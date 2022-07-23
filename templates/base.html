@@ -12,17 +12,30 @@
     <meta name="author" content="Kingsley Norman">
     {% endblock %}
     <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    {% block css %}
+    {% endblock %}
     {% block js %}
     {% endblock %}
-    {% block css %}
-    {% endblock  %}
-    <title>The Easy Whey</title>
+    <title>The Easy Whey {% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    <h1 class="text-3xl underline">
-        TAILWIND FROM BASE
-    </h1>
+    <header>HEADER</header>
+    <!-- in the header here will go our navigation with tailwind classes -->
+    {% if messages %}
+    <div class="message-container"></div>
+    {% endif %}
+
+    {% block header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block customjs %}
+    {% endblock %}
+    <!-- in the footer here will go our footer with tailwind classes -->
+    <footer>FOOTER</footer>
 </body>
 
 </html>
