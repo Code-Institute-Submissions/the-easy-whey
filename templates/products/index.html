@@ -1,8 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+- Home
+{% endblock %}
 {% block content %}
-<h1 class="text-3xl underline text-sky-400">
-    THIS IS GUNNA BE THE HOMEPAGE TESTT
-</h1>
+<header id="core-message" class="container-fluid">
+    <div id="overlay-parent" class="row" role="img" aria-label="protein powders on spoons in a circle arrangement">
+        <div id="hero-overlay" class="col d-flex align-items-center justify-content-center">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>The Easy Whey</h1>
+                    <a class="btn btn-primary" href="#how-does-it-work">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center mt-2">
+            <h2>What do we offer?</h2>
+        </div>
+    </div>
+</div>
+<section id="how-does-it-work">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6"><img src="../../static/images/chocolate-whey.png" class="img-fluid"
+                    alt="chocolate whey protein powder on a plate"></div>
+            <div class="col-6 align-self-center">Brief Explanation of the product here <a href="PRODUCTDETAIL">PRODUCT
+                    DETAIL BUTTON</a>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <h2 class="col text-center mb-4">How does it work?</h2>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-4">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                    <p class="mt-4">Select a flavour, or selection of flavours.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <p class="mt-4">Select the quantities required.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <i class="fa-solid fa-truck"></i>
+                    <p class="mt-4">Pick a reoccuring delivery date and enjoy!
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+</section>
 {% endblock %}
