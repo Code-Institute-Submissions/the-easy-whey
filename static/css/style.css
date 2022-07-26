@@ -1,7 +1,7 @@
 #overlay-parent {
     background: url(../images/landing-image.jpg) no-repeat center center;
     background-size: cover;
-    height: 94vh;
+    height: 80vh;
 }
 
 #hero-overlay {
@@ -13,4 +13,10 @@
 
 i {
     font-size: 2rem;
+}
+
+hr {
+    width: 50vw;
+    margin: auto;
+    height: 3px !important;
 }
