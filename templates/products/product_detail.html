@@ -9,4 +9,17 @@
 <h1 class="">
     product detail page
 </h1>
+<hr class="my-4">
+{% if products %}
+{% for product in products %}
+{{ product.flavour }}<br>
+{% endfor %}
+{% endif %}
+{{ chocolate.product }}
+{{ chocolate.energy }}g
+{{ chocolate.fat }}g
+{{ chocolate.carbohydrate }}g
+{{ chocolate.sugars }}g
+{{ chocolate.protein }}g
+{{ chocolate.salt }}g
 {% endblock %}
