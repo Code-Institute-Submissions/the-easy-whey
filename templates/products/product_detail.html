@@ -10,16 +10,57 @@
     product detail page
 </h1>
 <hr class="my-4">
-{% if products %}
-{% for product in products %}
-{{ product.flavour }}<br>
+{{ chocolate_nutrition.product }}
+{{ chocolate_nutrition.energy }}g
+{{ chocolate_nutrition.fat }}g
+{{ chocolate_nutrition.carbohydrate }}g
+{{ chocolate_nutrition.sugars }}g
+{{ chocolate_nutrition.protein }}g
+{{ chocolate_nutrition.salt }}g
+<hr>
+{{ banana_nutrition.product }}
+{{ banana_nutrition.energy }}g
+{{ banana_nutrition.fat }}g
+{{ banana_nutrition.carbohydrate }}g
+{{ banana_nutrition.sugars }}g
+{{ banana_nutrition.protein }}g
+{{ banana_nutrition.salt }}g
+<hr>
+{{ strawberry_nutrition.product }}
+{{ strawberry_nutrition.energy }}g
+{{ strawberry_nutrition.fat }}g
+{{ strawberry_nutrition.carbohydrate }}g
+{{ strawberry_nutrition.sugars }}g
+{{ strawberry_nutrition.protein }}g
+{{ strawberry_nutrition.salt }}g
+<hr>
+{{ cookies_and_cream_nutrition.product }}
+{{ cookies_and_cream_nutrition.energy }}g
+{{ cookies_and_cream_nutrition.fat }}g
+{{ cookies_and_cream_nutrition.carbohydrate }}g
+{{ cookies_and_cream_nutrition.sugars }}g
+{{ cookies_and_cream_nutrition.protein }}g
+{{ cookies_and_cream_nutrition.salt }}g
+
+<p>chocolate</p>
+{% for item in chocolate_ingredients %}
+{{ item.name }},
 {% endfor %}
-{% endif %}
-{{ chocolate.product }}
-{{ chocolate.energy }}g
-{{ chocolate.fat }}g
-{{ chocolate.carbohydrate }}g
-{{ chocolate.sugars }}g
-{{ chocolate.protein }}g
-{{ chocolate.salt }}g
+<hr>
+<p>banana</p>
+{% for item in banana_ingredients %}
+{{ item.name }},
+{% endfor %}
+<hr>
+<p>strawbs</p>
+{% for item in strawberry_ingredients %}
+{{ item.name }},
+{% endfor %}
+<hr>
+<p>cookies and cream</p>
+{% for item in cookies_and_cream_ingredients %}
+{{ item.name }},
+{% endfor %}
+<hr>
+
 {% endblock %}
