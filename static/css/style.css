@@ -20,3 +20,7 @@ hr {
     margin: auto;
     height: 3px !important;
 }
+
+#what-we-offer {
+    scroll-margin-top: 5rem;
+}

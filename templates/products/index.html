@@ -12,14 +12,14 @@
                 <div class="col-12 text-center">
                     <h1>The Easy Whey</h1>
                     <p>Making protein supplements easy.</p>
-                    <a class="btn btn-warning" href="#how-does-it-work">Learn More</a>
+                    <a class="btn btn-warning" href="#what-we-offer">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 </header>
 <hr class="my-4">
-<div class="container-fluid">
+<div class="container-fluid" id="what-we-offer">
     <div class="row">
         <div class="col text-center">
             <h2>What do we offer?</h2>
@@ -27,12 +27,61 @@
     </div>
 </div>
 <section id="how-does-it-work">
-    <div class="container-fluid">
+    <div class="container-fluid text-center">
         <div class="row">
-            <div class="col-6"><img src="../../static/images/chocolate-whey.png" class="img-fluid"
+            <div class="col-md-6 align-self-center">
+                <p>What Is Our Whey Protein?</p>
+                <p>Our Whey Protein is unrivalled in terms of quality and taste. This unique protein shakes has been
+                    developed without compromise using only the finest whey protein concentrate, delivering a massive
+                    80% protein content. That's <strong>Xg</strong> of protein, Xg of carbohydrates and x calories per
+                    30g serving.
+                </p>
+            </div>
+            <div class="col-md-6"><img src="../../static/images/chocolate-whey.png" class="img-fluid"
                     alt="chocolate whey protein powder on a plate"></div>
-            <div class="col-6 align-self-center">Brief Explanation of the product here <a
-                    href="{% url 'product_detail' %}">Learn More</a>
+        </div>
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <p>What Are The Benefits Of Whey Protein?</p>
+                <p>Our Whey Protein is high in BCAAs and low in fat and cholesterol, making it a healthy protein shake
+                    to
+                    consume any time of day. Its high protein and rich essential amino acids status means Whey Protein
+                    contributes to the growth and maintenance of muscle mass, helping you reach and maintain your
+                    fitness goals.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="../../static/images/chocolate-whey.png" class="img-fluid"
+                    alt="chocolate whey protein powder on a plate">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><img src="../../static/images/chocolate-whey.png" class="img-fluid"
+                    alt="chocolate whey protein powder on a plate"></div>
+            <div class="col-md-6 align-self-center">
+                <p>What Makes Our Whey Protein Special?</p>
+                <ul>
+                    <li>Smooth texture - a smooth, creamy, and delicious protein shake that'll
+                        satisfy your tastebuds with every sip.</li>
+                    <li>Delicious flavours - a variety of flavours including Chocolate, Banana, Strawberry and Cookies
+                        and Creme!</li>
+                    <li>Zero aftertaste - unlike others, our's has no artificial aftertaste!</li>
+                    <li>Instant mixability - easy and quick to blend into a smooth and creamy shake.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><img src="../../static/images/chocolate-whey.png" class="img-fluid"
+                    alt="chocolate whey protein powder on a plate"></div>
+            <div class="col-md-6 align-self-center">
+                <p>How Natural Is Our Whey Protein?</p>
+                <p>Our Whey Protein is a natural a food source that has been a staple in people's diets for centuries.
+                    Research has shown that grass-fed milk contains more linoleic acids and higher omega-3 fatty acids
+                    than milk from cows confined to indoor rearing. With our Whey Protein, you can rest assured that
+                    you are getting the purest and most natural whey protein possible.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"> <a class="btn btn-secondary" href="{% url 'product_detail' %}">Learn More</a>
             </div>
         </div>
         <hr class="my-4">
@@ -62,7 +111,8 @@
                 </div>
             </div>
         </div>
-        <hr class="my-4">
+    </div>
+    <hr class="my-4">
 
 
 </section>

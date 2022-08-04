@@ -65,20 +65,13 @@
     {% endif %}
 
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col text-center">
-                <h2 class="display-2">{% block header %}{% endblock %}</h2>
-            </div>
-        </div>
-    </div>
+    {% block header %}
+    {% endblock %}
 
 
     {% block content %}
     {% endblock %}
 
-
-    <!-- in the footer here will go our footer with tailwind classes -->
     <footer id="footer">
         <div class="container-fluid">
             <div class="row d-inline text-center">
