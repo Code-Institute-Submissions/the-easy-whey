@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Product, Nutrition, Ingredient
+from .forms import ProductForm, NutritionForm, IngredientForm
 # Create your views here.
 
 
@@ -42,3 +43,24 @@ def product_management(request):
     Returns the product management page
     """
     return render(request, "products/product_management.html")
+
+
+def admin_add(request):
+    product_form = ProductForm()
+    nutrition_form = NutritionForm()
+    ingredient_form = IngredientForm()
+    template = 'products/admin_add.html'
+    context = {
+        "product_form": product_form,
+        "nutrition_form": nutrition_form,
+        "ingredient_form": ingredient_form
+    }
+    return render(request, template, context)
+
+
+def admin_edit(request):
+    return render(request, "products/admin_edit.html")
+
+
+def admin_delete(request):
+    return render(request, "products/admin_delete.html")
