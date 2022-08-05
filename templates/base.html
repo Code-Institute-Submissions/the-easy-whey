@@ -47,13 +47,20 @@
                             Accounts
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            {% if not user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
                             <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                            {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
                             <li><a class="dropdown-item" href="{% url 'product_management' %}">Product Management</a>
+                                {% endif %}
+                                {% endif %}
                             </li>
-                            <!-- extra logic here from django for if authetnticated then hide register and login etc, if superuser add page for add product etc -->
                         </ul>
                     </li>
                 </ul>

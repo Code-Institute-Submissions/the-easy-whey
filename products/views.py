@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Product, Nutrition, Ingredient
 from .forms import ProductForm, NutritionForm, IngredientForm
 # Create your views here.
@@ -38,14 +38,14 @@ def product_detail(request):
 
     return render(request, "products/product_detail.html", context)
 
-
+@login_required
 def product_management(request):
     """
     Returns the product management page
     """
     return render(request, "products/product_management.html")
 
-
+@login_required
 def admin_add(request):
     if request.method == "POST":
         if "product_form_submit_button" in request.POST:
@@ -73,6 +73,10 @@ def admin_add(request):
         product_form = ProductForm()
         nutrition_form = NutritionForm()
         ingredient_form = IngredientForm()
+        # product = get_object_or_404(Product, pk=1)
+        # print(product)
+        # testtest = Product.objects.get(flavour='Chocolate Whey Protein')
+        # print(testtest.id)
     template = 'products/admin_add.html'
     context = {
         "product_form": product_form,
@@ -82,8 +86,15 @@ def admin_add(request):
     return render(request, template, context)
 
 
-def admin_edit(request):
-    return render(request, "products/admin_edit.html")
+def admin_edit(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    form = ProductForm(instance=product)
+    template = 'products/admin_edit.html'
+    context = {
+        "form": form,
+        "product": product
+    }
+    return render(request, template, context)
 
 
 def admin_delete(request):
