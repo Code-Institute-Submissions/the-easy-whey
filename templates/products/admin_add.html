@@ -26,20 +26,23 @@
     <div class="row">
         <div class="col-md-6">
             <form action="{% url 'admin_add' %}" method="post" class="form">
-                {{ product_form }}
-                <button class="button" type="submit">Submit</button>
+                {% csrf_token %}
+                {{ product_form.as_p }}
+                <button class="button" type="submit" name="product_form_submit_button">Submit</button>
             </form>
         </div>
         <div class="col-md-6">
             <form action="{% url 'admin_add' %}" method="post" class="form">
-                {{ nutrition_form }}
-                <button class="button" type="submit">Submit</button>
+                {% csrf_token %}
+                {{ nutrition_form.as_p }}
+                <button class="button" type="submit" name="nutrition_form_submit_button">Submit</button>
             </form>
         </div>
         <div class="col-md-6">
             <form action="{% url 'admin_add' %}" method="post" class="form">
-                {{ ingredient_form }}
-                <button class="button" type="submit">Submit</button>
+                {% csrf_token %}
+                {{ ingredient_form.as_p }}
+                <button class="button" type="submit" name="ingredient_form_submit_button">Submit</button>
             </form>
         </div>
     </div>

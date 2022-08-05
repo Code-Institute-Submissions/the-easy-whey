@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse
 from .models import Product, Nutrition, Ingredient
 from .forms import ProductForm, NutritionForm, IngredientForm
 # Create your views here.
@@ -46,9 +47,32 @@ def product_management(request):
 
 
 def admin_add(request):
-    product_form = ProductForm()
-    nutrition_form = NutritionForm()
-    ingredient_form = IngredientForm()
+    if request.method == "POST":
+        if "product_form_submit_button" in request.POST:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_add'))
+            else:
+                return redirect(reverse('product_management'))
+        if "nutrition_form_submit_button" in request.POST:
+            form = NutritionForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_add'))
+            else:
+                return redirect(reverse('product_management'))
+        if "ingredient_form_submit_button" in request.POST:
+            form = IngredientForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_add'))
+            else:
+                return redirect(reverse('product_management'))
+    else:
+        product_form = ProductForm()
+        nutrition_form = NutritionForm()
+        ingredient_form = IngredientForm()
     template = 'products/admin_add.html'
     context = {
         "product_form": product_form,
