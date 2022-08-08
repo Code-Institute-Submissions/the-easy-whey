@@ -86,14 +86,32 @@ def admin_add(request):
     return render(request, template, context)
 
 
-def admin_edit(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    form = ProductForm(instance=product)
-    template = 'products/admin_edit.html'
+def admin_edit_list(request): 
+    items = Product.objects.all()
+    template = 'products/admin_edit_list.html'
     context = {
-        "form": form,
-        "product": product
+        "items": items
     }
+    return render(request, template, context)
+
+
+def admin_edit_item(request, item_id):
+    item = get_object_or_404(Product, id=item_id)
+    if request.method == "POST":
+        form = ProductForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('admin_edit_list'))
+        else:
+            return redirect(reverse('product_management'))
+    else:
+        form = ProductForm()
+    template = 'products/admin_edit_item.html'
+    form = ProductForm(instance=item)
+    context = {
+        "form": form
+    }
+
     return render(request, template, context)
 
 
