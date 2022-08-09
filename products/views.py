@@ -96,20 +96,28 @@ def admin_edit_list(request):
 
 
 def admin_edit_item(request, item_id):
-    item = get_object_or_404(Product, id=item_id)
+    item_product = get_object_or_404(Product, id=item_id)
+    item_nutrition = get_object_or_404(Nutrition, product_id=item_id)
+    # item_ingredients = get_object_or_404(Ingredient, product=item_id)
     if request.method == "POST":
-        form = ProductForm(request.POST, instance=item)
+        form = ProductForm(request.POST, instance=item_product)
         if form.is_valid():
             form.save()
             return redirect(reverse('admin_edit_list'))
         else:
             return redirect(reverse('product_management'))
     else:
-        form = ProductForm()
+        product_form = ProductForm()
+        nutrition_form = NutritionForm()
+        # ingredients_form = IngredientForm()
     template = 'products/admin_edit_item.html'
-    form = ProductForm(instance=item)
+    product_form = ProductForm(instance=item_product)
+    nutrition_form = NutritionForm(instance=item_nutrition)
+    # ingredients_form = IngredientForm(instance=item_ingredients)
     context = {
-        "form": form
+        "product_form": product_form,
+        "nutrition_form": nutrition_form,
+        # "ingredients_form": ingredients_form,
     }
 
     return render(request, template, context)

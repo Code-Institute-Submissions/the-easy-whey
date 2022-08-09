@@ -48,14 +48,28 @@
             </form>
         </div> -->
         {% endcomment %}
-        <div class="col-md-6 offset-3 text-center">
-            <div class="col-md-6">
+        <div class="col-md-12 text-center">
+            <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ product_form.as_p }}
                     <button class="button" type="submit" name="product_form_edit_button">Update Item</button>
                 </form>
             </div>
+            <div class="col-4">
+                <form method="POST" class="form">
+                    {% csrf_token %}
+                    {{ nutrition_form.as_p }}
+                    <button class="button" type="submit" name="nutrition_form_edit_button">Update Item</button>
+                </form>
+            </div>
+            <!-- <div class="col-4">
+                <form method="POST" class="form">
+                    {% csrf_token %}
+                    {{ ingredients_form.as_p }}
+                    <button class="button" type="submit" name="ingredients_form_edit_button">Update Item</button>
+                </form>
+            </div> -->
         </div>
     </div>
 </div>
