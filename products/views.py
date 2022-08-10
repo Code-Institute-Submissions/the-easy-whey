@@ -118,10 +118,11 @@ def admin_edit_item(request, item_id):
     product_form = ProductForm(instance=item_product)
     nutrition_form = NutritionForm(instance=item_nutrition)
     # ingredients_form = IngredientForm(instance=item_ingredients)
+    ingredients_form = IngredientForm(instance=Ingredient.objects.all().first())
     context = {
         "product_form": product_form,
         "nutrition_form": nutrition_form,
-        # "ingredients_form": ingredients_form,
+        "ingredients_form": ingredients_form,
     }
 
 # Ingredient.objects.filter(product=1)
