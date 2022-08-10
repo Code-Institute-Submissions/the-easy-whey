@@ -98,18 +98,22 @@ def admin_edit_list(request):
 def admin_edit_item(request, item_id):
     item_product = get_object_or_404(Product, id=item_id)
     item_nutrition = get_object_or_404(Nutrition, product_id=item_id)
-    # item_ingredients = get_object_or_404(Ingredient, product=item_id)
+    # item_ingredients = Ingredient.objects.filter(product=1)
     if request.method == "POST":
-        form = ProductForm(request.POST, instance=item_product)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('admin_edit_list'))
-        else:
-            return redirect(reverse('product_management'))
-    else:
-        product_form = ProductForm()
-        nutrition_form = NutritionForm()
-        # ingredients_form = IngredientForm()
+        if "product_form_edit_button" in request.POST:
+            form = ProductForm(request.POST, instance=item_product)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_edit_list'))
+            else:
+                return redirect(reverse('product_management'))
+        if "nutrition_form_edit_button" in request.POST:
+            form = NutritionForm(request.POST, instance=item_nutrition)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_edit_list'))
+            else:
+                return redirect(reverse('product_management'))
     template = 'products/admin_edit_item.html'
     product_form = ProductForm(instance=item_product)
     nutrition_form = NutritionForm(instance=item_nutrition)
@@ -119,6 +123,11 @@ def admin_edit_item(request, item_id):
         "nutrition_form": nutrition_form,
         # "ingredients_form": ingredients_form,
     }
+
+# Ingredient.objects.filter(product=1)
+# for item in all:
+#   print(item.name)
+# this prints all the names out at least...
 
     return render(request, template, context)
 
