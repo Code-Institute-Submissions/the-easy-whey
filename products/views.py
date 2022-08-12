@@ -73,10 +73,7 @@ def admin_add(request):
         product_form = ProductForm()
         nutrition_form = NutritionForm()
         ingredient_form = IngredientForm()
-        # product = get_object_or_404(Product, pk=1)
-        # print(product)
-        # testtest = Product.objects.get(flavour='Chocolate Whey Protein')
-        # print(testtest.id)
+
     template = 'products/admin_add.html'
     context = {
         "product_form": product_form,
@@ -126,6 +123,14 @@ def admin_edit_item(request, item_id):
                 return redirect(reverse('admin_edit_list'))
             else:
                 return redirect(reverse('product_management'))
+        if "ingredients_form_edit_button" in request.POST:
+            form = IngredientForm(request.POST, instance=item_ingredients)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('admin_edit_list'))
+            else:
+                return redirect(reverse('product_management'))
+          
     template = 'products/admin_edit_item.html'
     
     context = {}
