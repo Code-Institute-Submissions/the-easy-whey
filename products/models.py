@@ -19,7 +19,7 @@ class Product(models.Model):
 
 
 class Nutrition(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='nutrition')
     energy = models.FloatField()
     fat = models.FloatField()
     carbohydrate = models.FloatField()
@@ -32,8 +32,17 @@ class Nutrition(models.Model):
 
 
 class Ingredient(models.Model):
-    product = models.ManyToManyField(Product)
-    name = models.CharField(max_length=30, blank=False, null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ingredient')
+    ingredient_one = models.CharField(max_length=35, blank=False, null=False, default="You need an ingredient")
+    ingredient_two = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_three = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_four = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_five = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_six = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_seven = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_eight = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_nine = models.CharField(max_length=35, blank=True, null=False)
+    ingredient_ten = models.CharField(max_length=35, blank=True, null=False)
 
     def __str__(self):
-        return f"ingredient - {self.name}"
+        return f"ingredient - {self.product} ingredients"

@@ -20,20 +20,20 @@ def product_detail(request):
     banana_nutrition = Nutrition.objects.get(product_id=2)
     strawberry_nutrition = Nutrition.objects.get(product_id=3)
     cookies_and_cream_nutrition = Nutrition.objects.get(product_id=4)
-    chocolate_ingredients = Ingredient.objects.filter(product=1)
-    banana_ingredients = Ingredient.objects.filter(product=2)
-    strawberry_ingredients = Ingredient.objects.filter(product=3)
-    cookies_and_cream_ingredients = Ingredient.objects.filter(product=4)
+    #chocolate_ingredients = Ingredient.objects.filter(product=1)
+    #banana_ingredients = Ingredient.objects.filter(product=2)
+    #strawberry_ingredients = Ingredient.objects.filter(product=3)
+    #cookies_and_cream_ingredients = Ingredient.objects.filter(product=4)
 
     context = {
         "chocolate_nutrition": chocolate_nutrition,
         "banana_nutrition": banana_nutrition,
         "strawberry_nutrition": strawberry_nutrition,
         "cookies_and_cream_nutrition": cookies_and_cream_nutrition,
-        "chocolate_ingredients": chocolate_ingredients,
-        "banana_ingredients": banana_ingredients,
-        "strawberry_ingredients": strawberry_ingredients,
-        "cookies_and_cream_ingredients": cookies_and_cream_ingredients,
+        #"chocolate_ingredients": chocolate_ingredients,
+        #"banana_ingredients": banana_ingredients,
+        #"strawberry_ingredients": strawberry_ingredients,
+        #"cookies_and_cream_ingredients": cookies_and_cream_ingredients,
     }
 
     return render(request, "products/product_detail.html", context)
@@ -136,14 +136,9 @@ def admin_edit_item(request, item_id):
         nutrition_form = NutritionForm(instance=item_nutrition)
         context["nutrition_form"] = nutrition_form
     if item_ingredients:
-        ingredients_form = IngredientForm(instance=Ingredient.objects.all().first())
+        ingredients_form = IngredientForm(instance=item_ingredients)
         context["ingredients_form"] = ingredients_form
     print(context)
-
-# Ingredient.objects.filter(product=1)
-# for item in all:
-#   print(item.name)
-# this prints all the names out at least...
 
     return render(request, template, context)
 
