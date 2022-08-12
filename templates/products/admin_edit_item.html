@@ -24,30 +24,6 @@
         </div>
     </div>
     <div class="row">
-        {% comment %}
-        <!-- <div class="col-md-6">
-            {% comment %}
-            <form action="{% url 'admin_edit_list' product.id %}" method="post" class="form">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="button" type="submit" name="product_form_submit_button">Submit</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form action="{% url 'admin_edit_list' %}" method="post" class="form">
-                {% csrf_token %}
-                {{ nutrition_form.as_p }}
-                <button class="button" type="submit" name="nutrition_form_submit_button">Submit</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form action="{% url 'admin_edit_list' %}" method="post" class="form">
-                {% csrf_token %}
-                {{ ingredient_form.as_p }}
-                <button class="button" type="submit" name="ingredient_form_submit_button">Submit</button>
-            </form>
-        </div> -->
-        {% endcomment %}
         <div class="col-md-12 text-center">
             <div class="col-4">
                 <form method="POST" class="form">
@@ -56,6 +32,7 @@
                     <button class="button" type="submit" name="product_form_edit_button">Update Item</button>
                 </form>
             </div>
+            {% if nutrition_form %}
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
@@ -63,6 +40,8 @@
                     <button class="button" type="submit" name="nutrition_form_edit_button">Update Item</button>
                 </form>
             </div>
+            {% endif %}
+            {% if nutrition_form %}
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
@@ -70,6 +49,7 @@
                     <button class="button" type="submit" name="ingredients_form_edit_button">Update Item</button>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>

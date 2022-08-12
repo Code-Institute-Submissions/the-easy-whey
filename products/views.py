@@ -85,7 +85,7 @@ def admin_add(request):
     }
     return render(request, template, context)
 
-
+@login_required
 def admin_edit_list(request): 
     items = Product.objects.all()
     template = 'products/admin_edit_list.html'
@@ -94,11 +94,23 @@ def admin_edit_list(request):
     }
     return render(request, template, context)
 
-
+@login_required
 def admin_edit_item(request, item_id):
-    item_product = get_object_or_404(Product, id=item_id)
-    item_nutrition = get_object_or_404(Nutrition, product_id=item_id)
-    # item_ingredients = Ingredient.objects.filter(product=1)
+    item_product = False
+    try:
+        item_product = Product.objects.get(id=item_id)
+    except:
+        print("Item not found")
+    item_nutrition = False
+    try:
+        item_nutrition = Nutrition.objects.get(product_id=item_id)
+    except:
+        print("Item not found")
+    item_ingredients = False
+    try:
+        item_ingredients = Ingredient.objects.get(product_id=item_id)
+    except:
+        print("Item not found")
     if request.method == "POST":
         if "product_form_edit_button" in request.POST:
             form = ProductForm(request.POST, instance=item_product)
@@ -115,15 +127,18 @@ def admin_edit_item(request, item_id):
             else:
                 return redirect(reverse('product_management'))
     template = 'products/admin_edit_item.html'
-    product_form = ProductForm(instance=item_product)
-    nutrition_form = NutritionForm(instance=item_nutrition)
-    # ingredients_form = IngredientForm(instance=item_ingredients)
-    ingredients_form = IngredientForm(instance=Ingredient.objects.all().first())
-    context = {
-        "product_form": product_form,
-        "nutrition_form": nutrition_form,
-        "ingredients_form": ingredients_form,
-    }
+    
+    context = {}
+    if item_product:
+        product_form = ProductForm(instance=item_product)
+        context["product_form"] = product_form
+    if item_nutrition:
+        nutrition_form = NutritionForm(instance=item_nutrition)
+        context["nutrition_form"] = nutrition_form
+    if item_ingredients:
+        ingredients_form = IngredientForm(instance=Ingredient.objects.all().first())
+        context["ingredients_form"] = ingredients_form
+    print(context)
 
 # Ingredient.objects.filter(product=1)
 # for item in all:
@@ -132,6 +147,8 @@ def admin_edit_item(request, item_id):
 
     return render(request, template, context)
 
-
-def admin_delete(request):
-    return render(request, "products/admin_delete.html")
+@login_required
+def admin_delete(request, item_id):
+    item = get_object_or_404(Product, id=item_id)
+    item.delete()
+    return render(request, "products/product_management.html")
