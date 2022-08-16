@@ -6,3 +6,5 @@ myprotien for nutrition information and ingredients
 the protein works for protein description
 
 differentiating between multiple forms in 1 view - https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django
+
+for help with bootstrap toast: https://www.goranstimac.com/blog/how-to-add-bootstrap-5-toast-on-page-load/

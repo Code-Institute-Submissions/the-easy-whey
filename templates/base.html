@@ -68,9 +68,17 @@
         </div>
     </nav>
     {% if messages %}
-    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
+    <div aria-live="polite" aria-atomic="true" class="position-absolute top-75 start-50 translate-middle border-0">
         {% for message in messages %}
+        {% with message.level as level %}
+        {% if level == 40 %}
+        {% include "./toasts/toast-error.html" %}
+        {% elif level == 25 %}
         {% include "./toasts/toast-success.html" %}
+        {% else %}
+        {% include "./toasts/toast-info.html" %}
+        {% endif %}
+        {% endwith %}
         {% endfor %}
     </div>
     {% endif %}
