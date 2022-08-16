@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Product, Nutrition, Ingredient
@@ -52,6 +53,7 @@ def admin_add(request):
             form = ProductForm(request.POST)
             if form.is_valid():
                 form.save()
+                messages.success(request, "Successfully added Product!")
                 return redirect(reverse('admin_add'))
             else:
                 return redirect(reverse('product_management'))
