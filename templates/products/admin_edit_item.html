@@ -28,7 +28,7 @@
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {{ product_form.as_p }}
+                    {{ product_form | crispy }}
                     <button class="button" type="submit" name="product_form_edit_button">Update Item</button>
                 </form>
             </div>
@@ -36,7 +36,7 @@
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {{ nutrition_form.as_p }}
+                    {{ nutrition_form | crispy }}
                     <button class="button" type="submit" name="nutrition_form_edit_button">Update Item</button>
                 </form>
             </div>
@@ -45,7 +45,7 @@
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {{ ingredients_form.as_p }}
+                    {{ ingredients_form | crispy }}
                     <button class="button" type="submit" name="ingredients_form_edit_button">Update Item</button>
                 </form>
             </div>
