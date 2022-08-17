@@ -14,7 +14,7 @@ class Subscription(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=50, null=False, blank=False)
-    postcode = models.CharField(max_length=50, null=True, blank=True)
+    postcode = models.CharField(max_length=50, null=True, blank=False)
     town_city = models.CharField(max_length=50, null=False, blank=False)
     address_one = models.CharField(max_length=100, null=False, blank=False)
     address_two = models.CharField(max_length=100, null=False, blank=False)

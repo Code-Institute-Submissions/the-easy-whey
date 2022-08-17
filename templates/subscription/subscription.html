@@ -6,4 +6,14 @@
 {% endblock %}
 {% block content %}
 <h1>SUBSCRIPTION PAGE</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="{% url 'subscribe' %}" method="POST" id="subscription-form">
+                {% csrf_token %}
+                {{ subscription_form | crispy }}
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
