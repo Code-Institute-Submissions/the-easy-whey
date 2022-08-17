@@ -9,12 +9,23 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            {% if user.is_authenticated %}
             <form action="{% url 'subscribe' %}" method="POST" id="subscription-form">
                 {% csrf_token %}
                 {{ subscription_form | crispy }}
+                <label class="form-check-label" for="subscription-save-info">Do you want to save your
+                    information to your profile?</label>
+                <input class="form-check-input" type="checkbox" id="subscription-save-info" name="save-info" checked>
+                <br>
                 <button id="submit-order">Complete Order</button>
             </form>
+            {% else %}
+            <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
+            <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a>
+                first.</p>
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock %}
