@@ -21,6 +21,8 @@ class Subscription(models.Model):
     county = models.CharField(max_length=50, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0)
+    subscription_start_date = models.DateTimeField(null=True, blank=True)
+    subscription_end_date = models.DateTimeField(null=True, blank=True)
 
     def _create_subscription_number(self):
         return uuid.uuid4().hex.upper()
