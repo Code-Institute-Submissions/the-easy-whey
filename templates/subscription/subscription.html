@@ -12,6 +12,7 @@
             <form action="{% url 'subscribe' %}" method="POST" id="subscription-form">
                 {% csrf_token %}
                 {{ subscription_form | crispy }}
+                <button id="submit-order">Complete Order</button>
             </form>
         </div>
     </div>

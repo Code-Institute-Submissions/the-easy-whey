@@ -4,7 +4,7 @@ from .models import Subscription
 class SubscriptionForm(forms.ModelForm):
     class Meta:
         model = Subscription
-        fields = ("name","email","phone_number","address_one","address_two","town_city","county","postcode",)
+        fields = ("name","email","phone_number","address_one","address_two","town_city","county","postcode", "country",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,6 +17,8 @@ class SubscriptionForm(forms.ModelForm):
             "town_city" : "Town or City",
             "county" : "County",
             "postcode" : "Postcode",
+            "country" : "Country",
+
         }
         for field in self.fields:
             if self.fields[field].required:

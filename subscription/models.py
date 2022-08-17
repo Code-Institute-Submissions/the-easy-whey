@@ -2,6 +2,9 @@ import uuid
 from django.db import models
 from django.db.models import Sum
 from django.conf import settings
+
+from django_countries.fields import CountryField
+
 from products.models import Product
 
 
@@ -19,6 +22,7 @@ class Subscription(models.Model):
     address_one = models.CharField(max_length=100, null=False, blank=False)
     address_two = models.CharField(max_length=100, null=False, blank=False)
     county = models.CharField(max_length=50, null=True, blank=True)
+    country = CountryField(blank_label="Country *" ,null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0)
     subscription_start_date = models.DateTimeField(null=True, blank=True)
