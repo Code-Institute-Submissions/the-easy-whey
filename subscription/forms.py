@@ -1,5 +1,5 @@
 from django import forms
-from .models import Subscription
+from .models import Subscription, SubscriptionLineItem
 from django.forms.widgets import DateInput
 
 class SubscriptionDetailsForm(forms.ModelForm):
@@ -39,5 +39,5 @@ class SubscriptionDetailsForm(forms.ModelForm):
 
 class SubscriptionItemsForm(forms.ModelForm):
     class Meta:
-        model = Subscription
+        model = SubscriptionLineItem
         exclude = ("",)

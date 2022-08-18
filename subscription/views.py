@@ -17,7 +17,7 @@ def subscribe(request):
     return render(request, "subscription/subscription.html", context)
 
 def subscribe_details(request):
-
+# need to get the current subscription ID and then pass that to the next page to be used as the choice for the subscription
     if request.method == "POST":
         subscription_details_form = SubscriptionDetailsForm(request.POST)
         if subscription_details_form.is_valid():
@@ -37,7 +37,8 @@ def subscribe_details(request):
 
 
 def subscribe_items(request):
-
+# this formed rendered below like i thought, but need to get a custom form perhaps and add the quantities there? e.g. only shows 1 product box
+# look into the subform / nested form stuff?
     subscription_items_form = SubscriptionItemsForm()
     context = {
         "subscription_items_form": subscription_items_form,
