@@ -1,10 +1,14 @@
 from django import forms
 from .models import Subscription
+from django.forms.widgets import DateInput
 
-class SubscriptionForm(forms.ModelForm):
+class SubscriptionDetailsForm(forms.ModelForm):
     class Meta:
         model = Subscription
-        fields = ("full_name","email","phone_number","address_one","address_two","town_city","county","postcode", "country",)
+        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date")
+        widgets = {
+            "subscription_start_date": DateInput(attrs={'type': 'date'})
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,6 +22,7 @@ class SubscriptionForm(forms.ModelForm):
             "county": "County",
             "postcode": "Postcode",
             "country": "County",
+            "subscription_start_date": "When do you want your subscription to start?"
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
@@ -28,3 +33,11 @@ class SubscriptionForm(forms.ModelForm):
                 placeholder = placeholders[field]
             self.fields[field].widget.attrs["placeholder"] = placeholder
             self.fields[field].label = False
+            if field == "subscription_start_date":
+                self.fields[field].label = "When do you want your subscription to start?"
+
+
+class SubscriptionItemsForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+        exclude = ("",)
