@@ -18,7 +18,6 @@ class SubscriptionForm(forms.ModelForm):
             "county": "County",
             "postcode": "Postcode",
             "country": "County",
-
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
