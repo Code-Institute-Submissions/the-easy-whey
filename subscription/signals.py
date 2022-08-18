@@ -5,9 +5,9 @@ from .models import SubscriptionLineItem
 
 @receiver(post_save, sender=SubscriptionLineItem)
 def update_on_save(sender, instance, created, **kwargs):
-    instance.order.update_total()
+    instance.subscription.update_total()
 
 
-@receiver(post_delete, sender=SubscriptionLineItem)
-def update_on_save(sender, created, **kwargs):
-    instance.order.update_total()
+# @receiver(post_delete, sender=SubscriptionLineItem)
+# def update_on_delete(sender, instance, **kwargs):
+#     instance.subscription.update_total()

@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 from django.db.models import Sum
-from django.conf import settings
 
 from django_countries.fields import CountryField
 
@@ -14,15 +13,15 @@ from products.models import Product
 
 class Subscription(models.Model):
     subscription_number = models.CharField(max_length=32, null=False, editable=False)
-    name = models.CharField(max_length=50, null=False, blank=False)
+    full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=50, null=False, blank=False)
-    postcode = models.CharField(max_length=50, null=True, blank=False)
+    postcode = models.CharField(max_length=50, null=True, blank=True)
     town_city = models.CharField(max_length=50, null=False, blank=False)
     address_one = models.CharField(max_length=100, null=False, blank=False)
     address_two = models.CharField(max_length=100, null=False, blank=False)
     county = models.CharField(max_length=50, null=True, blank=True)
-    country = CountryField(blank_label="Country *" ,null=False, blank=False)
+    country = CountryField(blank_label="Country *", null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0)
     subscription_start_date = models.DateTimeField(null=True, blank=True)
@@ -47,7 +46,7 @@ class Subscription(models.Model):
 
 
 class SubscriptionLineItem(models.Model):
-    order = models.ForeignKey(Subscription, on_delete=models.CASCADE, null=False, blank=False, related_name="lineitems")
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE, null=False, blank=False, related_name="lineitems")
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=0)
     product_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
@@ -57,4 +56,4 @@ class SubscriptionLineItem(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Product: {self.product.name} for the subscription: {self.order.subscription_number}"
+        return f"Product: {self.product.flavour} for the subscription: {self.subscription.subscription_number}"
