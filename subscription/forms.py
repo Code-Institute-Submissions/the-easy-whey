@@ -38,6 +38,11 @@ class SubscriptionDetailsForm(forms.ModelForm):
 
 
 class SubscriptionItemsForm(forms.ModelForm):
+
+    chocolate_quantity = forms.IntegerField(label="How many bags of Chocolate Whey Protein would you like?")
+    banana_quantity = forms.IntegerField(label="How many bags of Banana Whey Protein would you like?")
+    strawberry_quantity = forms.IntegerField(label="How many bags of Strawberry Whey Protein would you like?")
+    cookies_and_cream_quantity = forms.IntegerField(label="How many bags of Cookies and Cream Whey Protein would you like?")
     class Meta:
         model = SubscriptionLineItem
-        exclude = ("",)
+        exclude = ("subscription", "product", "quantity")

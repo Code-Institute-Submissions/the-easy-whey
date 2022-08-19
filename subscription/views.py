@@ -3,6 +3,7 @@ from django.contrib import messages
 
 from .forms import SubscriptionDetailsForm, SubscriptionItemsForm
 from .actions import add_bag_quantites
+from .models import Subscription, SubscriptionLineItem
 
 # Create your views here.
 def subscribe(request):
@@ -20,7 +21,6 @@ def subscribe_details(request):
     if request.method == "POST":
         subscription_details_form = SubscriptionDetailsForm(request.POST)
         if subscription_details_form.is_valid():
-            # chocolate_quantity = subscription_details_form.cleaned_data['chocolate_quantity']
             subscription_details_form.save()
             request.session['subscription_number'] = subscription_details_form.instance.subscription_number
             # return redirect(reverse('subscribe_items'))
@@ -36,12 +36,22 @@ def subscribe_details(request):
 def subscribe_items(request):
 # this formed rendered below like i thought, but need to get a custom form perhaps and add the quantities there? e.g. only shows 1 product box
 # look into the subform / nested form stuff?
-    instance_details = {
-        "subscription": 1,
-    }
-    subscription_items_form = SubscriptionItemsForm(initial=instance_details)
+# print(request.session["subscription_number"]) - I NOW HAVE ACCESS TO THIS.
+
+    if request.method == "POST":
+        subscription_items_form = SubscriptionItemsForm(request.POST)
+        if subscription_items_form.is_valid():
+            chocolate_quantity = subscription_items_form.cleaned_data['chocolate_quantity']
+            banana_quantity = subscription_items_form.cleaned_data['banana_quantity']
+            strawberry_quantity = subscription_items_form.cleaned_data['strawberry_quantity']
+            cookies_and_cream_quantity = subscription_items_form.cleaned_data['cookies_and_cream_quantity']
+            subscription = Subscription.objects.get(subscription_number=request.session["subscription_number"])
+            # item = Subscription.objects.get(subscription_number="9F1EDF0BBC444E84BAF93B577F45CBED") - ok so got the object here?
+            # SubscriptionLineItem(subscription=item, product_id=1) gives me <SubscriptionLineItem: Product: Chocolate Whey Protein for the subscription: 9F1EDF0BBC444E84BAF93B577F45CBED
+            # why does SubscriptionLineItem(subscription=item, product_id=1).quantity = 0, when in the admin view i see 2
+
+    subscription_items_form = SubscriptionItemsForm()
     context = {
         "subscription_items_form": subscription_items_form,
     }
-    print(request.session["subscription_number"])
     return render(request, "subscription/subscription_items.html", context)
