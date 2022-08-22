@@ -50,6 +50,11 @@ def subscribe_items(request):
             # SubscriptionLineItem(subscription=item, product_id=1) gives me <SubscriptionLineItem: Product: Chocolate Whey Protein for the subscription: 9F1EDF0BBC444E84BAF93B577F45CBED
             # why does SubscriptionLineItem(subscription=item, product_id=1).quantity = 0, when in the admin view i see 2
 
+
+            # GOT IT!
+            # item = SubscriptionLineItem.objects.filter(subscription__subscription_number="9F1EDF0BBC444E84BAF93B577F45CBED") - THIS GETS THE OBJECTS, WHICH IS ALL 3 PRODUCTS IN THIS SUBSCRIPTION
+            # item[0] then gets the first product, which is the Chocolate Whey Protein record
+            # from here, simply using item[0].quantity gives me 2!!!!!
     subscription_items_form = SubscriptionItemsForm()
     context = {
         "subscription_items_form": subscription_items_form,
