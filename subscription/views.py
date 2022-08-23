@@ -55,6 +55,12 @@ def subscribe_items(request):
             # item = SubscriptionLineItem.objects.filter(subscription__subscription_number="9F1EDF0BBC444E84BAF93B577F45CBED") - THIS GETS THE OBJECTS, WHICH IS ALL 3 PRODUCTS IN THIS SUBSCRIPTION
             # item[0] then gets the first product, which is the Chocolate Whey Protein record
             # from here, simply using item[0].quantity gives me 2!!!!!
+            # can use a loop then to go over all 3
+            # another way is actually doing it via the lineitems
+            # item = item = Subscription.objects.get(subscription_number="9F1EDF0BBC444E84BAF93B577F45CBED")
+            # item.lineitems.all() - this gives me the query set for all the line items:
+            # <QuerySet [<SubscriptionLineItem: Product: Chocolate Whey Protein for the subscription: 9F1EDF0BBC444E84BAF93B577F45CBED>,
+            # <SubscriptionLineItem: Product: Banana Whey Protein for the subscription: 9F1EDF0BBC444E84BAF93B577F45CBED>, <SubscriptionLineItem: Product: Cookies & Cream Whey Protein for the subscription: 9F1EDF0BBC444E84BAF93B577F45CBED>]>
     subscription_items_form = SubscriptionItemsForm()
     context = {
         "subscription_items_form": subscription_items_form,
