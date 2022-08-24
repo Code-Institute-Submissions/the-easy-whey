@@ -37,12 +37,10 @@ class SubscriptionDetailsForm(forms.ModelForm):
                 self.fields[field].label = "When do you want your subscription to start?"
 
 
-class SubscriptionItemsForm(forms.ModelForm):
+class SubscriptionItemsForm(forms.Form):
 
-    chocolate_quantity = forms.IntegerField(label="How many bags of Chocolate Whey Protein would you like?")
-    banana_quantity = forms.IntegerField(label="How many bags of Banana Whey Protein would you like?")
-    strawberry_quantity = forms.IntegerField(label="How many bags of Strawberry Whey Protein would you like?")
-    cookies_and_cream_quantity = forms.IntegerField(label="How many bags of Cookies and Cream Whey Protein would you like?")
-    class Meta:
-        model = SubscriptionLineItem
-        exclude = ("subscription", "product", "quantity")
+    chocolate_quantity = forms.IntegerField(label="How many bags of Chocolate Whey Protein would you like?", min_value=0, max_value=10, initial=0)
+    banana_quantity = forms.IntegerField(label="How many bags of Banana Whey Protein would you like?", min_value=0, max_value=10, initial=0)
+    strawberry_quantity = forms.IntegerField(label="How many bags of Strawberry Whey Protein would you like?", min_value=0, max_value=10, initial=0)
+    cookies_and_cream_quantity = forms.IntegerField(label="How many bags of Cookies and Cream Whey Protein would you like?", min_value=0, max_value=10, initial=0)
+
