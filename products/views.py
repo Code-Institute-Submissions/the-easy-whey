@@ -19,10 +19,10 @@ def product_detail(request):
     """
     Returns the product details page
     """
-    chocolate_nutrition = Nutrition.objects.get(product_id=1)
-    banana_nutrition = Nutrition.objects.get(product_id=2)
-    strawberry_nutrition = Nutrition.objects.get(product_id=3)
-    cookies_and_cream_nutrition = Nutrition.objects.get(product_id=4)
+    chocolate_nutrition = Nutrition.objects.get(product__flavour="Chocolate Whey Protein")
+    banana_nutrition = Nutrition.objects.get(product__flavour="Banana Whey Protein")
+    strawberry_nutrition = Nutrition.objects.get(product__flavour="Strawberry Whey Protein")
+    cookies_and_cream_nutrition = Nutrition.objects.get(product__flavour="Cookies & Cream Whey Protein")
     #chocolate_ingredients = Ingredient.objects.filter(product=1)
     #banana_ingredients = Ingredient.objects.filter(product=2)
     #strawberry_ingredients = Ingredient.objects.filter(product=3)
