@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+- Contact
+{% endblock %}
+{% block content %}
+<h1>Contact page</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3 justify-content-center">
+            <div>
+                {% if all_messages %}
+                <h1>There are messages!</h1>
+                <div class="message-container">
+                    {% for message in all_messages %}
+                    <div class="message-item">
+                        {{ message.name }}, {{ message.email }}, {{ message.phone }}, {{ message.message }}, <a
+                            href="">View</a> <a href="">Delete</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <h1>There are no messages!</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

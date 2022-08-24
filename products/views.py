@@ -1,8 +1,10 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Product, Nutrition, Ingredient
 from .forms import ProductForm, NutritionForm, IngredientForm
+
 # Create your views here.
 
 
@@ -40,6 +42,7 @@ def product_detail(request):
     return render(request, "products/product_detail.html", context)
 
 @login_required
+@staff_member_required
 def product_management(request):
     """
     Returns the product management page
@@ -47,6 +50,7 @@ def product_management(request):
     return render(request, "products/product_management.html")
 
 @login_required
+@staff_member_required
 def admin_add(request):
     if request.method == "POST":
         if "product_form_submit_button" in request.POST:
@@ -85,6 +89,7 @@ def admin_add(request):
     return render(request, template, context)
 
 @login_required
+@staff_member_required
 def admin_edit_list(request): 
     items = Product.objects.all()
     template = 'products/admin_edit_list.html'
@@ -94,6 +99,7 @@ def admin_edit_list(request):
     return render(request, template, context)
 
 @login_required
+@staff_member_required
 def admin_edit_item(request, item_id):
     item_product = False
     try:
@@ -150,6 +156,7 @@ def admin_edit_item(request, item_id):
     return render(request, template, context)
 
 @login_required
+@staff_member_required
 def admin_delete(request, item_id):
     item = get_object_or_404(Product, id=item_id)
     item.delete()
