@@ -11,6 +11,10 @@ class Product(models.Model):
 
 
 class Nutrition(models.Model):
+
+    class Meta:
+        verbose_name_plural = "Nutrition"
+
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='nutrition')
     energy = models.FloatField()
     fat = models.FloatField()

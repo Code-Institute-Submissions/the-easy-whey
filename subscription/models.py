@@ -22,6 +22,7 @@ class Subscription(models.Model):
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0)
     subscription_start_date = models.DateField(null=True, blank=True)
     subscription_end_date = models.DateField(null=True, blank=True)
+    is_paid = models.BooleanField(default=False)
 
     def _create_subscription_number(self):
         return uuid.uuid4().hex.upper()

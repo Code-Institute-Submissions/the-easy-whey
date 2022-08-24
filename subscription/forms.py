@@ -5,7 +5,7 @@ from django.forms.widgets import DateInput
 class SubscriptionDetailsForm(forms.ModelForm):
     class Meta:
         model = Subscription
-        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date")
+        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date", "is_paid")
         widgets = {
             "subscription_start_date": DateInput(attrs={'type': 'date'})
         }
