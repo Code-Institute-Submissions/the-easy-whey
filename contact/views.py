@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from .forms import ContactForm
 from .models import Contact
 
@@ -8,12 +11,20 @@ def contact(request):
     """
     Returns the contact page
     """
+    if request.method == "POST":
+        contact_form = ContactForm(request.POST)
+        if contact_form.is_valid():
+            contact_form.save()
+            
     contact_form = ContactForm()
     context = {
         "form": contact_form
     }
     return render(request, "contact/contact.html", context)
 
+
+@login_required
+@staff_member_required
 def message_management(request):
     all_messages = Contact.objects.all()
     context = {
@@ -21,8 +32,21 @@ def message_management(request):
     }
     return render(request, "contact/all_messages.html", context)
 
-def admin_view_message(request):
-    pass
 
-def admin_delete_message(request):
-    pass
+@login_required
+@staff_member_required
+def admin_view_message(request, message_id):
+    message = Contact.objects.get(id=message_id)
+    context = {
+        "message" : message
+    }
+
+    return render(request, "contact/view_message.html", context)
+
+
+@login_required
+@staff_member_required
+def admin_delete_message(request, message_id):
+    message = Contact.objects.get(id=message_id)
+    message.delete()
+    return redirect(reverse('message_management'))

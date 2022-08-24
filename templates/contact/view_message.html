@@ -10,12 +10,9 @@
     <div class="row">
         <div class="col-6 offset-3 justify-content-center">
             <div>
-                <form action="{% url 'contact' %}" method="post">
-                    {% csrf_token %}
-                    {{ form | crispy }}
-                    <button type="submit">Send Message</button>
-                </form>
+                {{ message.name }}, {{ message.email }}, {{ message.phone }}, {{ message.message }}
             </div>
+            <a class="btn btn-primary" href="{% url 'message_management' %}">All Messages</a>
         </div>
     </div>
 </div>
