@@ -4,7 +4,7 @@ from .models import Product, Nutrition, Ingredient
 # Register your models here.
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", 'flavour', 'description', 'price')
+    list_display = ("id", 'flavour', 'description', 'price', "image_url", "image")
 
 
 class NutritionAdmin(admin.ModelAdmin):
