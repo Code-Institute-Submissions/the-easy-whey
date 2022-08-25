@@ -18,7 +18,18 @@
 {% block content %}
 
 {% for nutrition, ingredients in all_data.items %}
-<p> {{ nutrition }} </p>
+{% for ingredient in ingredients %}
+<p></p>
+{% endfor %}
+{% endfor %}
+
+{% for product in products %}
+{% for nutrition in product.nutrition %}
+
+{% endfor %}
+{% for ingredient in product.ingredients %}
+
+{% endfor %}
 {% endfor %}
 
 <div class="container border py-5 px-5 mt-4">

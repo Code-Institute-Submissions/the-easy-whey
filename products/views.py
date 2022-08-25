@@ -29,15 +29,15 @@ def product_detail(request):
     strawberry_ingredients = Ingredient.objects.filter(product__flavour="Strawberry Whey Protein")
     cookies_and_cream_ingredients = Ingredient.objects.filter(product__flavour="Cookies & Cream Whey Protein")
     
-    all_data = {
-        "chocolate_info": [chocolate_nutrition, chocolate_ingredients],
-        "banana_info": [banana_nutrition, banana_ingredients],
-        "strawberry_info": [strawberry_nutrition, strawberry_ingredients],
-        "cookies_and_cream_info": [cookies_and_cream_nutrition, cookies_and_cream_ingredients],
-    }
-
+    # all_data = {
+    #     "chocolate_info": [chocolate_nutrition, chocolate_ingredients],
+    #     "banana_info": [banana_nutrition, banana_ingredients],
+    #     "strawberry_info": [strawberry_nutrition, strawberry_ingredients],
+    #     "cookies_and_cream_info": [cookies_and_cream_nutrition, cookies_and_cream_ingredients],
+    # }
+    # COMMENTS ADDED - THIS PRODUCT HAS ALL OF THE NUTRITION AND INGREDIENT DATA ATTACHED TOO! CAN USE THIS. SEE TEMPLATE.
     context = {
-        "all_data": all_data
+        "products": Product.objects.all()
     }
 
     return render(request, "products/product_detail.html", context)
