@@ -17,7 +17,12 @@
 
 {% block content %}
 
+{% for nutrition, ingredients in all_data.items %}
+<p> {{ nutrition }} </p>
+{% endfor %}
+
 <div class="container border py-5 px-5 mt-4">
+
     <div class="row">
         <div class="col-md-6 justify-content-center align-self-center text-center">
             <div class="row">
@@ -96,16 +101,14 @@
                     <div id="collapseChocolateIngredients" class="accordion-collapse collapse"
                         aria-labelledby="ChocolateHeadingIngredients" data-bs-parent="#accordionChocolate">
                         <div class="accordion-body">
-                            <!-- {% for item in chocolate_ingredients %}
-                            {{ item.name }}{% if not forloop.last %},{% else %}.{% endif %}
-                            {% endfor %} -->
+                            <p>INGREDIENTS HERE</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-6 justify-content-center align-self-center text-center">
             <div class="row">
                 <div class="col-12 ">
@@ -183,9 +186,7 @@
                     <div id="collapseBananaIngredients" class="accordion-collapse collapse"
                         aria-labelledby="BananaHeadingIngredients" data-bs-parent="#accordionBanana">
                         <div class="accordion-body">
-                            <!-- {% for item in banana_ingredients %}
-                            {{ item.name }}{% if not forloop.last %},{% else %}.{% endif %}
-                            {% endfor %} -->
+                            <p>INGREDIENTS HERE</p>
                         </div>
                     </div>
                 </div>
@@ -270,9 +271,7 @@
                     <div id="collapseStrawberryIngredients" class="accordion-collapse collapse"
                         aria-labelledby="StrawberryHeadingIngredients" data-bs-parent="#accordionStrawberry">
                         <div class="accordion-body">
-                            <!-- {% for item in strawberry_ingredients %}
-                            {{ item.name }}{% if not forloop.last %},{% else %}.{% endif %}
-                            {% endfor %} -->
+                            <p>INGREDIENTS HERE</p>
                         </div>
                     </div>
                 </div>
@@ -357,70 +356,18 @@
                     <div id="collapseCookiesAndCreamIngredients" class="accordion-collapse collapse"
                         aria-labelledby="CookiesAndCreamHeadingIngredients" data-bs-parent="#accordionCookiesAndCream">
                         <div class="accordion-body">
-                            <!-- {% for item in cookies_and_cream_ingredients %}
-                            {{ item.name }}{% if not forloop.last %},{% else %}.{% endif %}
-                            {% endfor %} -->
+                            <p>INGREDIENTS HERE</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 
-<!-- 
-{{ chocolate_nutrition.product }}
-{{ chocolate_nutrition.energy }}g
-{{ chocolate_nutrition.fat }}g
-{{ chocolate_nutrition.carbohydrate }}g
-{{ chocolate_nutrition.sugars }}g
-{{ chocolate_nutrition.protein }}g
-{{ chocolate_nutrition.salt }}g
-<hr>
-{{ banana_nutrition.product }}
-{{ banana_nutrition.energy }}g
-{{ banana_nutrition.fat }}g
-{{ banana_nutrition.carbohydrate }}g
-{{ banana_nutrition.sugars }}g
-{{ banana_nutrition.protein }}g
-{{ banana_nutrition.salt }}g
-<hr>
-{{ strawberry_nutrition.product }}
-{{ strawberry_nutrition.energy }}g
-{{ strawberry_nutrition.fat }}g
-{{ strawberry_nutrition.carbohydrate }}g
-{{ strawberry_nutrition.sugars }}g
-{{ strawberry_nutrition.protein }}g
-{{ strawberry_nutrition.salt }}g
-<hr>
-{{ cookies_and_cream_nutrition.product }}
-{{ cookies_and_cream_nutrition.energy }}g
-{{ cookies_and_cream_nutrition.fat }}g
-{{ cookies_and_cream_nutrition.carbohydrate }}g
-{{ cookies_and_cream_nutrition.sugars }}g
-{{ cookies_and_cream_nutrition.protein }}g
-{{ cookies_and_cream_nutrition.salt }}g
-
-<p>chocolate</p>
-{% for item in chocolate_ingredients %}
-{{ item.name }},
-{% endfor %}
-<hr>
-<p>banana</p>
-{% for item in banana_ingredients %}
-{{ item.name }},
-{% endfor %}
-<hr>
-<p>strawbs</p>
-{% for item in strawberry_ingredients %}
-{{ item.name }},
-{% endfor %}
-<hr>
-<p>cookies and cream</p>
-{% for item in cookies_and_cream_ingredients %}
-{{ item.name }},
-{% endfor %}
-<hr> -->
-
+<!-- useful for looping and having commas: -->
+<!-- {% for item in cookies_and_cream_ingredients %}
+{{ item.name }}{% if not forloop.last %},{% else %}.{% endif %}
+{% endfor %} -->
 {% endblock %}

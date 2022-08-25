@@ -19,24 +19,25 @@ def product_detail(request):
     """
     Returns the product details page
     """
+    
     chocolate_nutrition = Nutrition.objects.get(product__flavour="Chocolate Whey Protein")
     banana_nutrition = Nutrition.objects.get(product__flavour="Banana Whey Protein")
     strawberry_nutrition = Nutrition.objects.get(product__flavour="Strawberry Whey Protein")
     cookies_and_cream_nutrition = Nutrition.objects.get(product__flavour="Cookies & Cream Whey Protein")
-    #chocolate_ingredients = Ingredient.objects.filter(product=1)
-    #banana_ingredients = Ingredient.objects.filter(product=2)
-    #strawberry_ingredients = Ingredient.objects.filter(product=3)
-    #cookies_and_cream_ingredients = Ingredient.objects.filter(product=4)
+    chocolate_ingredients = Ingredient.objects.filter(product__flavour="Chocolate Whey Protein")
+    banana_ingredients = Ingredient.objects.filter(product__flavour="Banana Whey Protein")
+    strawberry_ingredients = Ingredient.objects.filter(product__flavour="Strawberry Whey Protein")
+    cookies_and_cream_ingredients = Ingredient.objects.filter(product__flavour="Cookies & Cream Whey Protein")
+    
+    all_data = {
+        "chocolate_info": [chocolate_nutrition, chocolate_ingredients],
+        "banana_info": [banana_nutrition, banana_ingredients],
+        "strawberry_info": [strawberry_nutrition, strawberry_ingredients],
+        "cookies_and_cream_info": [cookies_and_cream_nutrition, cookies_and_cream_ingredients],
+    }
 
     context = {
-        "chocolate_nutrition": chocolate_nutrition,
-        "banana_nutrition": banana_nutrition,
-        "strawberry_nutrition": strawberry_nutrition,
-        "cookies_and_cream_nutrition": cookies_and_cream_nutrition,
-        #"chocolate_ingredients": chocolate_ingredients,
-        #"banana_ingredients": banana_ingredients,
-        #"strawberry_ingredients": strawberry_ingredients,
-        #"cookies_and_cream_ingredients": cookies_and_cream_ingredients,
+        "all_data": all_data
     }
 
     return render(request, "products/product_detail.html", context)
