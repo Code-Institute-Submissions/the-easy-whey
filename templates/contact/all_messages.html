@@ -15,7 +15,7 @@
                 <div class="message-container">
                     {% for message in all_messages %}
                     <div class="message-item">
-                        {{ message.name }}, {{ message.email }}, {{ message.phone }}, {{ message.message }}, <a
+                        {{ message.name }}, {{ message.email }}, {{ message.phone_number }}, {{ message.message }}, <a
                             class="btn btn-primary" href="/contact/admin/{{ message.id }}">View</a> <a
                             class="btn btn-warning" href="/contact/admin/delete/{{ message.id }}">Delete</a>
                     </div>
