@@ -41,15 +41,15 @@
                 </form>
             </div>
             {% endif %}
-            {% if nutrition_form %}
+            {% for ingredient_form in ingredient_forms %}
             <div class="col-4">
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {{ ingredients_form | crispy }}
+                    {{ ingredient_form | crispy }}
                     <button class="button" type="submit" name="ingredients_form_edit_button">Update Item</button>
                 </form>
             </div>
-            {% endif %}
+            {% endfor %}
         </div>
     </div>
 </div>

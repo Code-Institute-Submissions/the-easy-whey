@@ -105,20 +105,21 @@ def admin_edit_item(request, item_id):
     try:
         item_product = Product.objects.get(id=item_id)
     except:
-        print("Item not found")
+        print("Item not found - Product")
     item_nutrition = False
     try:
         item_nutrition = Nutrition.objects.get(product_id=item_id)
     except:
-        print("Item not found")
+        print("Item not found - Nutrition")
     item_ingredients = False
     try:
-        item_ingredients = Ingredient.objects.get(product_id=item_id)
+        item_ingredients = Ingredient.objects.filter(product__id=item_id)
     except:
-        print("Item not found")
+        print("Item not found - Ingredients")
     if request.method == "POST":
         if "product_form_edit_button" in request.POST:
             form = ProductForm(request.POST, instance=item_product)
+
             if form.is_valid():
                 form.save()
                 return redirect(reverse('admin_edit_list'))
@@ -142,6 +143,7 @@ def admin_edit_item(request, item_id):
     template = 'products/admin_edit_item.html'
     
     context = {}
+    ingredient_forms = []
     if item_product:
         product_form = ProductForm(instance=item_product)
         context["product_form"] = product_form
@@ -149,9 +151,14 @@ def admin_edit_item(request, item_id):
         nutrition_form = NutritionForm(instance=item_nutrition)
         context["nutrition_form"] = nutrition_form
     if item_ingredients:
-        ingredients_form = IngredientForm(instance=item_ingredients)
-        context["ingredients_form"] = ingredients_form
-    print(context)
+        for ingredient in item_ingredients:
+            ingredient_forms.append(IngredientForm(instance=ingredient))
+    
+    context["ingredient_forms"] = ingredient_forms
+
+
+    #     ingredients_form = IngredientForm(instance=item_ingredients)
+    #     context["ingredients_form"] = ingredients_form
 
     return render(request, template, context)
 

@@ -25,7 +25,11 @@ def subscribe_details(request):
         if subscription_details_form.is_valid():
             subscription_details_form.save()
             request.session['subscription_number'] = subscription_details_form.instance.subscription_number
-            return render(request, 'subscription/subscription_items.html', {'subscription_number': request.session['subscription_number']})
+            subscription_items_form = SubscriptionItemsForm()
+            context = {
+                "subscription_items_form": subscription_items_form,
+            }
+            return render(request, 'subscription/subscription_items.html', context)
 
     subscription_details_form = SubscriptionDetailsForm()
     context = {
@@ -52,8 +56,11 @@ def subscribe_items(request):
                 SubscriptionLineItem(subscription=subscription, product=Product.objects.get(flavour=flavour), quantity=quantity).save()
 
             context = {}
-
             return render(request, "subscription/payment.html", context)
+
+    if "subscription_number" not in request.session:
+        messages.error(request, "An error occured, please try again.")
+        return redirect(reverse('subscribe_details'))
 
     subscription_items_form = SubscriptionItemsForm()
     context = {

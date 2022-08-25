@@ -12,7 +12,7 @@ class NutritionAdmin(admin.ModelAdmin):
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('product', 'ingredient_one','ingredient_two', 'ingredient_three', 'ingredient_four', 'ingredient_five', 'ingredient_six', 'ingredient_seven', 'ingredient_eight', 'ingredient_nine', 'ingredient_ten')
+    list_display = ('product', 'name')
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Nutrition, NutritionAdmin)
