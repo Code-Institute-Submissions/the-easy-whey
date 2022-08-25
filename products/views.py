@@ -119,7 +119,6 @@ def admin_edit_item(request, item_id):
     if request.method == "POST":
         if "product_form_edit_button" in request.POST:
             form = ProductForm(request.POST, instance=item_product)
-
             if form.is_valid():
                 form.save()
                 return redirect(reverse('admin_edit_list'))
@@ -133,6 +132,7 @@ def admin_edit_item(request, item_id):
             else:
                 return redirect(reverse('product_management'))
         if "ingredients_form_edit_button" in request.POST:
+            # HOW TO HANDLE THIS PROPERLY? NOW THERE ARE MULTIPLE INSTANCES...? MATS SUGGESTION TO DO LIKE A LIST OF ALL THE INGREDIENTS WITH EDIT OR DELETE BUTTONS.
             form = IngredientForm(request.POST, instance=item_ingredients)
             if form.is_valid():
                 form.save()
