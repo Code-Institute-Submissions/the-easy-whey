@@ -23,12 +23,12 @@
         <div class="col-md-6 justify-content-center align-self-center text-center">
             <div class="row">
                 <div class="col-12 ">
-                    <p class="">{{ product.flavour }}</p>
+                    <h2 class="">{{ product.flavour }}</h2>
                     <img src="{{product.image.url}}" class="img-fluid" alt="protein powder on a plate">
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 align-self-center">
             <div class="accordion accordion-flush text-center" id="accordion{{forloop.counter}}">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{forloop.counter}}HeadingNutrition">
