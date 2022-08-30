@@ -102,6 +102,7 @@ def admin_edit_item_ingredient(request, item_id, ingredient_id):
     template = 'products/admin_edit_item_ingredient.html'
     context = {
         "ingredient_form": ingredient_form,
+        "ingredient": ingredient
         }
     return render(request, template, context)
 

@@ -26,6 +26,7 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="col-4">
+                <h4>You are editing an ingredient for: {{ ingredient.product }}.</h4>
                 <form method="POST" class="form">
                     {% csrf_token %}
                     {{ ingredient_form | crispy }}
