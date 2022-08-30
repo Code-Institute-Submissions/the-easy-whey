@@ -178,10 +178,9 @@ def admin_delete(request, item_id):
     item.delete()
     return render(request, "products/product_management.html")
 
-# complete delete below
 @login_required
 @staff_member_required
-def delete_ingredient(request, item_id):
-    item = get_object_or_404(Product, id=item_id)
+def delete_ingredient(request, ingredient_id):
+    item = get_object_or_404(Ingredient, id=ingredient_id)
     item.delete()
     return render(request, "products/product_management.html")
