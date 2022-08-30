@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Product, Nutrition, Ingredient
-from .forms import ProductForm, NutritionForm, IngredientForm
+from .forms import ProductForm, NutritionForm, IngredientEditForm, IngredientForm
 
 # Create your views here.
 
@@ -88,10 +88,10 @@ def admin_edit_list(request):
 def admin_edit_item_ingredient(request, item_id, ingredient_id): 
 
     ingredient = get_object_or_404(Ingredient, id=ingredient_id)
-    ingredient_form = IngredientForm(instance=ingredient)
+    ingredient_form = IngredientEditForm(instance=ingredient)
 
     if request.method == "POST":
-        form = IngredientForm(request.POST, instance=ingredient)
+        form = IngredientEditForm(request.POST, instance=ingredient)
         if form.is_valid():
             form.save()
             messages.success(request, "Successfully edited ingredient!")
@@ -140,7 +140,6 @@ def admin_edit_item(request, item_id):
             else:
                 return redirect(reverse('product_management'))
         if "ingredients_form_edit_button" in request.POST:
-            # HOW TO HANDLE THIS PROPERLY? NOW THERE ARE MULTIPLE INSTANCES...? MATS SUGGESTION TO DO LIKE A LIST OF ALL THE INGREDIENTS WITH EDIT OR DELETE BUTTONS.
             form = IngredientForm(request.POST, instance=item_ingredients)
             if form.is_valid():
                 form.save()
@@ -176,6 +175,7 @@ def admin_edit_item(request, item_id):
 def admin_delete(request, item_id):
     item = get_object_or_404(Product, id=item_id)
     item.delete()
+    messages.success(request, "Successfully deleted Product!")
     return render(request, "products/product_management.html")
 
 @login_required
@@ -183,4 +183,5 @@ def admin_delete(request, item_id):
 def delete_ingredient(request, ingredient_id):
     item = get_object_or_404(Ingredient, id=ingredient_id)
     item.delete()
-    return render(request, "products/product_management.html")
+    messages.success(request, "Successfully deleted ingredient!")
+    return redirect(reverse('admin_edit_list'))
