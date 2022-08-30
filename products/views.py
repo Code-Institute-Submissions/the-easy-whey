@@ -82,6 +82,30 @@ def admin_edit_list(request):
     }
     return render(request, template, context)
 
+
+@login_required
+@staff_member_required
+def admin_edit_item_ingredient(request, item_id, ingredient_id): 
+
+    ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+    ingredient_form = IngredientForm(instance=ingredient)
+
+    if request.method == "POST":
+        form = IngredientForm(request.POST, instance=ingredient)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Successfully edited ingredient!")
+            return redirect(reverse('admin_edit_item', args=[item_id]))
+        else:
+            return redirect(reverse('product_management'))
+
+    template = 'products/admin_edit_item_ingredient.html'
+    context = {
+        "ingredient_form": ingredient_form,
+        }
+    return render(request, template, context)
+
+
 @login_required
 @staff_member_required
 def admin_edit_item(request, item_id):
@@ -125,8 +149,13 @@ def admin_edit_item(request, item_id):
                 return redirect(reverse('product_management'))
           
     template = 'products/admin_edit_item.html'
-    
-    context = {}
+    items = Ingredient.objects.filter(product_id=item_id)
+    product_id = item_id
+
+    context = {
+        "items": items,
+        "product_id": product_id,
+        }
     ingredient_forms = []
     if item_product:
         product_form = ProductForm(instance=item_product)
@@ -140,15 +169,19 @@ def admin_edit_item(request, item_id):
     
     context["ingredient_forms"] = ingredient_forms
 
-
-    #     ingredients_form = IngredientForm(instance=item_ingredients)
-    #     context["ingredients_form"] = ingredients_form
-
     return render(request, template, context)
 
 @login_required
 @staff_member_required
 def admin_delete(request, item_id):
+    item = get_object_or_404(Product, id=item_id)
+    item.delete()
+    return render(request, "products/product_management.html")
+
+# complete delete below
+@login_required
+@staff_member_required
+def delete_ingredient(request, item_id):
     item = get_object_or_404(Product, id=item_id)
     item.delete()
     return render(request, "products/product_management.html")
