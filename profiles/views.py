@@ -6,4 +6,5 @@ def profile(request):
     """
     Returns the profile page
     """
-    return render(request, "profiles/profile.html")
+    context = {}
+    return render(request, "profiles/profile.html", context)
