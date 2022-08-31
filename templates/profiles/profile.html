@@ -23,11 +23,63 @@
             <form action="{% url 'profile' %}" method="POST" id="profile-delivery-form">
                 {% csrf_token %}
                 {{ form | crispy }}
+                <button type="submit">Update Information</button>
             </form>
         </div>
         <div class="col-md-6 text-center">
             <h2>Subscription Details</h2>
-            {{ subscriptions }}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Subscription Number</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Total Cost</th>
+                        <th scope="col">Delivery Date</th>
+                        <th colspan="2" scope="col">Utilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subscription in subscriptions %}
+                    <tr>
+                        <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
+                                title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:6 }}</a>
+                        </td>
+                        <td> products </td>
+                        <td>{{ subscription.total_cost }}</td>
+                        <td>{{ subscription.subscription_start_date }}</td>
+                        <td><a class="btn btn-secondary" href="">Edit Subscription</a></td>
+                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{ forloop.counter }}">
+                                Cancel Subscription
+                            </button>
+                            <div class="modal fade" id="staticBackdrop{{ forloop.counter }}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1"
+                                aria-labelledby="staticBackdropLabel{{ forloop.counter }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel{{ forloop.counter }}">
+                                                Delete
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to cancel this subscription?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">No</button>
+                                            <a class="btn btn-danger" href="">Yes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

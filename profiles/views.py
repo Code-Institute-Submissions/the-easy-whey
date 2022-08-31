@@ -10,6 +10,13 @@ def profile(request):
     Returns the profile page
     """
     profile = get_object_or_404(UserProfile, user=request.user)
+
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile saved.")
+
     form = UserProfileForm(instance=profile)
     subscriptions = profile.subscriptions.all()
 
@@ -18,3 +25,7 @@ def profile(request):
         "subscriptions": subscriptions,
     }
     return render(request, "profiles/profile.html", context)
+
+
+def subscription_history(request, subscription_number):
+    return Pass

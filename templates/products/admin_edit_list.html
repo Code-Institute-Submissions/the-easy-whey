@@ -35,7 +35,7 @@
                 <tbody>
                     {% for item in items %}
                     <tr>
-                        <td>{{ item.flavour }}</th>
+                        <td>{{ item.flavour }}</td>
                         <td><a class="btn btn-secondary" href="item/{{ item.id }}">Edit</a></td>
                         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop{{ forloop.counter }}">
