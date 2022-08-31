@@ -1,9 +1,28 @@
-# from django import forms
-# from allauth.account.forms import SignupForm
+from django import forms
+from .models import UserProfile
 
-# class CustomSignupForm(SignupForm):
-#     first_name = forms.CharField(required=True)
-#     last_name = forms.CharField(required=True)
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ("user",)
 
-# this put the fields onto the form, not sure what happens if it gets filled in though
-# also needs this is settings : ACCOUNT_FORMS = {'signup': 'profiles.forms.CustomSignupForm',}
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        placeholders = {
+            "default_address_one": "Street Address 1",
+            "default_address_two": "Street Address 2",
+            "default_town_city": "Town or City",
+            "default_postcode": "Postcode",
+            "default_phone_number": "Phone Number",
+            "default_county": "County",
+            "default_country": "County",
+        }
+
+        self.fields["default_address_one"].widget.attrs["autofocus"] = True
+        for field in self.fields:
+            if self.fields[field].required:
+                placeholder = f"{placeholders[field]} *"
+            else:
+                placeholder = placeholders[field]
+            self.fields[field].widget.attrs["placeholder"] = placeholder
+            self.fields[field].label = False

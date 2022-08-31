@@ -12,7 +12,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
     inlines = (SubscriptionLineItemAdminInline,)
     readonly_fields = ("subscription_number","date","total_cost","subscription_start_date", "subscription_end_date",)
 
-    list_display = ("subscription_number","date","full_name","total_cost","subscription_start_date", "subscription_end_date",)
+    list_display = ("subscription_number","date","full_name", "user_profile", "total_cost","subscription_start_date", "subscription_end_date",)
 
     ordering = ("-date",)
 
