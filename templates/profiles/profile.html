@@ -32,9 +32,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Subscription Number</th>
-                        <th scope="col">Products</th>
-                        <th scope="col">Total Cost</th>
-                        <th scope="col">Delivery Date</th>
                         <th colspan="2" scope="col">Utilities</th>
                     </tr>
                 </thead>
@@ -44,9 +41,6 @@
                         <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
                                 title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:6 }}</a>
                         </td>
-                        <td> products </td>
-                        <td>{{ subscription.total_cost }}</td>
-                        <td>{{ subscription.subscription_start_date }}</td>
                         <td><a class="btn btn-secondary" href="">Edit Subscription</a></td>
                         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop{{ forloop.counter }}">

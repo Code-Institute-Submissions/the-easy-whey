@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from .forms import UserProfileForm
 from .models import UserProfile
+from subscription.models import Subscription
 
 
 # Create your views here.
@@ -28,4 +29,12 @@ def profile(request):
 
 
 def subscription_history(request, subscription_number):
-    return Pass
+    
+    subscription = get_object_or_404(Subscription, subscription_number=subscription_number)
+    messages.info(request, "This is a previous order.")
+
+    template = 'profiles/view_subscription.html'
+    context = {
+        "subscription": subscription
+    }
+    return render(request, template, context)
