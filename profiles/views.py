@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from .models import UserProfile
 from subscription.models import Subscription
 
 
 # Create your views here.
+@login_required
 def profile(request):
     """
     Returns the profile page
@@ -28,13 +30,21 @@ def profile(request):
     return render(request, "profiles/profile.html", context)
 
 
+@login_required
 def subscription_history(request, subscription_number):
     
     subscription = get_object_or_404(Subscription, subscription_number=subscription_number)
-    messages.info(request, "This is a previous order.")
 
-    template = 'profiles/view_subscription.html'
-    context = {
-        "subscription": subscription
-    }
-    return render(request, template, context)
+    if request.user == subscription.user_profile.user:
+        messages.info(request, "This is a previous order.")
+
+        template = 'profiles/view_subscription.html'
+        context = {
+            "subscription": subscription
+        }
+
+        return render(request, template, context)
+        
+    if request.user != subscription.user_profile.user:
+        messages.error(request, "An error occured.")
+        return redirect(reverse('profile'))

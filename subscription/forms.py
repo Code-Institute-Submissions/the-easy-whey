@@ -5,7 +5,7 @@ from django.forms.widgets import DateInput
 class SubscriptionDetailsForm(forms.ModelForm):
     class Meta:
         model = Subscription
-        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date", "is_paid")
+        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date", "is_paid", "user_profile",)
         widgets = {
             "subscription_start_date": DateInput(attrs={'type': 'date'})
         }
@@ -43,4 +43,3 @@ class SubscriptionItemsForm(forms.Form):
     banana_quantity = forms.IntegerField(label="How many bags of Banana Whey Protein would you like?", min_value=0, max_value=10, initial=0)
     strawberry_quantity = forms.IntegerField(label="How many bags of Strawberry Whey Protein would you like?", min_value=0, max_value=10, initial=0)
     cookies_and_cream_quantity = forms.IntegerField(label="How many bags of Cookies and Cream Whey Protein would you like?", min_value=0, max_value=10, initial=0)
-
