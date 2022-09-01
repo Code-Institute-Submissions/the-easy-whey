@@ -9,8 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center">
-            <h2 class="display-2">Previous Order{% if request.user == subscription.user_profile.user %} -
-                {{ subscription.subscription_number|truncatechars:10 }}{% endif %}</h2>
+            <h2 class="display-2">Previous Orders</h2>
         </div>
     </div>
 </div>
@@ -19,12 +18,13 @@
 {% block content %}
 <div class="container border py-5 px-5 mt-4">
     <div class="row justify-content-center align-items-center">
-        <div class="col-md-6 text-center">
+        <div class="col text-center">
             {% if request.user == subscription.user_profile.user %}
             <h2>Subscription Details</h2>
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
                 <thead>
                     <tr>
+                        <th scope="col">Subscription Number</th>
                         <th scope="col">Product</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Total Cost</th>
@@ -33,6 +33,7 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>{{ subscription.subscription_number }}</td>
                         <td>
                             <ul class="list-group list-group-flush">
                                 {% for item in subscription.lineitems.all %}
