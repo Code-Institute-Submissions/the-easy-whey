@@ -1,10 +1,11 @@
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.contrib import messages
 
 from .forms import SubscriptionDetailsForm, SubscriptionItemsForm
 from .actions import add_bag_quantites
 from .models import Subscription, SubscriptionLineItem
 from products.models import Product
+from profiles.models import UserProfile
 
 # Create your views here.
 def subscribe(request):
@@ -29,9 +30,24 @@ def subscribe_details(request):
             context = {
                 "subscription_items_form": subscription_items_form,
             }
+            request.session['save_information'] = 'save_information' in request.POST
+            if request.session['save_information']:
+                # SAVE INFORMAITON HERE NOW
+                print("test")
+
             return render(request, 'subscription/subscription_items.html', context)
 
-    subscription_details_form = SubscriptionDetailsForm()
+    user_information = get_object_or_404(UserProfile, user=request.user)
+    instance_data = {
+        "phone_number": user_information.default_phone_number,
+        "address_one": user_information.default_address_one,
+        "address_two": user_information.default_address_two,
+        "postcode": user_information.default_postcode,
+        "town_city": user_information.default_town_city,
+        "county": user_information.default_county,
+        "country": user_information.default_country,
+    }
+    subscription_details_form = SubscriptionDetailsForm(initial=instance_data)
     context = {
         "subscription_details_form": subscription_details_form,
     }
