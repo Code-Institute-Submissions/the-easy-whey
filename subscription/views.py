@@ -6,6 +6,7 @@ from .actions import add_bag_quantites
 from .models import Subscription, SubscriptionLineItem
 from products.models import Product
 from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 
 # Create your views here.
 def subscribe(request):
@@ -32,8 +33,11 @@ def subscribe_details(request):
             }
             request.session['save_information'] = 'save_information' in request.POST
             if request.session['save_information']:
-                # SAVE INFORMAITON HERE NOW
-                print("test")
+
+                profile = get_object_or_404(UserProfile, user=request.user)
+                # RENDER A NEW USER FORM WHICH ONLY SHOWS X FIELDS AND UPDATES THEM?
+
+
                 # MOVE ONTO THEN LINKING A SUBSCRIPTION TO A USERPROFILE
 
             return render(request, 'subscription/subscription_items.html', context)
