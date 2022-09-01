@@ -34,6 +34,7 @@ def subscribe_details(request):
             if request.session['save_information']:
                 # SAVE INFORMAITON HERE NOW
                 print("test")
+                # MOVE ONTO THEN LINKING A SUBSCRIPTION TO A USERPROFILE
 
             return render(request, 'subscription/subscription_items.html', context)
 
