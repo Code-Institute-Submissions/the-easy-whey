@@ -35,15 +35,14 @@ def subscribe_details(request):
             if request.session['save_information']:
 
                 profile = get_object_or_404(UserProfile, user=request.user)
-                profile.default_address_one = request.POST["address_one"]
-                profile.default_address_two = request.POST["address_two"]
-                profile.default_town_city = request.POST["town_city"]
-                profile.default_postcode = request.POST["postcode"]
-                profile.default_phone_number = request.POST["phone_number"]
-                profile.default_county = request.POST["county"]
-                profile.default_country = request.POST["country"]
+                profile.default_address_one = subscription_details_form.cleaned_data["address_one"]
+                profile.default_address_two = subscription_details_form.cleaned_data["address_two"]
+                profile.default_town_city = subscription_details_form.cleaned_data["town_city"]
+                profile.default_postcode = subscription_details_form.cleaned_data["postcode"]
+                profile.default_phone_number = subscription_details_form.cleaned_data["phone_number"]
+                profile.default_county = subscription_details_form.cleaned_data["county"]
+                profile.default_country = subscription_details_form.cleaned_data["country"]
                 profile.save()
-                messages.success(request, "Your profile has been updated.")
 
             return render(request, 'subscription/subscription_items.html', context)
 
