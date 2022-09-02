@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center">
-            <h2 class="display-2">Message from {{ message.name }}.</h2>
+            <h2 class="display-2">Customer messages.</h2>
         </div>
     </div>
 </div>
@@ -20,7 +20,8 @@
     <div class="row">
         <div class="col-6 offset-3 justify-content-center">
             <div>
-                {{ message.name }}, {{ message.email }}, {{ message.phone_number }}, {{ message.message }}
+                <h3>Message from: {{ message.name }}, {{ message.email }} - <i>{{ message.phone_number }}</i>.</h3>
+                <h4>{{ message.message }}</h4>
             </div>
             <a class="btn btn-primary" href="{% url 'message_management' %}">All Messages</a>
         </div>

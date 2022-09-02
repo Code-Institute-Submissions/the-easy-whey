@@ -43,6 +43,7 @@ def subscribe_details(request):
                 profile.default_county = subscription_details_form.cleaned_data["county"]
                 profile.default_country = subscription_details_form.cleaned_data["country"]
                 profile.save()
+                messages.success(request, "Your profile data has been updated.")
 
             return render(request, 'subscription/subscription_items.html', context)
 

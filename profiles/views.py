@@ -42,7 +42,7 @@ def subscription_history(request, subscription_number):
     subscription = get_object_or_404(Subscription, subscription_number=subscription_number)
 
     if request.user == subscription.user_profile.user:
-        messages.info(request, "This is a previous order.")
+        messages.info(request, "This is a previous subscription.")
 
         template = 'profiles/view_subscription.html'
         context = {
