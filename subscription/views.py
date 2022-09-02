@@ -35,10 +35,17 @@ def subscribe_details(request):
             if request.session['save_information']:
 
                 profile = get_object_or_404(UserProfile, user=request.user)
-                # RENDER A NEW USER FORM WHICH ONLY SHOWS X FIELDS AND UPDATES THEM?
+                profile.default_address_one = request.POST["address_one"]
+                profile.default_address_two = request.POST["address_two"]
+                profile.default_town_city = request.POST["town_city"]
+                profile.default_postcode = request.POST["postcode"]
+                profile.default_phone_number = request.POST["phone_number"]
+                profile.default_county = request.POST["county"]
+                profile.default_country = request.POST["country"]
+                profile.save()
+                messages.success(request, "Your profile has been updated.")
 
 
-                # MOVE ONTO THEN LINKING A SUBSCRIPTION TO A USERPROFILE
 
             return render(request, 'subscription/subscription_items.html', context)
 
