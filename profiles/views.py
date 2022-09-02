@@ -21,11 +21,11 @@ def profile(request):
             messages.success(request, "Profile saved.")
 
     form = UserProfileForm(instance=profile)
-    subscriptions = profile.subscriptions.all()
-
+    subscription = profile.subscriptions
+    
     context = {
         "form": form,
-        "subscriptions": subscriptions,
+        "subscription": subscription,
     }
     return render(request, "profiles/profile.html", context)
 

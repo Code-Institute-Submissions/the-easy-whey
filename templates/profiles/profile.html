@@ -36,7 +36,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for subscription in subscriptions %}
                     <tr>
                         <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
                                 title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:6 }}</a>
@@ -71,7 +70,6 @@
                             </div>
                         </td>
                     </tr>
-                    {% endfor %}
                 </tbody>
             </table>
         </div>
