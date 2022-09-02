@@ -5,19 +5,36 @@
 {% block title %}
 - Subscribe
 {% endblock %}
+
+{% block header %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <h2 class="display-2">Payment</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-<h1>SUBSCRIPTION PAGE</h1>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
             {% if user.is_authenticated %}
-            <form action="{% url 'payment' %}" method="POST" id="payment-form">
-                <div class="row">
-                    <div class="col-6">
-                        <h1>PAYMENT FORM HERE FROM STRIPE</h1>
+            <section>
+                <div class="product">
+                    <div class="description">
+                        <h3>Your subscription price:</h3>
+                        <h5>£{{ subscription.total_cost|floatformat:2 }} per month, starting on
+                            {{ subscription.subscription_start_date }}</h5>
                     </div>
                 </div>
-            </form>
+                <form action="/create-checkout-session" method="POST">
+                    <!-- Add a hidden field with the lookup_key of your Price -->
+                    <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
+                    <button id="checkout-and-portal-button" type="submit">Checkout</button>
+                </form>
+            </section>
             {% else %}
             <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
             <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a>

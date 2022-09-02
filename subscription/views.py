@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.contrib import messages
-
+from django.conf import settings
+import stripe
 from .forms import SubscriptionDetailsForm, SubscriptionItemsForm
 from .actions import add_bag_quantites
 from .models import Subscription, SubscriptionLineItem
@@ -9,6 +10,9 @@ from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
 
 # Create your views here.
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 def subscribe(request):
     """
     Returns the subscription page
@@ -89,10 +93,11 @@ def subscribe_items(request):
             }
 
             for flavour, quantity in order_data.items():
-                print(f"flavour:{flavour}, quantity: {quantity}")
                 SubscriptionLineItem(subscription=subscription, product=Product.objects.get(flavour=flavour), quantity=quantity).save()
 
-            context = {}
+            context = {
+                "subscription": subscription
+            }
             return render(request, "subscription/payment.html", context)
 
     if "subscription_number" not in request.session:
@@ -109,3 +114,29 @@ def subscribe_items(request):
 def payment(request):
     context = {}
     return render(request, "subscription/payment.html", context)
+
+
+def create_checkout_session(request, *args, **kwargs):
+    if request.method == "POST":
+        try:
+            prices = stripe.Price.list(
+                lookup_keys=[request.form['lookup_key']],
+                expand=['data.product']
+            )
+
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        'price': prices.data[0].id,
+                        'quantity': 1,
+                    },
+                ],
+                mode='subscription',
+                success_url=settings.BASE_DIR +
+                '/success.html?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=settings.BASE_DIR + '/cancel.html',
+            )
+            return redirect(checkout_session.url, code=303)
+        except Exception as e:
+            print(e)
+            return "Server error", 500
