@@ -21,12 +21,18 @@ def profile(request):
             messages.success(request, "Profile saved.")
 
     form = UserProfileForm(instance=profile)
-    subscription = profile.subscriptions
+
+    if hasattr(profile, 'subscriptions'):
+        subscription = profile.subscriptions
+        context = {
+            "form": form,
+            "subscription": subscription,
+        }
+    else:
+        context = {
+            "form": form,
+        }
     
-    context = {
-        "form": form,
-        "subscription": subscription,
-    }
     return render(request, "profiles/profile.html", context)
 
 

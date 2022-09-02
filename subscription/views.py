@@ -43,6 +43,17 @@ def subscribe_details(request):
             return render(request, 'subscription/subscription_items.html', context)
 
     user_information = get_object_or_404(UserProfile, user=request.user)
+    if hasattr(user_information, 'subscriptions'):
+        messages.error(request, "You already have a subscription!")
+        profile = get_object_or_404(UserProfile, user=request.user)
+        form = UserProfileForm(instance=profile)
+        subscription = profile.subscriptions
+        context = {
+            "form": form,
+            "subscription": subscription,
+        }
+        return render(request, "profiles/profile.html", context)
+
     instance_data = {
         "phone_number": user_information.default_phone_number,
         "address_one": user_information.default_address_one,
