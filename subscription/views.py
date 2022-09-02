@@ -45,8 +45,6 @@ def subscribe_details(request):
                 profile.save()
                 messages.success(request, "Your profile has been updated.")
 
-
-
             return render(request, 'subscription/subscription_items.html', context)
 
     user_information = get_object_or_404(UserProfile, user=request.user)
