@@ -30,6 +30,7 @@
                     </div>
                 </div>
                 <form action="/create-checkout-session" method="POST">
+                    {% csrf_token %}
                     <!-- Add a hidden field with the lookup_key of your Price -->
                     <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
                     <button id="checkout-and-portal-button" type="submit">Checkout</button>
@@ -43,5 +44,7 @@
         </div>
     </div>
 </div>
-
+{% block customjs %}
+<script src="{% static 'js/client.js' %}"></script>
+{% endblock %}
 {% endblock %}

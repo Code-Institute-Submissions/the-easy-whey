@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
+from django.http import HttpResponse
 import stripe
 from .forms import SubscriptionDetailsForm, SubscriptionItemsForm
 from .actions import add_bag_quantites
@@ -117,26 +118,34 @@ def payment(request):
 
 
 def create_checkout_session(request, *args, **kwargs):
-    if request.method == "POST":
-        try:
-            prices = stripe.Price.list(
-                lookup_keys=[request.form['lookup_key']],
-                expand=['data.product']
-            )
+    try:
+        prices = stripe.Price.list(
+            lookup_keys=[request.form['lookup_key']],
+            expand=['data.product']
+        )
 
-            checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        'price': prices.data[0].id,
-                        'quantity': 1,
-                    },
-                ],
-                mode='subscription',
-                success_url=settings.BASE_DIR +
-                '/success.html?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=settings.BASE_DIR + '/cancel.html',
-            )
-            return redirect(checkout_session.url, code=303)
-        except Exception as e:
-            print(e)
-            return "Server error", 500
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': prices.data[0].id,
+                    'quantity': 1,
+                },
+            ],
+            mode='subscription',
+            success_url=f"templates/subscription/success.html?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url="templates/subscription/cancel.html",
+        )
+        return HttpResponse(status=303, content=checkout_session.url)
+    except Exception as e:
+        print(e)
+        return HttpResponse(status=500, content=e)
+
+
+def stripe_success(request):
+    context = {}
+    return render(request, "subscription/success.html", context)
+
+
+def stripe_cancel(request):
+    context = {}
+    return render(request, "subscription/cancel.html", context)

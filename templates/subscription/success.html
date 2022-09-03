@@ -35,8 +35,12 @@
         </div>
     </div>
     <form action="/create-portal-session" method="POST">
+        {% csrf_token %}
         <input type="hidden" id="session-id" name="session_id" value="" />
         <button id="checkout-and-portal-button" type="submit">Manage your billing information</button>
     </form>
 </section>
+{% endblock %}
+{% block customjs %}
+<script src="{% static 'js/client.js' %}"></script>
 {% endblock %}
