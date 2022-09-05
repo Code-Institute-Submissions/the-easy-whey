@@ -1,1 +1,1 @@
-web: gunicorn easy_whey.wsgi.application
+web: gunicorn easy_whey.wsgi:application
