@@ -17,13 +17,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container py-5 px-5 border">
     <div class="row justify-content-center">
         <div class="col-12">
             {% if user.is_authenticated %}
             <form action="{% url 'subscribe_details' %}" method="POST" id="subscription-form">
-                <div class="row">
-                    <div class="col-6">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
                         {% csrf_token %}
                         {{ subscription_details_form | crispy }}
                         <label class="form-check-label" for="subscription-save-info">Do you want to save your
