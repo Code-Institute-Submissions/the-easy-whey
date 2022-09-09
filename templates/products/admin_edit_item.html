@@ -31,7 +31,7 @@
                 {% csrf_token %}
                 {{ product_form | crispy }}
                 <button class="button btn standout-button" type="submit" name="product_form_edit_button">Update
-                    Item</button>
+                    Product</button>
             </form>
         </div>
         {% if nutrition_form %}
@@ -41,7 +41,7 @@
                 {% csrf_token %}
                 {{ nutrition_form | crispy }}
                 <button class="button btn standout-button" type="submit" name="nutrition_form_edit_button">Update
-                    Item</button>
+                    Nutrition</button>
             </form>
         </div>
         {% endif %}

@@ -7,9 +7,9 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Contact Us</h2>
+            <h2 class="display-3 title-font">Contact Us</h2>
         </div>
     </div>
 </div>
@@ -18,21 +18,20 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-6 justify-content-center">
-            <h2>Please fill out the form below and we will get back to you as soon as possible!</h2>
+        <div class="col-md-6 justify-content-center">
+            <h3 class="text-font text-center">Please fill out the form below.</h3>
             <div>
-                <form action="{% url 'contact' %}" method="post">
+                <form action="{% url 'contact' %}" method="post" class="text-font">
                     {% csrf_token %}
                     {{ form | crispy }}
-                    <button type="submit">Send Message</button>
+                    <button class="btn standout-button" type="submit">Send Message</button>
                 </form>
             </div>
         </div>
-        <div class="col-6 text-center">
-
-            <address class="">1 Easy Way, Newport, NP10 8DB.
+        <div class="col-md-6 text-center align-self-center">
+            <address class="text-font">1 Easy Way, Newport, NP10 8DB.
             </address>
-            <p class=""><a href="tel:01633808808">Tel: 01633 533847</a></p>
+            <p class="text-font"><a href="tel:01633808808">Tel: 01633 533847</a></p>
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2479.530099329106!2d-2.976570684073057!3d51.57684731344382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDM0JzM2LjYiTiAywrA1OCcyNy44Ilc!5e0!3m2!1sen!2suk!4v1636301473869!5m2!1sen!2suk"
                 title="google map showing location of the gym"></iframe>
