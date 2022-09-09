@@ -7,9 +7,9 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Admin Product Management</h2>
+            <h2 class="display-3 title-font">Admin Product Management</h2>
         </div>
     </div>
 </div>
@@ -19,29 +19,37 @@
 <div class="container border py-5 px-5 mt-4">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 text-center">
-            <h1>Edit</h1>
-            <a class="dropdown-item" href="{% url 'product_management' %}">Return to Admin Management</a>
+            <h3 class="text-font">Edit Product</h3>
+            <a class="btn text-white background-black text-font my-2" href="{% url 'product_management' %}">Return to
+                Admin Management</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 text-center">
-            <div class="col-4">
-                <form method="POST" class="form">
-                    {% csrf_token %}
-                    {{ product_form | crispy }}
-                    <button class="button" type="submit" name="product_form_edit_button">Update Item</button>
-                </form>
-            </div>
-            {% if nutrition_form %}
-            <div class="col-4">
-                <form method="POST" class="form">
-                    {% csrf_token %}
-                    {{ nutrition_form | crispy }}
-                    <button class="button" type="submit" name="nutrition_form_edit_button">Update Item</button>
-                </form>
-            </div>
-            {% endif %}
-            <table class="table table-hover">
+        <div class="col-md-6">
+            <h3 class="text-font mt-3">Edit a Product</h3>
+            <form method="POST" class="form text-font">
+                {% csrf_token %}
+                {{ product_form | crispy }}
+                <button class="button btn standout-button" type="submit" name="product_form_edit_button">Update
+                    Item</button>
+            </form>
+        </div>
+        {% if nutrition_form %}
+        <div class="col-md-6">
+            <h3 class="text-font mt-3">Edit Nutrition</h3>
+            <form method="POST" class="form text-font">
+                {% csrf_token %}
+                {{ nutrition_form | crispy }}
+                <button class="button btn standout-button" type="submit" name="nutrition_form_edit_button">Update
+                    Item</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="text-font text-center mt-3 scroller">Edit Ingredients</h3>
+            <table class="table table-hover text-font">
                 <thead>
                     <tr>
                         <th scope="col">Product</th>
@@ -49,10 +57,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% if items %}
                     {% for item in items %}
                     <tr>
                         <td>{{ item.name }}</td>
-                        <td><a class="btn btn-secondary" href="{{ product_id }}/ingredient/{{ item.id }}">Edit</a></td>
+                        <td><a class="btn btn-secondary" href="{{ product_id }}/ingredient/{{ item.id }}">Edit</a>
+                        </td>
                         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop{{ forloop.counter }}">
                                 Delete
@@ -83,19 +93,9 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
-            {% comment %}
-            <!-- {% for ingredient_form in ingredient_forms %}
-            <div class="col-4">
-                <form method="POST" class="form">
-                    {% csrf_token %}
-                    {{ ingredient_form | crispy }}
-                    <button class="button" type="submit" name="ingredients_form_edit_button">Update Item</button>
-                </form>
-            </div>
-            {% endfor %} -->
-            {% endcomment %}
         </div>
     </div>
 </div>

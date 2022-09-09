@@ -33,19 +33,27 @@ hr {
     color: white !important;
 }
 
+.text-black {
+    color: black !important;
+}
+
 .background-black {
     background-color: black !important;
 }
 
-#subscribe-button {
-    background-color: coral;
-    color: white;
+.background-white {
+    background-color: white !important;
 }
 
-/* .product-page-image {
-    max-height: 50%;
-} */
+.standout-button {
+    background-color: coral !important;
+    color: white !important;
+}
 
+.scroller {
+    overflow-y: auto;
+    max-height: 50vh;
+}
 
 /* COLOURS
 1. #6a8b3b

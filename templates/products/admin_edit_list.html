@@ -7,9 +7,9 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Admin Product Management</h2>
+            <h2 class="display-3 title-font">Admin Product Management</h2>
         </div>
     </div>
 </div>
@@ -19,13 +19,14 @@
 <div class="container border py-5 px-5 mt-4">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 text-center">
-            <h1>Edit or Delete</h1>
-            <a class="dropdown-item" href="{% url 'product_management' %}">Return to Admin Management</a>
+            <h3 class="text-font">Edit or Delete Products</h3>
+            <a class="btn text-white background-black text-font my-2" href="{% url 'product_management' %}">Return to
+                Admin Management</a>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 offset-3 text-center">
-            <table class="table table-hover">
+        <div class="col text-center scroller">
+            <table class="table table-hover text-font">
                 <thead>
                     <tr>
                         <th scope="col">Product</th>
@@ -36,8 +37,8 @@
                     {% for item in items %}
                     <tr>
                         <td>{{ item.flavour }}</td>
-                        <td><a class="btn btn-secondary" href="item/{{ item.id }}">Edit</a></td>
-                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        <td><a class="btn btn-secondary text-font" href="item/{{ item.id }}">Edit</a></td>
+                        <td><button type="button" class="btn btn-danger text-font" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop{{ forloop.counter }}">
                                 Delete
                             </button>
@@ -47,19 +48,20 @@
                                 <div class="modal-dialog modal-dialog-centered ">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel{{ forloop.counter }}">
+                                            <h5 class="modal-title title-font"
+                                                id="staticBackdropLabel{{ forloop.counter }}">
                                                 Delete
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body text-font">
                                             Are you sure you want to delete this Product?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
+                                            <button type="button" class="btn btn-secondary text-font"
                                                 data-bs-dismiss="modal">Cancel</button>
-                                            <a class="btn btn-danger" href="delete/{{ item.id }}">Yes</a>
+                                            <a class="btn btn-danger text-font" href="delete/{{ item.id }}">Yes</a>
                                         </div>
                                     </div>
                                 </div>

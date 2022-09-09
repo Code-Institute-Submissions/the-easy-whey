@@ -17,23 +17,22 @@
 {% endblock %}
 
 {% block content %}
-<div class="container border py-1 px-1 mt-4 text-font">
+<div class="container py-1 px-1 mt-4 text-font">
     <div class="row">
         <div class="d-none d-lg-block col-lg-6">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center h-50 align-content-center">
                 <div class="col-auto "><img class="product-page-image"
                         src="{% static 'images/woman-shake-standing.png' %}" class="img-fluid"
                         alt="woman with a protein shake - standing"></div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center h-50 align-content-center">
                 <div class="col-auto"><img src="{% static 'images/woman-shake-skateboard.png' %}" class="img-fluid"
                         alt="woman skateboarding with a protein shake"></div>
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="d-none d-sm-block col-xs-12 text-center"><img
-                    src="{% static 'images/woman-shake-skateboard.png' %}" class="img-fluid"
-                    alt="woman skateboarding with a protein shake"></div>
+            <div class="d-sm-block d-lg-none text-center"><img src="{% static 'images/woman-shake-skateboard.png' %}"
+                    class="img-fluid" alt="woman skateboarding with a protein shake"></div>
             {% for product in products %}
             <div class="col-12 justify-content-center align-self-center text-center">
                 <p class="title-font header-size my-3">{{ product.flavour }}</p>
@@ -41,9 +40,9 @@
                 <div class="accordion accordion-flush text-center" id="accordion{{forloop.counter}}">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="{{forloop.counter}}HeadingNutrition">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse{{forloop.counter}}Nutrition" aria-expanded="false"
-                                aria-controls="collapse{{forloop.counter}}Nutrition">
+                            <button class="accordion-button collapsed background-white text-font" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}Nutrition"
+                                aria-expanded="false" aria-controls="collapse{{forloop.counter}}Nutrition">
                                 Nutritional Information
                             </button>
                         </h2>
@@ -99,9 +98,9 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="{{forloop.counter}}HeadingIngredients">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse{{forloop.counter}}Ingredients" aria-expanded="false"
-                                aria-controls="collapse{{forloop.counter}}Ingredients">
+                            <button class="accordion-button collapsed background-white text-font" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse{{forloop.counter}}Ingredients"
+                                aria-expanded="false" aria-controls="collapse{{forloop.counter}}Ingredients">
                                 Ingredients
                             </button>
                         </h2>
