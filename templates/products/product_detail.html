@@ -8,108 +8,120 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Nutritional Information & Ingredients</h2>
+            <h2 class="display-3 title-font">Nutritional Information & Ingredients</h2>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container border py-5 px-5 mt-4">
-    {% for product in products %}
+<div class="container border py-1 px-1 mt-4 text-font">
     <div class="row">
-        <div class="col-md-6 justify-content-center align-self-center text-center">
-            <div class="row">
-                <div class="col-12 ">
-                    <h2 class="">{{ product.flavour }}</h2>
-                    <img src="{{product.image_url}}" class="img-fluid" alt="protein powder on a plate">
-                </div>
+        <div class="d-none d-lg-block col-lg-6">
+            <div class="row justify-content-center">
+                <div class="col-auto "><img class="product-page-image"
+                        src="{% static 'images/woman-shake-standing.png' %}" class="img-fluid"
+                        alt="woman with a protein shake - standing"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto"><img src="{% static 'images/woman-shake-skateboard.png' %}" class="img-fluid"
+                        alt="woman skateboarding with a protein shake"></div>
             </div>
         </div>
-        <div class="col-md-6 align-self-center">
-            <div class="accordion accordion-flush text-center" id="accordion{{forloop.counter}}">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="{{forloop.counter}}HeadingNutrition">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse{{forloop.counter}}Nutrition" aria-expanded="false"
-                            aria-controls="collapse{{forloop.counter}}Nutrition">
-                            Nutritional Information
-                        </button>
-                    </h2>
-                    <div id="collapse{{forloop.counter}}Nutrition" class="accordion-collapse collapse"
-                        aria-labelledby="{{forloop.counter}}HeadingNutrition"
-                        data-bs-parent="#accordion{{forloop.counter}}">
-                        <div class="accordion-body">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nutrient</th>
-                                        <th scope="col">Per 100g</th>
-                                        <th scope="col">Per 30g</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for nutrient in product.nutrition.all %}
-                                    <tr>
-                                        <th scope="row">Calories</th>
-                                        <td>{{ nutrient.energy }} kcal</td>
-                                        <td>{{ nutrient.energy | div_nutrition }} kcal</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Fat</th>
-                                        <td>{{ nutrient.fat }}g</td>
-                                        <td>{{ nutrient.fat | div_nutrition }}g</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Carbohydrate</th>
-                                        <td>{{ nutrient.carbohydrate }}g</td>
-                                        <td>{{ nutrient.carbohydrate | div_nutrition }}g</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Sugars</th>
-                                        <td>{{ nutrient.sugars }}g</td>
-                                        <td>{{ nutrient.sugars | div_nutrition }}g</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Protein</th>
-                                        <td>{{ nutrient.protein }}g</td>
-                                        <td>{{ nutrient.protein | div_nutrition }}g</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Salt</th>
-                                        <td>{{ nutrient.salt }}g</td>
-                                        <td>{{ nutrient.salt | div_nutrition }}g</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+        <div class="col-lg-6">
+            <div class="d-none d-sm-block col-xs-12 text-center"><img
+                    src="{% static 'images/woman-shake-skateboard.png' %}" class="img-fluid"
+                    alt="woman skateboarding with a protein shake"></div>
+            {% for product in products %}
+            <div class="col-12 justify-content-center align-self-center text-center">
+                <p class="title-font header-size my-3">{{ product.flavour }}</p>
+                <p class="title-font">{{ product.description }}</p>
+                <div class="accordion accordion-flush text-center" id="accordion{{forloop.counter}}">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="{{forloop.counter}}HeadingNutrition">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{forloop.counter}}Nutrition" aria-expanded="false"
+                                aria-controls="collapse{{forloop.counter}}Nutrition">
+                                Nutritional Information
+                            </button>
+                        </h2>
+                        <div id="collapse{{forloop.counter}}Nutrition" class="accordion-collapse collapse"
+                            aria-labelledby="{{forloop.counter}}HeadingNutrition"
+                            data-bs-parent="#accordion{{forloop.counter}}">
+                            <div class="accordion-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nutrient</th>
+                                            <th scope="col">Per 100g</th>
+                                            <th scope="col">Per 30g</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for nutrient in product.nutrition.all %}
+                                        <tr>
+                                            <th scope="row">Calories</th>
+                                            <td>{{ nutrient.energy }} kcal</td>
+                                            <td>{{ nutrient.energy | div_nutrition }} kcal</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Fat</th>
+                                            <td>{{ nutrient.fat }}g</td>
+                                            <td>{{ nutrient.fat | div_nutrition }}g</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Carbohydrate</th>
+                                            <td>{{ nutrient.carbohydrate }}g</td>
+                                            <td>{{ nutrient.carbohydrate | div_nutrition }}g</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Sugars</th>
+                                            <td>{{ nutrient.sugars }}g</td>
+                                            <td>{{ nutrient.sugars | div_nutrition }}g</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Protein</th>
+                                            <td>{{ nutrient.protein }}g</td>
+                                            <td>{{ nutrient.protein | div_nutrition }}g</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Salt</th>
+                                            <td>{{ nutrient.salt }}g</td>
+                                            <td>{{ nutrient.salt | div_nutrition }}g</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="{{forloop.counter}}HeadingIngredients">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse{{forloop.counter}}Ingredients" aria-expanded="false"
-                            aria-controls="collapse{{forloop.counter}}Ingredients">
-                            Ingredients
-                        </button>
-                    </h2>
-                    <div id="collapse{{forloop.counter}}Ingredients" class="accordion-collapse collapse"
-                        aria-labelledby="{{forloop.counter}}HeadingIngredients"
-                        data-bs-parent="#accordion{{forloop.counter}}">
-                        <div class="accordion-body">
-                            <p>
-                                {% for ingredient in product.ingredient.all %}
-                                {{ ingredient.name }}{% if not forloop.last %},{% else %}.{% endif %}
-                                {% endfor %}
-                            </p>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="{{forloop.counter}}HeadingIngredients">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{forloop.counter}}Ingredients" aria-expanded="false"
+                                aria-controls="collapse{{forloop.counter}}Ingredients">
+                                Ingredients
+                            </button>
+                        </h2>
+                        <div id="collapse{{forloop.counter}}Ingredients" class="accordion-collapse collapse"
+                            aria-labelledby="{{forloop.counter}}HeadingIngredients"
+                            data-bs-parent="#accordion{{forloop.counter}}">
+                            <div class="accordion-body">
+                                <p>
+                                    {% for ingredient in product.ingredient.all %}
+                                    {{ ingredient.name }}{% if not forloop.last %},{% else %}.{% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
-    {% endblock %}
+</div>
+
+{% endblock %}
