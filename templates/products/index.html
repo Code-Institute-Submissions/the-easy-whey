@@ -5,105 +5,103 @@
 - Home
 {% endblock %}
 {% block content %}
-<header id="core-message" class="container-fluid">
-    <div id="overlay-parent" class="row" role="img" aria-label="protein powders on spoons in a circle arrangement">
-        <div id="hero-overlay" class="col d-flex align-items-center justify-content-center">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1>The Easy Whey</h1>
-                    <p>Making protein supplements easy.</p>
-                    <a class="btn btn-warning" href="#what-we-offer">Learn More</a>
-                </div>
-            </div>
+<header id="core-message" class="container">
+    <div class="row mt-5 align-self-center justify-content-center">
+        <div class="col-6 col-md-auto col-lg-4 col-xl-4 text-center align-self-center">
+            <img src="{% static 'images/man-shake-skate.png' %}" class="img-fluid" alt="man running">
+        </div>
+        <div class="col-6 col-md-auto col-lg-8 col-xl-4 text-center align-self-center">
+            <h1 class="title-font title-size">The Easy Whey</h1>
+            <p class="d-none d-sm-block text-font">Making protein easy.</p>
+            <a class="btn text-font mt-3 background-black text-white" href="#what-we-offer">Learn More</a>
+        </div>
+        <div class="d-none d-xl-inline col-lg-4 text-center align-self-center">
+            <img src="{% static 'images/woman-shake-bike.png' %}" class="img-fluid" alt="woman on bike with shake">
         </div>
     </div>
 </header>
-<div class="container" id="what-we-offer">
+
+<hr class="mb-4">
+
+<div class="container mt-3" id="what-we-offer">
     <div class="row">
         <div class="col text-center">
-            <h2>What do we offer?</h2>
+            <h2 class="title-font header-size">What do we offer?</h2>
         </div>
     </div>
 </div>
+
 <section id="how-does-it-work">
-    <div class="container text-center">
+    <div class="container text-center text-font">
         <div class="row">
             <div class="col-md-6 align-self-center">
-                <p>What Is Our Whey Protein?</p>
-                <p>Our Whey Protein is unrivalled in terms of quality and taste. This unique protein shakes has been
-                    developed without compromise using only the finest whey protein concentrate, delivering a massive
-                    80% protein content.
+                <p>Easy Whey Protein simply tastes fantastic. The unique protein powder has been
+                    developed without compromise using only the finest whey protein concentrate.
                 </p>
             </div>
-            <div class="col-md-6"><img src="{% static 'images/chocolate-whey.png' %}" class="img-fluid"
+            <div class="col-md-6"><img src="{% static 'images/man-shake-sitting.png' %}" class="img-fluid"
                     alt="chocolate whey protein powder on a plate"></div>
         </div>
         <div class="row">
             <div class="col-md-6 align-self-center">
-                <p>What Are The Benefits Of Whey Protein?</p>
-                <p>Our Whey Protein is high in BCAAs and low in fat and cholesterol, making it a healthy protein shake
-                    to
-                    consume any time of day. Its high protein and rich essential amino acids status means Whey Protein
-                    contributes to the growth and maintenance of muscle mass, helping you reach and maintain your
-                    fitness goals.</p>
+                <p class="title-font my-3 header-size">What Are The Benefits?</p>
+                <p>Easy Whey Protein is high in BCAAs and low in fat and cholesterol, making it a healthy protein shake
+                    to consume, helping you reach and maintain your fitness goals.</p>
             </div>
             <div class="col-md-6">
-                <img src="{% static 'images/chocolate-whey.png' %}" class="img-fluid"
+                <img src="{% static 'images/man-weights.png' %}" class="img-fluid"
                     alt="chocolate whey protein powder on a plate">
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6"><img src="{% static 'images/chocolate-whey.png' %}" class="img-fluid"
-                    alt="chocolate whey protein powder on a plate"></div>
+            <div class="d-none d-md-inline col-md-6"><img src="{% static 'images/woman-shake-1.png' %}"
+                    class="img-fluid" alt="chocolate whey protein powder on a plate"></div>
             <div class="col-md-6 align-self-center">
-                <p>What Makes Our Whey Protein Special?</p>
-                <ul>
-                    <li>Smooth texture - a smooth, creamy, and delicious protein shake that'll
-                        satisfy your tastebuds with every sip.</li>
-                    <li>Delicious flavours - a variety of flavours including Chocolate, Banana, Strawberry and Cookies
-                        and Creme!</li>
-                    <li>Zero aftertaste - unlike others, our's has no artificial aftertaste!</li>
-                    <li>Instant mixability - easy and quick to blend into a smooth and creamy shake.</li>
-                </ul>
+                <p class="title-font my-3 header-size">Why Easy Whey?</p>
+                <p>It's a smooth, creamy, and delicious protein shake.</p>
+                <p>Variety of flavours including Chocolate, Banana, Strawberry and Cookies
+                    and Creme!</p>
+                <p>Zero aftertaste, our's has no artificial aftertaste!</p>
+                <p>Easy and quick to blend into a smooth and creamy shake.</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6"><img src="{% static 'images/chocolate-whey.png' %}" class="img-fluid"
+            <div class="col-md-6"><img src="{% static 'images/woman-shake-2.png' %}" class="img-fluid"
                     alt="chocolate whey protein powder on a plate"></div>
             <div class="col-md-6 align-self-center">
-                <p>How Natural Is Our Whey Protein?</p>
-                <p>Our Whey Protein is a natural a food source that has been a staple in people's diets for centuries.
-                    Research has shown that grass-fed milk contains more linoleic acids and higher omega-3 fatty acids
-                    than milk from cows confined to indoor rearing. With our Whey Protein, you can rest assured that
+                <p class="title-font my-3 header-size">How Natural Is Easy Whey?</p>
+                <p>Whey Protein is a natural a food source. With our Easy Whey, you can rest assured that
                     you are getting the purest and most natural whey protein possible.</p>
             </div>
         </div>
         <div class="row">
-            <div class="col"> <a class="btn btn-secondary" href="{% url 'product_detail' %}">Learn More</a>
+            <div class="col"> <a class="btn text-font my-3 background-black text-white"
+                    href="{% url 'product_detail' %}">Product Details</a>
             </div>
         </div>
+        <hr class="mb-4">
         <div class="container">
             <div class="row">
-                <h2 class="col text-center mb-4">How does it work?</h2>
+                <h2 class="col title-font my-3 header-size">How does it work?</h2>
             </div>
-            <div class="row text-center">
-                <div class="col-lg-3">
+            <div class="row text-center mt-3">
+                <div class="col-md-6 col-lg-3">
                     <i class="fa-solid fa-cookie-bite"></i>
-                    <p class="mt-4">Select a flavour, or selection of flavours.
+                    <p class="my-3">Select a flavour, or selection of flavours.
                     </p>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-md-6 col-lg-3">
                     <i class="fa-solid fa-scale-balanced"></i>
-                    <p class="mt-4">Select the quantities required.
+                    <p class="my-3">Select the quantities required.
                     </p>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-md-6 col-lg-3">
                     <i class="fa-solid fa-truck"></i>
-                    <p class="mt-4">Pick a reoccuring delivery date and enjoy!
+                    <p class="my-3">Pick a reoccuring delivery date and enjoy!
                     </p>
                 </div>
-                <div class="col-lg-3">
-                    <p><a class="btn btn-warning" href="{% url 'subscribe' %}">Subscribe!</a>
+                <div class="col-md-6 col-lg-3 align-self-center">
+                    <p><a id="subscribe-button" class="btn" href="{% url 'subscribe' %}">Subscribe!</a>
                     </p>
                 </div>
             </div>
