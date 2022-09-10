@@ -7,74 +7,83 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Your profile:</h2>
+            <h2 class="display-3 title-font">Your Profile</h2>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container border py-5 px-5 mt-4">
+<div class="container border py-2 px-5 mt-4">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 text-center">
-            <h2>Edit your delivery details:</h2>
+            <div class="row">
+                <div class="col"><img src="{% static 'images/man-shake-sitting.png' %}" class="img-fluid my-2 w-50"
+                        alt="man sitting with a protein shake"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-font">Subscription Details</h2>
+                    {% if subscription %}
+                    <table class="table table-hover align-middle text-font">
+                        <thead>
+                            <tr>
+                                <th scope="col">Subscription Number</th>
+                                <th scope="col">Utilities</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
+                                        title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:12 }}</a>
+                                </td>
+                                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{ forloop.counter }}">
+                                        Cancel Subscription
+                                    </button>
+                                    <div class="modal fade" id="staticBackdrop{{ forloop.counter }}"
+                                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                        aria-labelledby="staticBackdropLabel{{ forloop.counter }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered ">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="staticBackdropLabel{{ forloop.counter }}">
+                                                        Delete
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to cancel this subscription?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">No</button>
+                                                    <a class="btn btn-danger" href="">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <h3 class="text-font my-2">You currently have no active subscription.</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <h2 class="text-font my-3">Edit your delivery details:</h2>
             <form action="{% url 'profile' %}" method="POST" id="profile-delivery-form">
                 {% csrf_token %}
                 {{ form | crispy }}
-                <button type="submit">Update Information</button>
+                <button type="submit" class="btn standout-button mb-4">Update Information</button>
             </form>
-        </div>
-        <div class="col-md-6 text-center">
-            <h2>Subscription Details</h2>
-            {% if subscription %}
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col">Subscription Number</th>
-                        <th scope="col">Utilities</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
-                                title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:12 }}</a>
-                        </td>
-                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop{{ forloop.counter }}">
-                                Cancel Subscription
-                            </button>
-                            <div class="modal fade" id="staticBackdrop{{ forloop.counter }}" data-bs-backdrop="static"
-                                data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel{{ forloop.counter }}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered ">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel{{ forloop.counter }}">
-                                                Delete
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want to cancel this subscription?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">No</button>
-                                            <a class="btn btn-danger" href="">Yes</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            {% else %}
-            <h3>You currently have no active subscription.</h3>
-            {% endif %}
         </div>
     </div>
 </div>
