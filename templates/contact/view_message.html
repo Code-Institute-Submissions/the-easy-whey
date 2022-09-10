@@ -7,9 +7,9 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Customer messages.</h2>
+            <h2 class="display-3 title-font">Messages</h2>
         </div>
     </div>
 </div>
@@ -18,12 +18,16 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-6 offset-3 justify-content-center">
+        <div class="col justify-content-center text-font">
             <div>
-                <h3>Message from: {{ message.name }}, {{ message.email }} - <i>{{ message.phone_number }}</i>.</h3>
-                <h4>{{ message.message }}</h4>
+                <p><strong>Message from:</strong> {{ message.name }}.</p>
+                <p class="d-block text-truncate"><strong>Email:</strong> {{ message.email }}.</p>
+                <p><strong>Phone:</strong> {{ message.phone_number }}</p>
+                <p><strong>Message:</strong></p>
+                <p>{{ message.message }}</p>
             </div>
-            <a class="btn btn-primary" href="{% url 'message_management' %}">All Messages</a>
+            <a class="btn text-white background-black text-font my-2" href="{% url 'message_management' %}">All
+                Messages</a>
         </div>
     </div>
 </div>

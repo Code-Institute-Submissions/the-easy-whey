@@ -26,8 +26,6 @@
                         <tr>
                             <th scope="col">From</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Message</th>
                             <th colspan="2" scope="col">Utilities</th>
                         </tr>
                     </thead>
@@ -36,9 +34,8 @@
                         <tr>
                             <td class="text-break">{{ message.name }}</td>
                             <td class="text-break">{{ message.email }}</td>
-                            <td class="text-break">{{ message.phone_number }}</td>
-                            <td class="text-break">{{ message.message }}</td>
-                            <td><a class="btn btn-primary" href="/contact/admin/{{ message.id }}">View</a></td>
+                            <td><a class="btn btn-secondary" href="/contact/admin/{{ message.id }}">View</a>
+                            </td>
                             <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop{{ forloop.counter }}">
                                     Delete
