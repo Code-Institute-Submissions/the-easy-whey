@@ -38,43 +38,52 @@
 
               {{ emailaddress.email }}
               {% if emailaddress.verified %}
-              <span class="verified">Verified</span>
+              <span class="verified btn btn-outline-custom">Verified</span>
               {% else %}
-              <span class="unverified">Unverified</span>
+              <span class="unverified btn btn-outline-danger">Unverified</span>
               {% endif %}
-              {% if emailaddress.primary %}<span class="primary">Primary</span>{% endif %}
+              {% if emailaddress.primary %}<span class="primary btn btn-outline-custom">Primary</span>{% endif %}
             </label>
           </div>
           {% endfor %}
 
-          <div class="buttonHolder my-2">
+          <div class="buttonHolder my-4">
             <button class="secondaryAction btn standout-button" type="submit" name="action_primary">Make
               Primary</button>
             <button class="secondaryAction btn btn-secondary" type="submit" name="action_send">Re-send
               Verification</button>
             <button class="primaryAction btn btn-danger" type="submit" name="action_remove">Remove</button>
           </div>
-
         </fieldset>
       </form>
     </div>
   </div>
 </div>
 {% else %}
-<p><strong>{% trans 'Warning:'%}</strong>
-  {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}
-</p>
+<div class="container">
+  <div class="row justify-content-center text-center">
+    <div class="col-md-6 title-font">
+      <p>Warning!</p>
+      <p>You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive
+        notifications, reset your password, etc.</p>
+    </div>
+  </div>
+</div>
 
 {% endif %}
 
-
-<h2>{% trans "Add E-mail Address" %}</h2>
-
-<form method="post" action="{% url 'account_email' %}" class="add_email">
-  {% csrf_token %}
-  {{ form | crispy }}
-  <button name="action_add" type="submit">{% trans "Add E-mail" %}</button>
-</form>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="my-3 title-font">Add E-mail Address</h2>
+      <form method="post" action="{% url 'account_email' %}" class="add_email text-font">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn standout-button" name="action_add" type="submit">Add E-mail</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 

@@ -3,29 +3,55 @@
 {% load i18n %}
 {% load account %}
 
-{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
 
+{% block title %}
+- Confirm E-mail
+{% endblock %}
+
+{% block header %}
+<div class="container-fluid">
+    <div class="row my-4">
+        <div class="col text-center">
+            <h2 class="display-3 title-font">Confirm E-mail Address</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
 {% block content %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+
 
 {% if confirmation %}
 
 {% user_display confirmation.email_address.user as user_display %}
 
-<p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-font">
+            <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a
+                    href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
+                {{ user_display }}.{% endblocktrans %}</p>
 
-<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-{% csrf_token %}
-    <button type="submit">{% trans 'Confirm' %}</button>
-</form>
-
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                {% csrf_token %}
+                <button class="btn standout-button" type="submit">Confirm</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% else %}
 
 {% url 'account_email' as email_url %}
 
-<p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-font">
+            <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a
+                    href="{{ email_url }}">issue a new
+                    e-mail confirmation request</a>.{% endblocktrans %}</p>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}
