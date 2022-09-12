@@ -61,6 +61,8 @@
                             </li>
                             {% endif %}
                             <li><a class="dropdown-item text-white" href="{% url 'profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item text-white" href="{% url 'account_email' %}">Change E-mail</a>
+                            </li>
                             {% if user.is_authenticated %}
                             {% if user.is_superuser %}
                             <li><a class="dropdown-item text-white" href="{% url 'product_management' %}">Product
@@ -117,7 +119,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     {% endblock %}
-    {% block customjs %}
+
     <script type="text/javascript">
         window.onload = (event) => {
             let myAlert = document.querySelector(".toast");
@@ -125,6 +127,8 @@
             bsAlert.show()
         }
     </script>
+
+    {% block customjs %}
     {% endblock %}
 </body>
 
