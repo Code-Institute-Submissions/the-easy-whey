@@ -24,3 +24,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('subscription.urls')),
 ]
+
+handler404 = "easy_whey.views.page_not_found_view"
