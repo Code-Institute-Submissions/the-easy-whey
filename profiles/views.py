@@ -54,3 +54,10 @@ def subscription_history(request, subscription_number):
     if request.user != subscription.user_profile.user:
         messages.error(request, "An error occured.")
         return redirect(reverse('profile'))
+
+def delete_subscription(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    subscription = profile.subscriptions
+    subscription.delete()
+    messages.success(request, "Your subscription has been cancelled.")
+    return redirect(reverse('profile'))
