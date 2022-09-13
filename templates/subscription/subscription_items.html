@@ -8,33 +8,35 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Your Whey</h2>
+            <h2 class="display-3 title-font">Your Protein</h2>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5 px-5 border">
-    <div class="row justify-content-center">
+<div class="container py-3 px-3 border">
+    <div class="row justify-content-center text-font">
         <div class="col-12">
             {% if user.is_authenticated %}
+            <h2 class="text-font text-center my-2">Please note, all bags weigh 500g.</h2>
             <form action="{% url 'subscribe_items' %}" method="POST" id="subscription-form">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         {% csrf_token %}
                         {{ subscription_items_form | crispy }}
                         <br>
-                        <button id="submit-order">Continue To Payment</button>
+                        <button class="btn standout-button my-2" id="submit-order">Continue To Payment</button>
                     </div>
                 </div>
             </form>
             {% else %}
-            <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
-            <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a>
-                first.</p>
+            <p>Already have an account? Then please <a class="btn standout-button" href="{% url 'account_login' %}">Sign
+                    in</a></p>
+            <p>If you have not created an account yet, then please <a class="btn standout-button"
+                    href="{% url 'account_signup' %}">Sign Up</a></p>
             {% endif %}
         </div>
     </div>

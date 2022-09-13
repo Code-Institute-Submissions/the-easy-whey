@@ -8,9 +8,9 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Why subscribe?</h2>
+            <h2 class="display-3 title-font">Why Subscribe?</h2>
         </div>
     </div>
 </div>
@@ -18,13 +18,24 @@
 
 {% block content %}
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
-            <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a>
-                first.</p>
+    <div class="row justify-content-center text-center">
+        <div class="col-md-6 align-self-center text-font">
+            <p>Tasty and Easy Whey to help you reach and maintain your goals!</p>
+            <p>Fantastic tasting and easy to mix!</p>
+            <p>500g bags which allow a variety of flavours to be picked!</p>
+            <p>No contract, simply cancel your order before the next payment is due!</p>
+
         </div>
+        <div class="col-md-6 text-font"><img src="{% static 'images/woman-shake-1.png' %}" class="img-fluid"
+                alt="women sitting with a protein shake"></div>
     </div>
+    <div class="col align-self-center text-font text-center">
+        <p>Already have an account? Then please <a class="btn standout-button" href="{% url 'account_login' %}">Sign
+                in</a></p>
+        <p>If you have not created an account yet, then please <a class="btn standout-button"
+                href="{% url 'account_signup' %}">Sign Up</a></p>
+    </div>
+</div>
 </div>
 
 {% endblock %}

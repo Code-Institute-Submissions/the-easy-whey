@@ -8,23 +8,23 @@
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Payment</h2>
+            <h2 class="display-3 title-font">Payment</h2>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5 px-5 border">
+<div class="container py-3 px-3 border">
     <div class="row justify-content-center">
-        <div class="col-md-6 justify-content-center">
+        <div class="col-md-6 justify-content-center text-font text-center">
             {% if user.is_authenticated %}
             <section>
                 <div class="product">
                     <div class="description">
-                        <h3>Your subscription price:</h3>
+                        <h3 class="my-2">Your subscription price:</h3>
                         <h5>£{{ subscription.total_cost|floatformat:2 }} per month, starting on
                             {{ subscription.subscription_start_date }}</h5>
                     </div>
@@ -33,13 +33,15 @@
                     {% csrf_token %}
                     <!-- Add a hidden field with the lookup_key of your Price -->
                     <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
-                    <button id="checkout-and-portal-button" type="submit">Checkout</button>
+                    <button id="checkout-and-portal-button" class="btn standout-button my-2"
+                        type="submit">Checkout</button>
                 </form>
             </section>
             {% else %}
-            <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
-            <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a>
-                first.</p>
+            <p>Already have an account? Then please <a class="btn standout-button" href="{% url 'account_login' %}">Sign
+                    in</a></p>
+            <p>If you have not created an account yet, then please <a class="btn standout-button"
+                    href="{% url 'account_signup' %}">Sign Up</a></p>
             {% endif %}
         </div>
     </div>

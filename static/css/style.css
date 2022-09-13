@@ -60,6 +60,11 @@ hr {
     border-color: coral;
 }
 
+.form-check-input:checked {
+    background-color: coral;
+    border-color: coral;
+}
+
 /* COLOURS
 1. #6a8b3b
 2. #ffb955
