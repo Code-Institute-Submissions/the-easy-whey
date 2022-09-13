@@ -106,9 +106,6 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-# Temporary log of emails into the console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # AllAuth settings
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
