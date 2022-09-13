@@ -24,9 +24,20 @@
             <section>
                 <div class="product">
                     <div class="description">
-                        <h3 class="my-2">Your subscription price:</h3>
+                        <h3 class="my-2">Your subscription:</h3>
+                        {% for item in subscription.lineitems.all %}
+                        {% if item.quantity > 0 %}
+                        <p>500g {{ item.product }} x {{ item.quantity }}</p>
+                        {% endif %}
+                        {% endfor %}
                         <h5>£{{ subscription.total_cost|floatformat:2 }} per month, starting on
                             {{ subscription.subscription_start_date }}</h5>
+                        <div>
+                            <h3 class="my-4">Delivery Address:</h3>
+                            <p>{{ subscription.address_one }}, {{ subscription.address_two }},
+                                {{ subscription.town_city }},
+                                {{ subscription.postcode }}, {{ subscription.county }}.</p>
+                        </div>
                     </div>
                 </div>
                 <form action="/create-checkout-session" method="POST">
@@ -36,6 +47,9 @@
                     <button id="checkout-and-portal-button" class="btn standout-button my-2"
                         type="submit">Checkout</button>
                 </form>
+                <h3 class="my-2">Something not quite right?</h3>
+                <p>Click the button below to delete the order and try again.</p>
+                <a class="btn standout-button" href="{% url 'try_again' %}">Try Again</a>
             </section>
             {% else %}
             <p>Already have an account? Then please <a class="btn standout-button" href="{% url 'account_login' %}">Sign

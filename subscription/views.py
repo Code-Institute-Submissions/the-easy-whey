@@ -149,3 +149,9 @@ def stripe_success(request):
 def stripe_cancel(request):
     context = {}
     return render(request, "subscription/cancel.html", context)
+
+
+def try_again(request):
+    subscription = Subscription.objects.get(subscription_number=request.session["subscription_number"])
+    subscription.delete()
+    return redirect(reverse('subscribe'))
