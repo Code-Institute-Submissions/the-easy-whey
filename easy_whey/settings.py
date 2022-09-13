@@ -31,7 +31,7 @@ STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_PRODUCT_KEY = os.environ.get('STRIPE_PRODUCT_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ["the-easy-whey.herokuapp.com", "localhost"]
 
