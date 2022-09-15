@@ -2,12 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('subscribe/', views.subscribe, name="subscribe"),
-    path('subscribe/details', views.subscribe_details, name="subscribe_details"),
-    path('subscribe/items', views.subscribe_items, name="subscribe_items"),
-    path('subscribe/payment', views.payment, name="payment"),
-    path('create-checkout-session', views.create_checkout_session, name="create_checkout_session"),
-    path('stripe_success', views.stripe_success, name="stripe_success"),
-    path('stripe_cancel', views.stripe_cancel, name="stripe_cancel"),
+    path('order/', views.order, name="order"),
+    path('order/details', views.order_details, name="order_details"),
+    path('order/items', views.order_items, name="order_items"),
+    path('order/payment', views.payment, name="payment"),
+    # path('create-checkout-session', views.create_checkout_session, name="create_checkout_session"),
+    # path('stripe_success', views.stripe_success, name="stripe_success"),
+    # path('stripe_cancel', views.stripe_cancel, name="stripe_cancel"),
     path('try_again', views.try_again, name="try_again"),
 ]

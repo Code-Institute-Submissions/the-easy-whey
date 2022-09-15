@@ -19,39 +19,37 @@
 <div class="container border py-2 px-5 mt-4">
     <div class="row justify-content-center align-items-center text-font">
         <div class="col text-center">
-            {% if request.user == subscription.user_profile.user %}
-            <h2>Subscription Details</h2>
+            {% if request.user == order.user_profile.user %}
+            <h2>Order Details</h2>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
                         <tr>
-                            <th scope="col">Subscription Number</th>
+                            <th scope="col">Order Number</th>
                             <th scope="col">Product</th>
                             <th scope="col">Total Cost</th>
-                            <th scope="col">Subscription Start Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-break">{{ subscription.subscription_number }}</td>
+                            <td class="text-break">{{ order.order_number }}</td>
                             <td class="word-break">
                                 <ul class="list-group list-group-flush">
-                                    {% for item in subscription.lineitems.all %}
+                                    {% for item in order.lineitems.all %}
                                     {% if item.quantity > 0 %}
                                     <li class="list-group-item">{{ item.product }} x {{ item.quantity }}</li>
                                     {% endif %}
                                     {% endfor %}
                                 </ul>
                             </td>
-                            <td>{{ subscription.total_cost }}</td>
-                            <td>{{ subscription.subscription_start_date }}</td>
+                            <td>{{ order.total_cost }}</td>
 
                         </tr>
                     </tbody>
                 </table>
             </div>
             {% else %}
-            <h2>This subscription doesn't belong to you.</h2>
+            <h2>This order doesn't belong to you.</h2>
             {% endif %}
             <a class="btn text-white background-black text-font my-2" href="{% url 'profile' %}">Return to Profile</a>
         </div>

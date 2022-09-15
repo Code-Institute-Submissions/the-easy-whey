@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-- Subscribe
+- Order
 {% endblock %}
 
 {% block header %}
@@ -21,13 +21,12 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             {% if user.is_authenticated %}
-            <form action="{% url 'subscribe_details' %}" method="POST" id="subscription-form" class="text-font">
+            <form action="{% url 'order_details' %}" method="POST" id="order-form" class="text-font">
                 {% csrf_token %}
-                {{ subscription_details_form | crispy }}
-                <label class="form-check-label" for="subscription-save-info">Do you want to save your
+                {{ order_details_form | crispy }}
+                <label class="form-check-label" for="order-save-info">Do you want to save your
                     information to your profile?</label>
-                <input class="form-check-input" type="checkbox" id="subscription-save-info" name="save_information"
-                    checked>
+                <input class="form-check-input" type="checkbox" id="order-save-info" name="save_information" checked>
                 <br>
                 <button class="btn standout-button my-2" id="submit-order">Next Step</button>
             </form>

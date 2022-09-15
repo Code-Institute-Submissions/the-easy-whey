@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-- Subscribe
+- Order
 {% endblock %}
 
 {% block header %}
@@ -24,19 +24,17 @@
             <section>
                 <div class="product">
                     <div class="description">
-                        <h3 class="my-2">Your subscription:</h3>
-                        {% for item in subscription.lineitems.all %}
+                        <h3 class="my-2">Your order:</h3>
+                        {% for item in order.lineitems.all %}
                         {% if item.quantity > 0 %}
                         <p>500g {{ item.product }} x {{ item.quantity }}</p>
                         {% endif %}
                         {% endfor %}
-                        <h5>£{{ subscription.total_cost|floatformat:2 }} per month, starting on
-                            {{ subscription.subscription_start_date }}</h5>
                         <div>
                             <h3 class="my-4">Delivery Address:</h3>
-                            <p>{{ subscription.address_one }}, {{ subscription.address_two }},
-                                {{ subscription.town_city }},
-                                {{ subscription.postcode }}, {{ subscription.county }}.</p>
+                            <p>{{ order.address_one }}, {{ order.address_two }},
+                                {{ order.town_city }},
+                                {{ order.postcode }}, {{ order.county }}.</p>
                         </div>
                     </div>
                 </div>

@@ -22,11 +22,11 @@
         <div class="col-12">
             {% if user.is_authenticated %}
             <h2 class="text-font text-center my-2">Please note, all bags weigh 500g.</h2>
-            <form action="{% url 'subscribe_items' %}" method="POST" id="subscription-form">
+            <form action="{% url 'order_items' %}" method="POST" id="order-form">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         {% csrf_token %}
-                        {{ subscription_items_form | crispy }}
+                        {{ order_items_form | crispy }}
                         <br>
                         <button class="btn standout-button my-2" id="submit-order">Continue To Payment</button>
                     </div>

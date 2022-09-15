@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Whey protein subscription to make your fitness goals easier!">
-    <meta name="keywords" content="whey, gym, protein, fitness, health, bodybuilding, subscription">
+    <meta name="description" content="Whey protein to make your fitness goals easier!">
+    <meta name="keywords" content="whey, gym, protein, fitness, health, bodybuilding">
     <meta name="author" content="Kingsley Norman">
     {% endblock %}
     {% block css %}
@@ -40,7 +40,7 @@
                         <a class="nav-link text-white" href="{% url 'product_detail' %}">Products</a>
                     </li>
                     <li class="nav-item btn">
-                        <a class="nav-link text-white" href="{% url 'subscribe' %}">Subscription</a>
+                        <a class="nav-link text-white" href="{% url 'order' %}">Order</a>
                     </li>
                     <li class="nav-item btn ">
                         <a class="nav-link text-white" href="{% url 'contact' %}">Contact</a>
@@ -48,7 +48,7 @@
                     <li class="nav-item dropdown btn">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Accounts
+                            Account
                         </a>
                         <ul class="dropdown-menu background-black" aria-labelledby="navbarDropdownMenuLink">
                             {% if not user.is_authenticated %}

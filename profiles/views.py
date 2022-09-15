@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserProfileForm
 from .models import UserProfile
-from subscription.models import Subscription
+from subscription.models import Order
 
 
 # Create your views here.
@@ -22,11 +22,11 @@ def profile(request):
 
     form = UserProfileForm(instance=profile)
 
-    if hasattr(profile, 'subscriptions'):
-        subscription = profile.subscriptions
+    if hasattr(profile, 'order'):
+        order = profile.orders
         context = {
             "form": form,
-            "subscription": subscription,
+            "order": order,
         }
     else:
         context = {
@@ -37,27 +37,27 @@ def profile(request):
 
 
 @login_required
-def subscription_history(request, subscription_number):
+def order_history(request, order_number):
     
-    subscription = get_object_or_404(Subscription, subscription_number=subscription_number)
+    order = get_object_or_404(Order, order_number=order_number)
 
-    if request.user == subscription.user_profile.user:
-        messages.info(request, "This is a previous subscription.")
+    if request.user == order.user_profile.user:
+        messages.info(request, "This is a previous order.")
 
-        template = 'profiles/view_subscription.html'
+        template = 'profiles/view_order.html'
         context = {
-            "subscription": subscription
+            "order": order
         }
 
         return render(request, template, context)
         
-    if request.user != subscription.user_profile.user:
+    if request.user != order.user_profile.user:
         messages.error(request, "An error occured.")
         return redirect(reverse('profile'))
 
-def delete_subscription(request):
+def delete_order(request):
     profile = get_object_or_404(UserProfile, user=request.user)
-    subscription = profile.subscriptions
-    subscription.delete()
-    messages.success(request, "Your subscription has been cancelled.")
+    order = profile.orders
+    order.delete()
+    messages.success(request, "Your order has been cancelled.")
     return redirect(reverse('profile'))

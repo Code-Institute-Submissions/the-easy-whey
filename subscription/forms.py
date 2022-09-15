@@ -1,14 +1,12 @@
 from django import forms
-from .models import Subscription, SubscriptionLineItem
+from .models import Order, OrderLineItem
 from django.forms.widgets import DateInput
 
-class SubscriptionDetailsForm(forms.ModelForm):
+class OrderDetailsForm(forms.ModelForm):
     class Meta:
-        model = Subscription
-        exclude = ("product", "subscription_number", "date", "total_cost", "subscription_end_date", "is_paid", "user_profile",)
-        widgets = {
-            "subscription_start_date": DateInput(attrs={'type': 'date'})
-        }
+        model = Order
+        exclude = ("product", "order_number", "date", "total_cost", "is_paid", "user_profile",)
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,7 +20,6 @@ class SubscriptionDetailsForm(forms.ModelForm):
             "county": "County",
             "postcode": "Postcode",
             "country": "County",
-            "subscription_start_date": "When do you want your subscription to start?"
         }
 
         self.fields["full_name"].widget.attrs["autofocus"] = True
@@ -33,11 +30,10 @@ class SubscriptionDetailsForm(forms.ModelForm):
                 placeholder = placeholders[field]
             self.fields[field].widget.attrs["placeholder"] = placeholder
             self.fields[field].label = False
-            if field == "subscription_start_date":
-                self.fields[field].label = "When do you want your subscription to start?"
 
 
-class SubscriptionItemsForm(forms.Form):
+
+class OrderItemsForm(forms.Form):
 
     chocolate_quantity = forms.IntegerField(label="How many bags of Chocolate Whey Protein would you like?", min_value=0, max_value=10, initial=0)
     banana_quantity = forms.IntegerField(label="How many bags of Banana Whey Protein would you like?", min_value=0, max_value=10, initial=0)

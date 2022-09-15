@@ -25,23 +25,23 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h2 class="text-font">Subscription Details</h2>
-                    {% if subscription %}
+                    <h2 class="text-font">order Details</h2>
+                    {% if order %}
                     <table class="table table-hover align-middle text-font">
                         <thead>
                             <tr>
-                                <th scope="col">Subscription Number</th>
+                                <th scope="col">order Number</th>
                                 <th scope="col">Utilities</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><a href="{% url 'subscription_history' subscription.subscription_number %}"
-                                        title="{{ subscription.subscription_number }}">{{ subscription.subscription_number|truncatechars:12 }}</a>
+                                <td><a href="{% url 'order_history' order.order_number %}"
+                                        title="{{ order.order_number }}">{{ order.order_number|truncatechars:12 }}</a>
                                 </td>
                                 <td><button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop{{ forloop.counter }}">
-                                        Cancel Subscription
+                                        Cancel Order
                                     </button>
                                     <div class="modal fade" id="staticBackdrop{{ forloop.counter }}"
                                         data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -57,13 +57,12 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Are you sure you want to cancel this subscription?
+                                                    Are you sure you want to cancel this order?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">No</button>
-                                                    <a class="btn btn-danger"
-                                                        href="{% url 'delete_subscription' %}">Yes</a>
+                                                    <a class="btn btn-danger" href="{% url 'delete_order' %}">Yes</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -73,7 +72,7 @@
                         </tbody>
                     </table>
                     {% else %}
-                    <h3 class="text-font my-2">You currently have no active subscription.</h3>
+                    <h3 class="text-font my-2">You currently have no orders.</h3>
                     {% endif %}
                 </div>
             </div>
