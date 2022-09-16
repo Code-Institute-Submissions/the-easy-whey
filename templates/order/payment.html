@@ -40,8 +40,6 @@
                 </div>
                 <form action="/create-checkout-session" method="POST">
                     {% csrf_token %}
-                    <!-- Add a hidden field with the lookup_key of your Price -->
-                    <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
                     <button id="checkout-and-portal-button" class="btn standout-button my-2"
                         type="submit">Checkout</button>
                 </form>

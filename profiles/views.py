@@ -47,11 +47,3 @@ def order_history(request, order_number):
     if request.user != order.user_profile.user:
         messages.error(request, "An error occured.")
         return redirect(reverse('profile'))
-
-
-def delete_order(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    order = profile.orders
-    order.delete()
-    messages.success(request, "Your order has been cancelled.")
-    return redirect(reverse('profile'))

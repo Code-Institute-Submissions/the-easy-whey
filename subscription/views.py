@@ -107,28 +107,24 @@ def payment(request):
     return render(request, "order/payment.html", context)
 
 
-def create_checkout_session(request, *args, **kwargs):
-    try:
-        prices = stripe.Price.list(
-            lookup_keys=[request.form['lookup_key']],
-            expand=['data.product']
-        )
+def create_checkout_session(request):
+  session = stripe.checkout.Session.create(
+    line_items=[{
+      'price_data': {
+        'currency': 'gbp',
+        'product_data': {
+          'name': 'T-shirt',
+        },
+        'unit_amount': 2000,
+      },
+      'quantity': 1,
+    }],
+    mode='payment',
+    success_url=f"{settings.url}templates/order/success.html",
+    cancel_url=f"templates/order/cancel.html",
+  )
 
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    'price': prices.data[0].id,
-                    'quantity': 1,
-                },
-            ],
-            mode='subscription',
-            success_url=f"templates/order/success.html?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url="templates/order/cancel.html",   
-        )
-        return HttpResponse(status=303, content=checkout_session.url)
-    except Exception as e:
-        print(e)
-        return HttpResponse(status=500, content=e)
+  return redirect(session.url, code=303)
 
 
 def stripe_success(request):
