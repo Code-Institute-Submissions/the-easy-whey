@@ -74,7 +74,7 @@ def order_items(request):
     if request.method == "POST":
         order_items_form = OrderItemsForm(request.POST)
         if order_items_form.is_valid():
-            order = Order.objects.get(order_number=request.session["order_number"])
+            order = get_object_or_404(Order, order_number=request.session["order_number"])
 
             order_data = {
                 "Chocolate Whey Protein" : order_items_form.cleaned_data['chocolate_quantity'],
@@ -84,7 +84,7 @@ def order_items(request):
             }
 
             for flavour, quantity in order_data.items():
-                OrderLineItem(order=order, product=Product.objects.get(flavour=flavour), quantity=quantity).save()
+                OrderLineItem(order=order, product=get_object_or_404(Product, flavour=flavour), quantity=quantity).save()
 
             context = {
                 "order": order
@@ -142,6 +142,6 @@ def stripe_cancel(request):
 
 
 def try_again(request):
-    order = Order.objects.get(order_number=request.session["order_number"])
+    order = get_object_or_404(Order, order_number=request.session["order_number"])
     order.delete()
     return redirect(reverse('order'))
