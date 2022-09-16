@@ -48,6 +48,11 @@
                     </tbody>
                 </table>
             </div>
+            <h2>Delivery Address</h2>
+            <p>{{ order.address_one }}, {{ order.address_two }},
+                {{ order.town_city }},
+                {{ order.postcode }}, {{ order.county }}.</p>
+
             {% else %}
             <h2>This order doesn't belong to you.</h2>
             {% endif %}

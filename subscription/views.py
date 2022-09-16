@@ -32,7 +32,7 @@ def order_details(request):
         if order_details_form.is_valid():
             order_details_form.save()
             request.session['order_number'] = order_details_form.instance.order_number
-            ordercription_items_form = orderItemsForm()
+            order_items_form = OrderItemsForm()
             context = {
                 "order_items_form": order_items_form,
             }
@@ -52,19 +52,8 @@ def order_details(request):
 
             return render(request, 'subscription/subscription_items.html', context)
 
-    user_information = get_object_or_404(UserProfile, user=request.user)
-    if hasattr(user_information, 'orders'):
-        messages.error(request, "You already have an order!")
-        print(user_information.orders.all)
-        profile = get_object_or_404(UserProfile, user=request.user)
-        form = UserProfileForm(instance=profile)
-        order = profile.orders
-        context = {
-            "form": form,
-            "order": order,
-        }
-        return render(request, "profiles/profile.html", context)
 
+    user_information = get_object_or_404(UserProfile, user=request.user)
     instance_data = {
         "phone_number": user_information.default_phone_number,
         "address_one": user_information.default_address_one,
@@ -118,38 +107,38 @@ def payment(request):
     return render(request, "subscription/payment.html", context)
 
 
-# def create_checkout_session(request, *args, **kwargs):
-#     try:
-#         prices = stripe.Price.list(
-#             lookup_keys=[request.form['lookup_key']],
-#             expand=['data.product']
-#         )
+def create_checkout_session(request, *args, **kwargs):
+    try:
+        prices = stripe.Price.list(
+            lookup_keys=[request.form['lookup_key']],
+            expand=['data.product']
+        )
 
-#         checkout_session = stripe.checkout.Session.create(
-#             line_items=[
-#                 {
-#                     'price': prices.data[0].id,
-#                     'quantity': 1,
-#                 },
-#             ],
-#             mode='subscription',
-#             success_url=f"templates/subscription/success.html?session_id={CHECKOUT_SESSION_ID}",
-#             cancel_url="templates/subscription/cancel.html",
-#         )
-#         return HttpResponse(status=303, content=checkout_session.url)
-#     except Exception as e:
-#         print(e)
-#         return HttpResponse(status=500, content=e)
-
-
-# def stripe_success(request):
-#     context = {}
-#     return render(request, "subscription/success.html", context)
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    'price': prices.data[0].id,
+                    'quantity': 1,
+                },
+            ],
+            mode='subscription',
+            success_url=f"templates/subscription/success.html?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url="templates/subscription/cancel.html",
+        )
+        return HttpResponse(status=303, content=checkout_session.url)
+    except Exception as e:
+        print(e)
+        return HttpResponse(status=500, content=e)
 
 
-# def stripe_cancel(request):
-#     context = {}
-#     return render(request, "subscription/cancel.html", context)
+def stripe_success(request):
+    context = {}
+    return render(request, "subscription/success.html", context)
+
+
+def stripe_cancel(request):
+    context = {}
+    return render(request, "subscription/cancel.html", context)
 
 
 def try_again(request):
