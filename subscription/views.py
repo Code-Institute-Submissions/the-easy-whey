@@ -23,7 +23,7 @@ def order(request):
         return redirect(reverse('order_details'))
 
     context = {}
-    return render(request, "subscription/subscription.html", context)
+    return render(request, "order/order.html", context)
 
 def order_details(request):
 
@@ -50,7 +50,7 @@ def order_details(request):
                 profile.save()
                 messages.success(request, "Your profile data has been updated.")
 
-            return render(request, 'subscription/subscription_items.html', context)
+            return render(request, 'order/order_items.html', context)
 
 
     user_information = get_object_or_404(UserProfile, user=request.user)
@@ -67,7 +67,7 @@ def order_details(request):
     context = {
         "order_details_form": order_details_form,
     }
-    return render(request, "subscription/subscription_details.html", context)
+    return render(request, "order/order_details.html", context)
 
 
 def order_items(request):
@@ -89,7 +89,7 @@ def order_items(request):
             context = {
                 "order": order
             }
-            return render(request, "subscription/payment.html", context)
+            return render(request, "order/payment.html", context)
 
     if "order_number" not in request.session:
         messages.error(request, "An error occured, please try again.")
@@ -99,12 +99,12 @@ def order_items(request):
     context = {
         "order_items_form": order_items_form,
     }
-    return render(request, "subscription/subscription_items.html", context)
+    return render(request, "order/order_items.html", context)
 
 
 def payment(request):
     context = {}
-    return render(request, "subscription/payment.html", context)
+    return render(request, "order/payment.html", context)
 
 
 def create_checkout_session(request, *args, **kwargs):
@@ -122,8 +122,8 @@ def create_checkout_session(request, *args, **kwargs):
                 },
             ],
             mode='subscription',
-            success_url=f"templates/subscription/success.html?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url="templates/subscription/cancel.html",
+            success_url=f"templates/order/success.html?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url="templates/order/cancel.html",   
         )
         return HttpResponse(status=303, content=checkout_session.url)
     except Exception as e:
@@ -133,12 +133,12 @@ def create_checkout_session(request, *args, **kwargs):
 
 def stripe_success(request):
     context = {}
-    return render(request, "subscription/success.html", context)
+    return render(request, "order/success.html", context)
 
 
 def stripe_cancel(request):
     context = {}
-    return render(request, "subscription/cancel.html", context)
+    return render(request, "order/cancel.html", context)
 
 
 def try_again(request):
