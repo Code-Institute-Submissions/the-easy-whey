@@ -3,14 +3,14 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-- Subscribe
+- Payment Cancelled
 {% endblock %}
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Cancelled!</h2>
+            <h2 class="display-3 title-font">Payment Cancelled!</h2>
         </div>
     </div>
 </div>
@@ -18,9 +18,16 @@
 
 {% block content %}
 <section>
-    <p>Picked the wrong order? Shop around then come back to pay!</p>
+    <div class="container">
+        <div class="row">
+            <div class="col text-font text-center">
+                <p>You have exited the payment process.</p>
+                <p>Please feel free to try ordering again! Use this link below:</p>
+                <a class="btn standout-button" href="{% url 'order_details' %}">Order!</a>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
 {% block customjs %}
-<script src="{% static 'js/client.js' %}"></script>
 {% endblock %}

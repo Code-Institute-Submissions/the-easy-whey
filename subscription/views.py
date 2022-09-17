@@ -9,6 +9,7 @@ from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
 from profiles.forms import UserProfileForm
+from django.contrib.sites.models import Site
 
 # Create your views here.
 
@@ -108,27 +109,41 @@ def payment(request):
 
 
 def create_checkout_session(request):
-  session = stripe.checkout.Session.create(
-    line_items=[{
-      'price_data': {
-        'currency': 'gbp',
-        'product_data': {
-          'name': 'T-shirt',
-        },
-        'unit_amount': 2000,
-      },
-      'quantity': 1,
-    }],
-    mode='payment',
-    success_url=f"{settings.url}templates/order/success.html",
-    cancel_url=f"templates/order/cancel.html",
-  )
+    DOMAIN = Site.objects.get_current()
+    order = get_object_or_404(Order, order_number=request.session["order_number"])
+    order_lineitems = order.lineitems.all()
+    items = []
 
-  return redirect(session.url, code=303)
+    for item in order_lineitems:
+        if item.quantity >= 1:
+            items.append(
+                {
+                    'price_data': {
+                        'currency': 'gbp',
+                        'product_data': {
+                            'name': item.product.flavour,
+                        },
+                        'unit_amount': 699,
+                    },
+                    'quantity': item.quantity,
+                }
+            )
+
+    session = stripe.checkout.Session.create(
+        line_items=items,
+        mode='payment',
+        success_url=f"{DOMAIN}stripe-success",
+        cancel_url=f"{DOMAIN}stripe-cancel",
+    )
+    
+    return redirect(session.url, code=303)
 
 
 def stripe_success(request):
-    context = {}
+    order = get_object_or_404(Order, order_number=request.session["order_number"])
+    context = {
+        "order": order
+    }
     return render(request, "order/success.html", context)
 
 

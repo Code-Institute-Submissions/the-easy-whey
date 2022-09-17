@@ -3,14 +3,14 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-- Subscribe
+- Payment Successful!
 {% endblock %}
 
 {% block header %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-2">Success!</h2>
+            <h2 class="display-3 title-font">Payment Successful!</h2>
         </div>
     </div>
 </div>
@@ -18,29 +18,29 @@
 
 {% block content %}
 <section>
-    <div class="product Box-root">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14px" height="16px"
-            viewBox="0 0 14 16" version="1.1">
-            <defs />
-            <g id="Flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="0-Default" transform="translate(-121.000000, -40.000000)" fill="#E184DF">
-                    <path
-                        d="M127,50 L126,50 C123.238576,50 121,47.7614237 121,45 C121,42.2385763 123.238576,40 126,40 L135,40 L135,56 L133,56 L133,42 L129,42 L129,56 L127,56 L127,50 Z M127,48 L127,42 L126,42 C124.343146,42 123,43.3431458 123,45 C123,46.6568542 124.343146,48 126,48 L127,48 Z"
-                        id="Pilcrow" />
-                </g>
-            </g>
-        </svg>
-        <div class="description Box-root">
-            <h3>Your Easy Whey Order was a success!</h3>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6 text-font align-self-center">
+                <h3>Your Easy Whey Order was a success!</h3>
+                <p>Thank you so much for your order, we know you'll love it!</p>
+                <p>You can view details of your order in your Profile.</p>
+                <a class="btn standout-button" href="{% url 'profile' %}">Profile</a>
+                <form action="/create-portal-session" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="session-id" name="session_id" value="" />
+                    <button id="checkout-and-portal-button" type="submit"
+                        class="btn text-white background-black my-3">Manage
+                        your Billing Information</button>
+                </form>
+            </div>
+            <div class="col-md-6 justify-content-center align-self-center"><img
+                    src="{% static 'images/woman-shake-skateboard.png' %}" class="img-fluid"
+                    alt="woman skateboarding with a protein shake"></div>
         </div>
     </div>
-    <form action="/create-portal-session" method="POST">
-        {% csrf_token %}
-        <input type="hidden" id="session-id" name="session_id" value="" />
-        <button id="checkout-and-portal-button" type="submit">Manage your billing information</button>
-    </form>
 </section>
+
 {% endblock %}
+
 {% block customjs %}
-<script src="{% static 'js/client.js' %}"></script>
 {% endblock %}

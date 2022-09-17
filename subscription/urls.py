@@ -7,7 +7,7 @@ urlpatterns = [
     path('order/items/', views.order_items, name="order_items"),
     path('order/payment/', views.payment, name="payment"),
     path('create-checkout-session', views.create_checkout_session, name="create_checkout_session"),
-    path('stripe_success', views.stripe_success, name="stripe_success"),
-    path('stripe_cancel', views.stripe_cancel, name="stripe_cancel"),
+    path('stripe-success', views.stripe_success, name="stripe_success"),
+    path('stripe-cancel', views.stripe_cancel, name="stripe_cancel"),
     path('try_again', views.try_again, name="try_again"),
 ]
