@@ -142,7 +142,8 @@ def create_checkout_session(request):
 
 def stripe_success(request):
     order = get_object_or_404(Order, order_number=request.session["order_number"])
-    order.user_profile.user = request.user
+    profile = get_object_or_404(UserProfile, user=request.user)
+    order.user_profile = request.user
     order.is_paid = True
     order.save()
     context = {
@@ -153,7 +154,8 @@ def stripe_success(request):
 
 def stripe_cancel(request):
     order = get_object_or_404(Order, order_number=request.session["order_number"])
-    order.user_profile.user = request.user
+    profile = get_object_or_404(UserProfile, user=request.user)
+    order.user_profile = request.user
     order.save()
     context = {
         "order": order
