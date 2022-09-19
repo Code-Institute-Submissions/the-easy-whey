@@ -4,9 +4,7 @@ from django.db import models
 class Product(models.Model):
     flavour = models.CharField(max_length=50, null=False, blank=False)
     description = models.CharField(max_length=200, null=False, blank=False)
-    price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default="12.99")
-    image_url = models.URLField(max_length=1024, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, upload_to='products')
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default="6.99")
 
     def __str__(self):
         return self.flavour

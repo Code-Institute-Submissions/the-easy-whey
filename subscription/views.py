@@ -4,7 +4,6 @@ from django.conf import settings
 from django.http import HttpResponse
 import stripe
 from .forms import OrderDetailsForm, OrderItemsForm
-from .actions import add_bag_quantites
 from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
@@ -141,6 +140,7 @@ def create_checkout_session(request):
 
 
 def stripe_success(request):
+    messages.success(request, "Order successful!")
     order = get_object_or_404(Order, order_number=request.session["order_number"])
     profile = get_object_or_404(UserProfile, user=request.user)
     order.user_profile = profile
@@ -151,6 +151,7 @@ def stripe_success(request):
 
 
 def stripe_cancel(request):
+    messages.error(request, "Order was unsuccessful!")
     order = get_object_or_404(Order, order_number=request.session["order_number"])
     profile = get_object_or_404(UserProfile, user=request.user)
     order.user_profile = profile
