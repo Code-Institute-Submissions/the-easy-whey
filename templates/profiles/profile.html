@@ -25,7 +25,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h2 class="text-font">Orders</h2>
+                    <h2 class="text-font">Completed Orders</h2>
                     {% if orders %}
                     <table class="table table-hover align-middle text-font">
                         <thead>
@@ -35,12 +35,34 @@
                         </thead>
                         <tbody>
                             {% for order in orders %}
+                            {% if order.is_paid %}
                             <tr>
                                 <td>{{order.order_number|truncatechars:12}}</td>
                                 <td><a href="{% url 'order_history' order.order_number %}" class="btn standout-button"
                                         title="{{ order.order_number }}">View</a>
                                 </td>
                             </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <h2 class="text-font">Incomplete Orders</h2>
+                    <table class="table table-hover align-middle text-font">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="2">Order Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if not order.is_paid %}
+                            <tr>
+                                <td>{{order.order_number|truncatechars:12}}</td>
+                                <td><a href="{% url 'order_history' order.order_number %}" class="btn standout-button"
+                                        title="{{ order.order_number }}">View</a>
+                                </td>
+                            </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

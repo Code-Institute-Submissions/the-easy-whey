@@ -27,7 +27,9 @@
                         <tr>
                             <th scope="col">Order Number</th>
                             <th scope="col">Product</th>
+                            {% if order.is_paid %}
                             <th scope="col">Total Cost</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -42,17 +44,19 @@
                                     {% endfor %}
                                 </ul>
                             </td>
+                            {% if order.is_paid %}
                             <td>{{ order.total_cost }}</td>
-
+                            {% endif %}
                         </tr>
                     </tbody>
                 </table>
             </div>
+            {% if order.is_paid %}
             <h2>Delivery Address</h2>
             <p>{{ order.address_one }}, {{ order.address_two }},
                 {{ order.town_city }},
                 {{ order.postcode }}, {{ order.county }}.</p>
-
+            {% endif %}
             {% else %}
             <h2>This order doesn't belong to you.</h2>
             {% endif %}
