@@ -3,14 +3,14 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-- Payment Cancelled
+- Error
 {% endblock %}
 
 {% block header %}
 <div class="container-fluid">
     <div class="row my-4">
         <div class="col text-center">
-            <h2 class="display-3 title-font">Error</h2>
+            <h2 class="display-3 title-font">Sorry, an error occured.</h2>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-font text-center">
-                <p>An error has occured sorry! Please follow the order process below:</p>
+                <p>An error has occured, sorry! Please follow the order process below:</p>
                 <a class="btn standout-button" href="{% url 'order_details' %}">Order!</a>
             </div>
         </div>

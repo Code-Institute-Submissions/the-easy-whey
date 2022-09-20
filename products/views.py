@@ -12,6 +12,7 @@ def index(request):
     """
     Returns the homepage
     """
+    request.session['checkout_key'] = False
     return render(request, "products/index.html")
 
 
