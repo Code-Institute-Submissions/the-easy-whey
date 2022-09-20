@@ -136,28 +136,41 @@ def create_checkout_session(request):
         cancel_url=f"{DOMAIN}stripe-cancel",
     )
     
+    request.session['checkout_key'] = True
+
     return redirect(session.url, code=303)
 
 
 def stripe_success(request):
-    messages.success(request, "Order successful!")
-    order = get_object_or_404(Order, order_number=request.session["order_number"])
-    profile = get_object_or_404(UserProfile, user=request.user)
-    order.user_profile = profile
-    order.is_paid = True
-    order.save()
-    context = {}
-    return render(request, "order/success.html", context)
+    if request.session['checkout_key']:
+        messages.success(request, "Order successful!")
+        order = get_object_or_404(Order, order_number=request.session["order_number"])
+        profile = get_object_or_404(UserProfile, user=request.user)
+        order.user_profile = profile
+        order.is_paid = True
+        order.save()
+        request.session['checkout_key'] = False
+        context = {}
+        return render(request, "order/success.html", context)
+    else:
+        context = {}
+        return render(request, "order/wrong_path.html", context)
+
 
 
 def stripe_cancel(request):
-    messages.error(request, "Order was unsuccessful!")
-    order = get_object_or_404(Order, order_number=request.session["order_number"])
-    profile = get_object_or_404(UserProfile, user=request.user)
-    order.user_profile = profile
-    order.save()
-    context = {}
-    return render(request, "order/cancel.html", context)
+    if request.session['checkout_key']:
+        messages.error(request, "Order was unsuccessful!")
+        order = get_object_or_404(Order, order_number=request.session["order_number"])
+        profile = get_object_or_404(UserProfile, user=request.user)
+        order.user_profile = profile
+        order.save()
+        request.session['checkout_key'] = False
+        context = {}
+        return render(request, "order/cancel.html", context)
+    else:
+        context = {}
+        return render(request, "order/wrong_path.html", context)
 
 
 def try_again(request):
