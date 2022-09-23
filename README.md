@@ -1,4 +1,4 @@
-![Landing Page](/static/readme/XXX.PNG) # XXX CHANGE
+![Landing Page](/static/readme/landing.PNG)
 # Milestone Project 4 - The Easy Whey
 # Table of Contents
 * [Introduction](https://github.com/KNFullStack/the-easy-whey#introduction)
@@ -55,7 +55,7 @@ The project is part of a Full Stack Developer course run by CodeInstitute. This 
 
 A mockup of the web application can be seen below:
 
-![Mockup Image](/static/readme/XXX.png)
+![Mockup Image](/static/readme/mockup.png)
 
 # User Experience Design
 ## User Stories
@@ -83,20 +83,20 @@ A mockup of the web application can be seen below:
 Below are screenshots relating to some of the user stories.
 > How can I get in touch with the company?
 * There is a button that takes a user to the contact page, where a contact form is rendered, where snet messages are accessible to superusers/admins.<br>
-![User-Story-1](/static/readme/XXX.PNG)
+![User-Story-1](/static/readme/contact.PNG)
 
 > What ingredients are in the products?
 > What is the nutritional content of the products?
 * There is a button that takes a user to the product details page, where the product flavours, nutrition and ingredients are shown.<br>
-![User-Story-2](/static/readme/XXX.PNG)
+![User-Story-2](/static/readme/nutrition.PNG)
 
 > How to access my previous orders.
 * In the accounts menu there is a button for Profile, which shows a user their delivery address (if entered already) along with successful and unsuccessful orders.<br>
-![User-Story-3](/static/readme/XXX.PNG)
+![User-Story-3](/static/readme/profile.PNG)
 
 > Can I save my delivery information?
-* In the order form first page a user can click the checkbox to save their delivery information.<br>
-![User-Story-4](/static/readme/XXX.PNG)
+* In the order form first page a user can click the checkbox to save their delivery information or in their profile.<br>
+![User-Story-4](/static/readme/savedelivery.PNG)
 
 ## Structure
 Shown below are elements that correspond to the User Stories:
@@ -123,9 +123,9 @@ Shown below are elements that correspond to the User Stories:
 ### Colors
 The main colors throughout are white backgrounds, using coral colour that stands out for buttons.
 ### Images
-The landing page image is used with thanks to [usernamexxx](linkxxx).
+The images used throughout are thanks to [Open Doodles](https://www.opendoodles.com/).
 ### Wireframes
-Wireframes images can be seen below and also found in the "/assets/readme-content" folder. It contains an original design for the desktop and mobile version of the homepage.
+Wireframes images can be seen below and a PDF can be found in the "/static/readme" folder. It contains designs for the desktop and mobile version of some pages. See below for homepage:
 
 * Mobile: <br> ![Mobile Wireframe](/static/readme/XXX.png)
 * Desktop: <br> ![Desktop Wireframe](/static/readme/XXX.png)
@@ -148,7 +148,7 @@ The database is a POSTGRES database hosted with Heroku, the following models wer
     > OrderLineItem
 
 See image below for the Entity Relationship Diagram: <br>
-![ERD](/static/readme/XXX.PNG)
+[Entity Relationship Diagram](static/readme/entity.png)
 
 ### Design Deviations
 Compared to the original Wireframe there have been multiple deviations.
@@ -222,6 +222,8 @@ Technologies used are as follows.
     * Used to host the static files that the project uses.
 * [Django](https://www.djangoproject.com/)
   * Used as the backend framework in which the project was created.
+* [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline)
+  * Used to generate the entity relationship diagram.
 
 # Testing
 Django Unit Tests:
@@ -330,11 +332,16 @@ To create a local clone of the project you can follow the steps below:
      * Option 1: Click the "Download ZIP" button to download the files. This can be unzipped locally and opened with your preferred IDE.
      * Option 2: Copy the link from the HTTPS box shown. Then open your preferred IDE of choice and in the terminal window of your preferred directory, use the command "git clone" followed by the link that was copied. For example "git clone https://github.com/KNFullStack/the-easy-whey.git". This will clone the files in the selected directory.
 # Acknowledgements
-Would like to say thank you to my mentor Spencer Barriball for his help and guidance throughout the project and the entire course!
+* I would like to say thank you to my mentor Spencer Barriball for his help and guidance throughout the project and the entire course!
+* Nutritional information for flavours was taken from [Myprotein](https://www.myprotein.com/).
+* Protein descriptions and content taken from [The Protein Works](https://www.theproteinworks.com/).
 
 ## Code
-* Thank you to stackoverflow user [XXXSERNAME](XXXLINKHERE) for the help with rendering the pie chart images onto the dashboard page, link to the post can be found [here](XXXLINKHERE).
-* The login and register functionality was adapted from lessons contained with the [Code Institute](https://codeinstitute.net/) course. 
+* Thank you to stackoverflow user [Adam Nelson](https://stackoverflow.com/users/26235/adam-nelson) for the help with differentiating between multiple forms in a single view [here](https://stackoverflow.com/questions/1395807/proper-way-to-handle-multiple-forms-on-one-page-in-django).
+* The login and register functionality was adapted from lessons contained with the [Code Institute](https://codeinstitute.net/) course, using the [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html).
+* Thank you to [Goran Štimac](https://www.goranstimac.com/) for their help with Bootstrap Toasts, link to the post can be found [here](https://www.goranstimac.com/blog/how-to-add-bootstrap-5-toast-on-page-load/).
+* Thank you to [Görkem Arslan](https://garslan.medium.com/) for help with customising the 404 page, link to the post can be found [here](https://levelup.gitconnected.com/django-customize-404-error-page-72c6b6277317).
 
 ## Media
-* Thank you to [XXXUSERNAME](XXXLINKHERE) with their image that was used for the landing page background.
+* The images used throughout are thanks to [Open Doodles](https://www.opendoodles.com/).
+* Thank you to Andrew Paglinawan and [Kimberly Geswein](https://www.kimberlygeswein.com/) for their fonts: [Quicksand](https://fonts.google.com/?query=Andrew+Paglinawan) and [Shadows Into Light](https://fonts.google.com/specimen/Shadows+Into+Light?query=Kimberly+Geswein), respectively.
