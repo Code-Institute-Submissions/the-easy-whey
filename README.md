@@ -127,11 +127,11 @@ The images used throughout are thanks to [Open Doodles](https://www.opendoodles.
 ### Wireframes
 Wireframes images can be seen below and a PDF can be found in the "/static/readme" folder. It contains designs for the desktop and mobile version of some pages. See below for homepage:
 
-* Mobile: <br> ![Mobile Wireframe](/static/readme/XXX.png)
-* Desktop: <br> ![Desktop Wireframe](/static/readme/XXX.png)
+* Mobile: <br> ![Mobile Wireframe](/static/readme/wireframe-mobile.png)
+* Desktop: <br> ![Desktop Wireframe](/static/readme/wireframe-desktop.png)
 
 See link for PDF below:
-* [Wireframe](/static/readme/XXX.pdf)
+* [Wireframe](/static/readme/wireframe-pdf.pdf)
 
 ### Database
 The database is a POSTGRES database hosted with Heroku, the following models were created within Django:
@@ -151,9 +151,10 @@ See image below for the Entity Relationship Diagram: <br>
 [Entity Relationship Diagram](static/readme/entity.png)
 
 ### Design Deviations
-Compared to the original Wireframe there have been multiple deviations.
-* original XXX
-> CHANGE XXX
+Compared to the original Wireframe and Project idea there have been some minor and major deviations.
+* Planned on using a main landing image behind some hero text on both mobile and desktop views.
+> Found image packs with people drinking shakes that I felt would be better to use through the web app, giving a more consistent feel to branding.
+> Landing page idea was then removed and images inserted which are visible/hidden at different breakpoints.
 * sub based XXX
 > order based XXX
 
