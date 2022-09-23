@@ -239,7 +239,7 @@ xxx
 Manual High level testing plan:
 1. CRUD functionality in various places within the web application
   > Admin panels, user creating orders, users updating their delivery detail etc.
-2. Responsiveness from 320px to 3000px, on multiple browsers:
+2. Responsiveness from 300px to 3000px, on multiple browsers:
   > Google Chrome, Mozilla Firefox & Opera
 3. All buttons working as intended.
 4. No content areas overlapping other content areas.
