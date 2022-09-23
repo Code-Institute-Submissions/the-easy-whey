@@ -154,27 +154,28 @@ See image below for the Entity Relationship Diagram: <br>
 Compared to the original Wireframe and Project idea there have been some minor and major deviations.
 * Planned on using a main landing image behind some hero text on both mobile and desktop views.
 > Found image packs with people drinking shakes that I felt would be better to use through the web app, giving a more consistent feel to branding.
-> Landing page idea was then removed and images inserted which are visible/hidden at different breakpoints.
-* sub based XXX
-> order based XXX
+> Landing page image was then removed and images inserted which are visible/hidden at different breakpoints.
+* Originally had planned the project to use a subscription based model with Stripe payments, where users could have a custom subscription, e.g. one person can have 3 bags of one flavoured protein and 2 of another, while someone else could have 10 bags of one flavour.
+> When looking into using Stripe however I opted to change this to an order based system instead, where a user could have multiple orders instead of just 1 subscription.
 
 ## Limitations
 Currently, there some limitations:
 
-* LIMITATION 1 XXX
-* LIMITATION 2 XXX
+* Order system goes through multiple forms. This approach works however in future I would add a Basket/Bag system.
+* Refreshing during the order process (when on the page prior to Stripe, which confirms the products) causes the products to be entered again.
 
 # Features
 ## Current Features
-* FEATURE 1 XXX
-* FEATURE 2 XXX
-* FEATURE 3 XXX
+* Authentication system where users can see their previous orders, whether they were successfully completed or not.
+* Ability to store their delivery information.
+* Contact page where users can send messages.
+* Admin panel where admin users can add/edit/delete products, as well as see messages that have been sent across from users.
 
 ## Future Features
 Features that could be released in subsequent versions include:
-* FUTURE FEATURE 1 XXX
-* FUTURE FEATURE 2 XXX
-* FUTURE FEATURE 3 XXX
+* Adding items to basket/bag.
+* Adding functionality in the profile's completed orders, to reorder the same items to the same address.
+* Expanded range of products broken down into different categories, such as clothing, accessories etc.
 
 # Technologies
 Technologies used are as follows.
@@ -223,6 +224,8 @@ Technologies used are as follows.
     * Used to host the static files that the project uses.
 * [Django](https://www.djangoproject.com/)
   * Used as the backend framework in which the project was created.
+* [Stripe](https://stripe.com/gb)
+  * Used to process payments.
 * [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline)
   * Used to generate the entity relationship diagram.
 
@@ -290,16 +293,18 @@ User's comments were as follows:
   * how to address it xxx 
 
 ## Currently Known Bugs
-1. None currently known. xxx
+1. None currently known.
 
 ## Major Bugs Fixed During Development
-1. BUG
-> FIX
+1. Toasts that popped up after user interaction while on the mobile view were often too large, to the point where the x button to remove the toast was not visible.
+> Added a class to the toast container in base.html that limited the toast's width.
+2. Having multiple forms in one view posed a problem as I didn't know how to differentiate between each form submission.
+> This was fixed by searching on [stackoverflow](https://stackoverflow.com) to find a solution, a link to the post can be found in the Code section of the Acknowledgements.
 
 ## Lighthouse Results
 Images below show the Lighthouse results on both mobile and desktop:
-1. Mobile:<br>![Mobile Lighthouse](/static/readme/XXX.PNG)
-1. Desktop:<br>![Desktop Lighthouse](/static/readme/XXX.PNG)
+1. Mobile:<br>![Mobile Lighthouse](/static/readme/mobile-lighthouse.PNG)
+1. Desktop:<br>![Desktop Lighthouse](/static/readme/desktop-lighthouse.PNG)
 
 # Deployment
 ## Project Creation
@@ -332,6 +337,7 @@ To create a local clone of the project you can follow the steps below:
 3. From here there are two options:
      * Option 1: Click the "Download ZIP" button to download the files. This can be unzipped locally and opened with your preferred IDE.
      * Option 2: Copy the link from the HTTPS box shown. Then open your preferred IDE of choice and in the terminal window of your preferred directory, use the command "git clone" followed by the link that was copied. For example "git clone https://github.com/KNFullStack/the-easy-whey.git". This will clone the files in the selected directory.
+
 # Acknowledgements
 * I would like to say thank you to my mentor Spencer Barriball for his help and guidance throughout the project and the entire course!
 * Nutritional information for flavours was taken from [Myprotein](https://www.myprotein.com/).

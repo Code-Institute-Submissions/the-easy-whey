@@ -12,6 +12,8 @@ def profile(request):
     """
     Returns the profile page
     """
+    request.session['checkout_key'] = False
+    
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == "POST":
         form = UserProfileForm(request.POST, instance=profile)

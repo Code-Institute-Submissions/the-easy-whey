@@ -11,6 +11,8 @@ def contact(request):
     """
     Returns the contact page
     """
+    request.session['checkout_key'] = False
+
     if request.method == "POST":
         contact_form = ContactForm(request.POST)
         if contact_form.is_valid():

@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Shadows+Into+Light&display=swap"
         rel="stylesheet">
+    <link rel="shortcut icon" href="../static/favicon.ico">
     {% endblock %}
     {% block js %}
     <script src="https://kit.fontawesome.com/601c3b6c2f.js" crossorigin="anonymous"></script>
@@ -79,7 +80,7 @@
         </div>
     </nav>
     {% if messages %}
-    <div aria-live="polite" aria-atomic="true" class="position-absolute top-75 start-50 translate-middle border-0">
+    <div aria-live="polite" aria-atomic="true" class="position-absolute top-75 start-50 translate-middle border-0 w-75">
         {% for message in messages %}
         {% with message.level as level %}
         {% if level == 40 %}

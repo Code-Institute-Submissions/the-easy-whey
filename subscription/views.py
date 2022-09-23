@@ -18,7 +18,8 @@ def order(request):
     """
     Returns the order page
     """
-
+    request.session['checkout_key'] = False
+    
     if request.user.is_authenticated:
         return redirect(reverse('order_details'))
 
