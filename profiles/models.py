@@ -6,6 +6,9 @@ from django.dispatch import receiver
 
 # Create your models here.
 class UserProfile(models.Model):
+    """
+    Models a user profile
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     default_address_one = models.CharField(max_length=100, null=True, blank=True)
     default_address_two = models.CharField(max_length=100, null=True, blank=True)
@@ -20,6 +23,9 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
+    """
+    function to create or update a user profile
+    """
     if created:
         UserProfile.objects.create(user=instance)
     instance.userprofile.save()

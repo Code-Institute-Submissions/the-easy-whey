@@ -29,6 +29,9 @@ def contact(request):
 @login_required
 @staff_member_required
 def message_management(request):
+    """
+    Returns page which contains all messages
+    """
     all_messages = Contact.objects.all()
     context = {
         "all_messages" : all_messages
@@ -39,6 +42,9 @@ def message_management(request):
 @login_required
 @staff_member_required
 def admin_view_message(request, message_id):
+    """
+    Returns a view of a single message that has been selected
+    """
     message = Contact.objects.get(id=message_id)
     context = {
         "message" : message
@@ -50,6 +56,9 @@ def admin_view_message(request, message_id):
 @login_required
 @staff_member_required
 def admin_delete_message(request, message_id):
+    """
+    Deletes a selected message
+    """
     message = Contact.objects.get(id=message_id)
     message.delete()
     return redirect(reverse('message_management'))

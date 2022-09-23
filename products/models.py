@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Product(models.Model):
+    """
+    Model for the individual protein powder
+    """
     flavour = models.CharField(max_length=50, null=False, blank=False)
     description = models.CharField(max_length=200, null=False, blank=False)
     price = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False, default="6.99")
@@ -11,7 +14,9 @@ class Product(models.Model):
 
 
 class Nutrition(models.Model):
-
+    """
+    Model for the nutritional content of products
+    """
     class Meta:
         verbose_name_plural = "Nutrition"
 
@@ -28,6 +33,9 @@ class Nutrition(models.Model):
 
 
 class Ingredient(models.Model):
+    """
+    Model for ingredients for each product
+    """
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ingredient')
     name = models.CharField(max_length=50, blank=False, null=False, default="You need an ingredient")
  

@@ -3,6 +3,9 @@ from django.db import models
 # Create your models here.
 
 class Contact(models.Model):
+    """
+    Model for the contact form
+    """
     class Meta:
         verbose_name_plural = "Contact"
 

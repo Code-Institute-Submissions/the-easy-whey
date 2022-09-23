@@ -27,7 +27,9 @@ def order(request):
     return render(request, "order/order.html", context)
 
 def order_details(request):
-
+    """
+    Returns first page of the order form
+    """
     if request.method == "POST":
         order_details_form = OrderDetailsForm(request.POST)
         if order_details_form.is_valid():
@@ -53,7 +55,6 @@ def order_details(request):
 
             return render(request, 'order/order_items.html', context)
 
-
     user_information = get_object_or_404(UserProfile, user=request.user)
     instance_data = {
         "phone_number": user_information.default_phone_number,
@@ -72,6 +73,9 @@ def order_details(request):
 
 
 def order_items(request):
+    """
+    Returns second page of the order form
+    """
     if request.method == "POST":
         order_items_form = OrderItemsForm(request.POST)
         if order_items_form.is_valid():
@@ -104,11 +108,17 @@ def order_items(request):
 
 
 def payment(request):
+    """
+    Returns a page highlighting the order details
+    """
     context = {}
     return render(request, "order/payment.html", context)
 
 
 def create_checkout_session(request):
+    """
+    Stripe checkout system
+    """
     DOMAIN = Site.objects.get_current()
     order = get_object_or_404(Order, order_number=request.session["order_number"])
     order_lineitems = order.lineitems.all()
@@ -143,6 +153,9 @@ def create_checkout_session(request):
 
 
 def stripe_success(request):
+    """
+    Returns a success page when stripe payment is successful
+    """
     if request.session['checkout_key']:
         messages.success(request, "Order successful!")
         order = get_object_or_404(Order, order_number=request.session["order_number"])
@@ -160,6 +173,9 @@ def stripe_success(request):
 
 
 def stripe_cancel(request):
+    """
+    Returns a page to let the user know the order was not completed
+    """
     if request.session['checkout_key']:
         messages.error(request, "Order was unsuccessful!")
         order = get_object_or_404(Order, order_number=request.session["order_number"])
@@ -175,6 +191,9 @@ def stripe_cancel(request):
 
 
 def try_again(request):
+    """
+    view to delete the current order and restart 
+    """
     order = get_object_or_404(Order, order_number=request.session["order_number"])
     order.delete()
     return redirect(reverse('order'))

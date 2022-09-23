@@ -34,7 +34,9 @@ def profile(request):
 
 @login_required
 def order_history(request, order_number):
-    
+    """
+    Shows details of an order
+    """
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user == order.user_profile.user:

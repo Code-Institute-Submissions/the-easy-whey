@@ -176,6 +176,7 @@ Features that could be released in subsequent versions include:
 * Adding items to basket/bag.
 * Adding functionality in the profile's completed orders, to reorder the same items to the same address.
 * Expanded range of products broken down into different categories, such as clothing, accessories etc.
+* A new app, or modifying an existing app for reviews.
 
 # Technologies
 Technologies used are as follows.
@@ -242,7 +243,7 @@ Manual High level testing plan:
   > Google Chrome, Mozilla Firefox & Opera
 3. All buttons working as intended.
 4. No content areas overlapping other content areas.
-5. Attempts to force errors with HTML forms.
+5. Testing forms.
 
 Test Results can be found here: [Test Results](/static/readme/test-result.xlsx)
 
@@ -269,22 +270,36 @@ Python files were run through the [pep8online](http://pep8online.com/).
 > These were all corrected and no errors now show.
 
 ## User Scenarios - Testing
-How does the web application design enable the goals of a first time, returning OR frequent user and admins?<br>
+How does the web application design enable the goals of a first time users, returning users, frequent users and admins?<br>
 ### First Time User
-1. GOAL xxx
-  * WHAT I DID TO TEST xxx
+1. What can I use the web application for, what products can I purchase?
+> Homepage explains what the product is, with a button and navigation link showing the current protein powders available. 
+2. Where can I register?
+> Under the Accounts drop down there is a link, but also when trying to access pages that require you to be logged in, sign up buttons are displayed.
+3. How can I get in touch with the company?
+> Navigation link in the navbar for Contact that allows users to send messages.
+4. What ingredients are in the products?
+> Found by clicking the Products navigation link or the Product Details button, an accordion is displayed for each flavour. 
+5. What is the nutritional content of the products?
+> Found by clicking the Products navigation link or the Product Details button, an accordion is displayed for each flavour. 
 
 ### Returning User
-1. GOAL xxx
-  * WHAT I DID xxx
+1. Where can I log in?
+> Links displayed around the site that take users to a log in page, especially when trying to access pages that requires a user to be logged in.
+2. How to access my previous orders.
+> Navigating to the Accounts dropdown and then to Profile. Completed and Incomplete orders are displayed.
+3. How can I make an order?
+> The Order button on the homepage, as well as the Order link in the navigation takes users through the checkout forms.
 
 ### Frequent Users
-1. GOAL xxx
-  * WHAT I DID xxx
+1. Can I save my delivery information?
+2. How can I edit my delivery information?
+> In the Profile section users can save their delivery information which is rendered in the form when ordering. Users can edit their information in their profile, or through the first Order form which asks if using wish to save their information.
 
 ### Admin Users
-1. GOAL xxx
-  * WHAT I DID xxx
+1. Can I add/edit/delete products/ingredients/nutritional information from within the web application?
+2. How can I check if there have been messages sent from customers?
+> Links that appear only for staff users/admin users direct the relevant users to the pages that control these operations.
 
 ## User Testing
 A user kindly volunteered to test the web application once overall development was complete.
@@ -328,7 +343,11 @@ The project was published using [Heroku](https://www.heroku.com/), the following
 5. Navigate back to the "Deploy" branch and click "Enable Automatic Deployment". Heroku will now start to gather data from the assocaited GitHub repository. Future `git push` commands in GitPod will save the data to GitHub and to Heroku, where a live version of the project can be found.
 
 ## AWS
-CONTENT HERE # XXX CHANGE
+AWS was used to store static files and images if they are needed on the website itself. Using AWS S3, the cloud based storage service. Some high levels steps to get this set up were as follows:
+1. Navigate to AWS S3 and create a bucket with unblocked public access. CORS configuration and Bucket policy was applied as per the course content.
+2. Navigate to IAM to create a a group for a user that is to be created, then create the user within the group. Give this group access to the S3 bucket that was created.
+3. This S3 Bucket was then connected to our deployed app on Heroku using the relevant secret keys.
+4. Within the projects settings file, add the appropriate settings to connect AWS and the project, again as per the course content.
 
 ## Local Clone
 To create a local clone of the project you can follow the steps below:

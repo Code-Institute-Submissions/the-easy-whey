@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from .models import Product, Nutrition, Ingredient
 from .forms import ProductForm, NutritionForm, IngredientEditForm, IngredientForm
 
@@ -37,6 +37,9 @@ def product_management(request):
 @login_required
 @staff_member_required
 def admin_add(request):
+    """
+    View to add new product, nutrition or ingredients
+    """
     if request.method == "POST":
         if "product_form_submit_button" in request.POST:
             form = ProductForm(request.POST)
@@ -76,6 +79,9 @@ def admin_add(request):
 @login_required
 @staff_member_required
 def admin_edit_list(request): 
+    """
+    Displays the list of products that can be selected to be edited
+    """
     items = Product.objects.all()
     template = 'products/admin_edit_list.html'
     context = {
@@ -87,7 +93,9 @@ def admin_edit_list(request):
 @login_required
 @staff_member_required
 def admin_edit_item_ingredient(request, item_id, ingredient_id): 
-
+    """
+    View to edit a products ingredient
+    """
     ingredient = get_object_or_404(Ingredient, id=ingredient_id)
     ingredient_form = IngredientEditForm(instance=ingredient)
 
@@ -111,21 +119,27 @@ def admin_edit_item_ingredient(request, item_id, ingredient_id):
 @login_required
 @staff_member_required
 def admin_edit_item(request, item_id):
+    """
+    View to edit a products information
+    """
     item_product = False
     try:
         item_product = Product.objects.get(id=item_id)
-    except:
-        print("Item not found - Product")
+    except Exception as e:
+        messages.error(request, ('Sorry, there has been an error.'))
+        return HttpResponse(content=e, status=400)
     item_nutrition = False
     try:
         item_nutrition = Nutrition.objects.get(product_id=item_id)
-    except:
-        print("Item not found - Nutrition")
+    except Exception as e:
+        messages.error(request, ('Sorry, there has been an error.'))
+        return HttpResponse(content=e, status=400)
     item_ingredients = False
     try:
         item_ingredients = Ingredient.objects.filter(product__id=item_id)
-    except:
-        print("Item not found - Ingredients")
+    except Exception as e:
+        messages.error(request, ('Sorry, there has been an error.'))
+        return HttpResponse(content=e, status=400)
     if request.method == "POST":
         if "product_form_edit_button" in request.POST:
             form = ProductForm(request.POST, instance=item_product)
@@ -175,6 +189,9 @@ def admin_edit_item(request, item_id):
 @login_required
 @staff_member_required
 def admin_delete(request, item_id):
+    """
+    view to delete product
+    """
     item = get_object_or_404(Product, id=item_id)
     item.delete()
     messages.success(request, "Successfully deleted Product!")
@@ -183,6 +200,9 @@ def admin_delete(request, item_id):
 @login_required
 @staff_member_required
 def delete_ingredient(request, ingredient_id):
+    """
+    view to delete an ingredient
+    """
     item = get_object_or_404(Ingredient, id=ingredient_id)
     item.delete()
     messages.success(request, "Successfully deleted ingredient!")
