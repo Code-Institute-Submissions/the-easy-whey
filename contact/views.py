@@ -7,6 +7,8 @@ from .forms import ContactForm
 from .models import Contact
 
 # Create your views here.
+
+
 def contact(request):
     """
     Returns the contact page
@@ -34,7 +36,7 @@ def message_management(request):
     """
     all_messages = Contact.objects.all()
     context = {
-        "all_messages" : all_messages
+        "all_messages": all_messages
     }
     return render(request, "contact/all_messages.html", context)
 
@@ -47,7 +49,7 @@ def admin_view_message(request, message_id):
     """
     message = Contact.objects.get(id=message_id)
     context = {
-        "message" : message
+        "message": message
     }
 
     return render(request, "contact/view_message.html", context)

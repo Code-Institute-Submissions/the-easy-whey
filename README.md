@@ -238,7 +238,7 @@ xxx
 
 Manual High level testing plan:
 1. CRUD functionality in various places within the web application
-  > Admin panels, user creating orders, users updating their delivery detail etc.
+  > Admin panels and contact form etc.
 2. Responsiveness from 300px to 3000px, on multiple browsers:
   > Google Chrome, Mozilla Firefox & Opera
 3. All buttons working as intended.
@@ -265,9 +265,13 @@ JavaScript file was run through the [JSHint](https://jshint.com/).
 > ERRORS? XXX
 
 ### Python Validation
-Python files were run through the [pep8online](http://pep8online.com/).
-* Warnings were found regarding line length, white spaces around assignment operators and spaces in empty lines.
-> These were all corrected and no errors now show.
+Python files were run through the [pythonchecker](https://www.pythonchecker.com/).
+* Warnings were found regarding line length, white spaces around assignment operators, spaces in empty lines and no new line at end.
+> These were all corrected.
+* Another warning appeared in places: `Class 'x' has no 'objects' member`.
+> These are just warnings from pylint and therefore no "addressed".
+
+To note, in Gitpod the "Problems" tab in the bottom left sometimes conflicted with what pythonchecker suggested. xxx
 
 ## User Scenarios - Testing
 How does the web application design enable the goals of a first time users, returning users, frequent users and admins?<br>
