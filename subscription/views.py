@@ -77,6 +77,11 @@ def order_items(request):
     """
     Returns second page of the order form
     """
+    if "order_number" not in request.session:
+        messages.error(request, "An error occured, please try again.")
+        return redirect(reverse('order_details'))
+    order_items_form = OrderItemsForm()
+
     if request.method == "POST":
         order_items_form = OrderItemsForm(request.POST)
         if order_items_form.is_valid():
@@ -97,11 +102,6 @@ def order_items(request):
             }
             return render(request, "order/payment.html", context)
 
-    if "order_number" not in request.session:
-        messages.error(request, "An error occured, please try again.")
-        return redirect(reverse('order_details'))
-
-    order_items_form = OrderItemsForm()
     context = {
         "order_items_form": order_items_form,
     }
