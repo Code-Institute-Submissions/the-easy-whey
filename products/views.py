@@ -20,6 +20,7 @@ def product_detail(request):
     """
     Returns the product details page
     """
+    request.session['checkout_key'] = False
     context = {
         "products": Product.objects.all(),
     }

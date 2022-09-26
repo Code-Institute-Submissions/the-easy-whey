@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from easy_whey.validators import phone_regex
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -14,7 +15,7 @@ class UserProfile(models.Model):
     default_address_two = models.CharField(max_length=100, null=True, blank=True)
     default_town_city = models.CharField(max_length=50, null=True, blank=True)
     default_postcode = models.CharField(max_length=50, null=True, blank=True)
-    default_phone_number = models.CharField(max_length=50, null=True, blank=True)
+    default_phone_number = models.CharField(validators=[phone_regex], max_length=11, null=True, blank=True)
     default_county = models.CharField(max_length=50, null=True, blank=True)
     default_country = CountryField(blank_label="Country", null=True, blank=True)
 

@@ -30,6 +30,18 @@ def order_details(request):
     """
     Returns first page of the order form
     """
+    user_information = get_object_or_404(UserProfile, user=request.user)
+    instance_data = {
+        "phone_number": user_information.default_phone_number,
+        "address_one": user_information.default_address_one,
+        "address_two": user_information.default_address_two,
+        "postcode": user_information.default_postcode,
+        "town_city": user_information.default_town_city,
+        "county": user_information.default_county,
+        "country": user_information.default_country,
+    }
+    order_details_form = OrderDetailsForm(initial=instance_data)
+
     if request.method == "POST":
         order_details_form = OrderDetailsForm(request.POST)
         if order_details_form.is_valid():
@@ -55,17 +67,6 @@ def order_details(request):
 
             return render(request, 'order/order_items.html', context)
 
-    user_information = get_object_or_404(UserProfile, user=request.user)
-    instance_data = {
-        "phone_number": user_information.default_phone_number,
-        "address_one": user_information.default_address_one,
-        "address_two": user_information.default_address_two,
-        "postcode": user_information.default_postcode,
-        "town_city": user_information.default_town_city,
-        "county": user_information.default_county,
-        "country": user_information.default_country,
-    }
-    order_details_form = OrderDetailsForm(initial=instance_data)
     context = {
         "order_details_form": order_details_form,
     }

@@ -367,6 +367,7 @@ To create a local clone of the project you can follow the steps below:
 * The login and register functionality was adapted from lessons contained with the [Code Institute](https://codeinstitute.net/) course, using the [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html).
 * Thank you to [Goran Štimac](https://www.goranstimac.com/) for their help with Bootstrap Toasts, link to the post can be found [here](https://www.goranstimac.com/blog/how-to-add-bootstrap-5-toast-on-page-load/).
 * Thank you to [Görkem Arslan](https://garslan.medium.com/) for help with customising the 404 page, link to the post can be found [here](https://levelup.gitconnected.com/django-customize-404-error-page-72c6b6277317).
+* Thank you to [engin_ipek](https://stackoverflow.com/users/6505916/engin-ipek) for his post which helped me with phone number validation, see the post [here](https://stackoverflow.com/questions/59480134/how-to-store-a-phone-number-django).
 
 ## Media
 * The images used throughout are thanks to [Open Doodles](https://www.opendoodles.com/).

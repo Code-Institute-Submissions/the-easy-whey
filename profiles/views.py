@@ -15,14 +15,13 @@ def profile(request):
     request.session['checkout_key'] = False
     
     profile = get_object_or_404(UserProfile, user=request.user)
+    form = UserProfileForm(instance=profile)
     if request.method == "POST":
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile saved.")
 
-    form = UserProfileForm(instance=profile)
-    
     orders = profile.orders.all()
     context = {
              "form": form,
