@@ -129,18 +129,43 @@ def admin_edit_item(request, item_id):
     except Exception as e:
         messages.error(request, ('Sorry, there has been an error.'))
         return HttpResponse(content=e, status=400)
+
     item_nutrition = False
     try:
-        item_nutrition = Nutrition.objects.get(product_id=item_id)
+        item_nutrition = Nutrition.objects.filter(product_id=item_id)
     except Exception as e:
         messages.error(request, ('Sorry, there has been an error.'))
         return HttpResponse(content=e, status=400)
+
     item_ingredients = False
     try:
         item_ingredients = Ingredient.objects.filter(product__id=item_id)
     except Exception as e:
         messages.error(request, ('Sorry, there has been an error.'))
         return HttpResponse(content=e, status=400)
+          
+    template = 'products/admin_edit_item.html'
+    items = Ingredient.objects.filter(product_id=item_id)
+    product_id = item_id
+
+    context = {
+        "items": items,
+        "product_id": product_id,
+        }
+
+    ingredient_forms = []
+    if item_product:
+        product_form = ProductForm(instance=item_product)
+        context["product_form"] = product_form
+    if item_nutrition:
+        nutrition_form = NutritionForm(instance=item_nutrition.first())
+        context["nutrition_form"] = nutrition_form
+    if item_ingredients:
+        for ingredient in item_ingredients:
+            ingredient_forms.append(IngredientForm(instance=ingredient))
+    
+    context["ingredient_forms"] = ingredient_forms
+
     if request.method == "POST":
         if "product_form_edit_button" in request.POST:
             form = ProductForm(request.POST, instance=item_product)
@@ -150,7 +175,7 @@ def admin_edit_item(request, item_id):
             else:
                 return redirect(reverse('product_management'))
         if "nutrition_form_edit_button" in request.POST:
-            form = NutritionForm(request.POST, instance=item_nutrition)
+            form = NutritionForm(request.POST, instance=item_nutrition.first())
             if form.is_valid():
                 form.save()
                 return redirect(reverse('admin_edit_list'))
@@ -163,27 +188,6 @@ def admin_edit_item(request, item_id):
                 return redirect(reverse('admin_edit_list'))
             else:
                 return redirect(reverse('product_management'))
-          
-    template = 'products/admin_edit_item.html'
-    items = Ingredient.objects.filter(product_id=item_id)
-    product_id = item_id
-
-    context = {
-        "items": items,
-        "product_id": product_id,
-        }
-    ingredient_forms = []
-    if item_product:
-        product_form = ProductForm(instance=item_product)
-        context["product_form"] = product_form
-    if item_nutrition:
-        nutrition_form = NutritionForm(instance=item_nutrition)
-        context["nutrition_form"] = nutrition_form
-    if item_ingredients:
-        for ingredient in item_ingredients:
-            ingredient_forms.append(IngredientForm(instance=ingredient))
-    
-    context["ingredient_forms"] = ingredient_forms
 
     return render(request, template, context)
 

@@ -315,6 +315,8 @@ User's comments were as follows:
 > Added a class to the toast container in base.html that limited the toast's width.
 2. Having multiple forms in one view posed a problem as I didn't know how to differentiate between each form submission.
 > This was fixed by searching on [stackoverflow](https://stackoverflow.com) to find a solution, a link to the post can be found in the Code section of the Acknowledgements.
+3. Not able to view a new product that would be added via the admin panel if nutrition and ingredients were not also populated.
+> Fixed by changing the database query type to filter and accessing the first database result.
 
 ## Lighthouse Results
 Images below show the Lighthouse results on both mobile and desktop:
