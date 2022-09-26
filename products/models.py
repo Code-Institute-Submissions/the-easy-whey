@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Product(models.Model):
@@ -21,12 +22,12 @@ class Nutrition(models.Model):
         verbose_name_plural = "Nutrition"
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='nutrition')
-    energy = models.FloatField()
-    fat = models.FloatField()
-    carbohydrate = models.FloatField()
-    sugars = models.FloatField()
-    protein = models.FloatField()
-    salt = models.FloatField()
+    energy = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(999.99)])
+    fat = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(20.00)])
+    carbohydrate = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(20.00)])
+    sugars = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(20.00)])
+    protein = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(100.00)])
+    salt = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.00)])
 
     def __str__(self):
         return f"{self.product} nutrition"

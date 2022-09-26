@@ -41,6 +41,17 @@ def admin_add(request):
     """
     View to add new product, nutrition or ingredients
     """
+    product_form = ProductForm()
+    nutrition_form = NutritionForm()
+    ingredient_form = IngredientForm()
+
+    template = 'products/admin_add.html'
+    context = {
+        "product_form": product_form,
+        "nutrition_form": nutrition_form,
+        "ingredient_form": ingredient_form,
+    }
+
     if request.method == "POST":
         if "product_form_submit_button" in request.POST:
             form = ProductForm(request.POST)
@@ -49,32 +60,29 @@ def admin_add(request):
                 messages.success(request, "Successfully added Product!")
                 return redirect(reverse('admin_add'))
             else:
-                return redirect(reverse('product_management'))
+                messages.error(request, "The form was not valid and therefore failed.")
+                return redirect(reverse('admin_add'))
+
         if "nutrition_form_submit_button" in request.POST:
             form = NutritionForm(request.POST)
             if form.is_valid():
                 form.save()
+                messages.success(request, "Successfully added Nutrition!")
                 return redirect(reverse('admin_add'))
             else:
-                return redirect(reverse('product_management'))
+                messages.error(request, "The form was not valid and therefore failed.")
+                return redirect(reverse('admin_add'))
+            
         if "ingredient_form_submit_button" in request.POST:
             form = IngredientForm(request.POST)
             if form.is_valid():
                 form.save()
+                messages.success(request, "Successfully added Ingredient!")
                 return redirect(reverse('admin_add'))
             else:
-                return redirect(reverse('product_management'))
-    else:
-        product_form = ProductForm()
-        nutrition_form = NutritionForm()
-        ingredient_form = IngredientForm()
+                messages.error(request, "The form was not valid and therefore failed.")
+                return redirect(reverse('admin_add'))
 
-    template = 'products/admin_add.html'
-    context = {
-        "product_form": product_form,
-        "nutrition_form": nutrition_form,
-        "ingredient_form": ingredient_form
-    }
     return render(request, template, context)
 
 @login_required
