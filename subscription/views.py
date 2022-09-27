@@ -50,10 +50,6 @@ def order_details(request):
             request.session['order_number'] = (
                 order_details_form.instance.order_number
             )
-            order_items_form = OrderItemsForm()
-            context = {
-                "order_items_form": order_items_form,
-            }
             request.session['save_information'] = (
                 'save_information' in request.POST
                 )
@@ -86,7 +82,7 @@ def order_details(request):
                                  "Your profile data has been updated."
                                  )
 
-            return render(request, 'order/order_items.html', context)
+            return redirect(reverse('order_items'))
 
     context = {
         "order_details_form": order_details_form,
@@ -132,8 +128,7 @@ def order_items(request):
                     quantity=quantity,
                 ).save()
 
-            context = {"order": order}
-            return render(request, "order/payment.html", context)
+            return redirect(reverse('payment'))
 
     context = {"order_items_form": order_items_form}
     return render(request, "order/order_items.html", context)
@@ -143,7 +138,10 @@ def payment(request):
     """
     Returns a page highlighting the order details
     """
-    context = {}
+    order = get_object_or_404(Order, order_number=request.session[
+        "order_number"
+    ])
+    context = {"order": order}
     return render(request, "order/payment.html", context)
 
 
