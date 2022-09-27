@@ -1,10 +1,12 @@
 from django import forms
 from .models import UserProfile
 
+
 class UserProfileForm(forms.ModelForm):
     """
     Creates the form for the user profile to be created
     """
+
     class Meta:
         model = UserProfile
         exclude = ("user",)

@@ -22,9 +22,7 @@ def contact(request):
             contact_form.save()
             messages.success(request, "Successfully sent message!")
 
-    context = {
-        "form": contact_form
-    }
+    context = {"form": contact_form}
     return render(request, "contact/contact.html", context)
 
 
@@ -35,9 +33,7 @@ def message_management(request):
     Returns page which contains all messages
     """
     all_messages = Contact.objects.all()
-    context = {
-        "all_messages": all_messages
-    }
+    context = {"all_messages": all_messages}
     return render(request, "contact/all_messages.html", context)
 
 
@@ -48,9 +44,7 @@ def admin_view_message(request, message_id):
     Returns a view of a single message that has been selected
     """
     message = Contact.objects.get(id=message_id)
-    context = {
-        "message": message
-    }
+    context = {"message": message}
 
     return render(request, "contact/view_message.html", context)
 

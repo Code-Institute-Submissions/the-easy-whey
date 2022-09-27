@@ -1,30 +1,31 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
-from django.contrib import messages
 from django.conf import settings
-from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.sites.models import Site
 import stripe
-from .forms import OrderDetailsForm, OrderItemsForm
-from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
-from profiles.forms import UserProfileForm
-from django.contrib.sites.models import Site
+from .forms import OrderDetailsForm, OrderItemsForm
+from .models import Order, OrderLineItem
+
 
 # Create your views here.
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def order(request):
     """
     Returns the order page
     """
     request.session['checkout_key'] = False
-    
+
     if request.user.is_authenticated:
         return redirect(reverse('order_details'))
 
     context = {}
     return render(request, "order/order.html", context)
+
 
 def order_details(request):
     """
@@ -46,24 +47,44 @@ def order_details(request):
         order_details_form = OrderDetailsForm(request.POST)
         if order_details_form.is_valid():
             order_details_form.save()
-            request.session['order_number'] = order_details_form.instance.order_number
+            request.session['order_number'] = (
+                order_details_form.instance.order_number
+            )
             order_items_form = OrderItemsForm()
             context = {
                 "order_items_form": order_items_form,
             }
-            request.session['save_information'] = 'save_information' in request.POST
+            request.session['save_information'] = (
+                'save_information' in request.POST
+                )
             if request.session['save_information']:
 
                 profile = get_object_or_404(UserProfile, user=request.user)
-                profile.default_address_one = order_details_form.cleaned_data["address_one"]
-                profile.default_address_two = order_details_form.cleaned_data["address_two"]
-                profile.default_town_city = order_details_form.cleaned_data["town_city"]
-                profile.default_postcode = order_details_form.cleaned_data["postcode"]
-                profile.default_phone_number = order_details_form.cleaned_data["phone_number"]
-                profile.default_county = order_details_form.cleaned_data["county"]
-                profile.default_country = order_details_form.cleaned_data["country"]
+                profile.default_address_one = order_details_form.cleaned_data[
+                    "address_one"
+                ]
+                profile.default_address_two = order_details_form.cleaned_data[
+                    "address_two"
+                ]
+                profile.default_town_city = order_details_form.cleaned_data[
+                    "town_city"
+                ]
+                profile.default_postcode = order_details_form.cleaned_data[
+                    "postcode"
+                ]
+                profile.default_phone_number = order_details_form.cleaned_data[
+                    "phone_number"
+                ]
+                profile.default_county = order_details_form.cleaned_data[
+                    "county"
+                ]
+                profile.default_country = order_details_form.cleaned_data[
+                    "country"
+                ]
                 profile.save()
-                messages.success(request, "Your profile data has been updated.")
+                messages.success(request,
+                                 "Your profile data has been updated."
+                                 )
 
             return render(request, 'order/order_items.html', context)
 
@@ -85,26 +106,36 @@ def order_items(request):
     if request.method == "POST":
         order_items_form = OrderItemsForm(request.POST)
         if order_items_form.is_valid():
-            order = get_object_or_404(Order, order_number=request.session["order_number"])
+            order = get_object_or_404(
+                Order, order_number=request.session["order_number"]
+            )
 
             order_data = {
-                "Chocolate Whey Protein" : order_items_form.cleaned_data['chocolate_quantity'],
-                "Banana Whey Protein" : order_items_form.cleaned_data['banana_quantity'],
-                "Strawberry Whey Protein" : order_items_form.cleaned_data['strawberry_quantity'],
-                "Cookies & Cream Whey Protein" : order_items_form.cleaned_data['cookies_and_cream_quantity'],
+                "Chocolate Whey Protein": order_items_form.cleaned_data[
+                    "chocolate_quantity"
+                ],
+                "Banana Whey Protein": order_items_form.cleaned_data[
+                    "banana_quantity"
+                ],
+                "Strawberry Whey Protein": order_items_form.cleaned_data[
+                    "strawberry_quantity"
+                ],
+                "Cookies & Cream Whey Protein": order_items_form.cleaned_data[
+                    "cookies_and_cream_quantity"
+                ],
             }
 
             for flavour, quantity in order_data.items():
-                OrderLineItem(order=order, product=get_object_or_404(Product, flavour=flavour), quantity=quantity).save()
+                OrderLineItem(
+                    order=order,
+                    product=get_object_or_404(Product, flavour=flavour),
+                    quantity=quantity,
+                ).save()
 
-            context = {
-                "order": order
-            }
+            context = {"order": order}
             return render(request, "order/payment.html", context)
 
-    context = {
-        "order_items_form": order_items_form,
-    }
+    context = {"order_items_form": order_items_form}
     return render(request, "order/order_items.html", context)
 
 
@@ -121,7 +152,9 @@ def create_checkout_session(request):
     Stripe checkout system
     """
     DOMAIN = Site.objects.get_current()
-    order = get_object_or_404(Order, order_number=request.session["order_number"])
+    order = get_object_or_404(
+                Order, order_number=request.session["order_number"]
+            )
     order_lineitems = order.lineitems.all()
     items = []
 
@@ -147,7 +180,7 @@ def create_checkout_session(request):
         success_url=f"{DOMAIN}stripe-success",
         cancel_url=f"{DOMAIN}stripe-cancel",
     )
-    
+
     request.session['checkout_key'] = True
 
     return redirect(session.url, code=303)
@@ -159,7 +192,9 @@ def stripe_success(request):
     """
     if request.session['checkout_key']:
         messages.success(request, "Order successful!")
-        order = get_object_or_404(Order, order_number=request.session["order_number"])
+        order = get_object_or_404(
+                Order, order_number=request.session["order_number"]
+            )
         profile = get_object_or_404(UserProfile, user=request.user)
         order.user_profile = profile
         order.is_paid = True
@@ -172,14 +207,15 @@ def stripe_success(request):
         return render(request, "order/wrong_path.html", context)
 
 
-
 def stripe_cancel(request):
     """
     Returns a page to let the user know the order was not completed
     """
     if request.session['checkout_key']:
         messages.error(request, "Order was unsuccessful!")
-        order = get_object_or_404(Order, order_number=request.session["order_number"])
+        order = get_object_or_404(
+                Order, order_number=request.session["order_number"]
+            )
         profile = get_object_or_404(UserProfile, user=request.user)
         order.user_profile = profile
         order.save()
@@ -193,8 +229,10 @@ def stripe_cancel(request):
 
 def try_again(request):
     """
-    view to delete the current order and restart 
+    view to delete the current order and restart
     """
-    order = get_object_or_404(Order, order_number=request.session["order_number"])
+    order = get_object_or_404(
+            Order, order_number=request.session["order_number"]
+        )
     order.delete()
     return redirect(reverse('order'))

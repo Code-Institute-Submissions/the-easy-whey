@@ -1,9 +1,20 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import (
+    render,
+    redirect,
+    reverse,
+    get_object_or_404,
+    HttpResponse
+    )
 from .models import Product, Nutrition, Ingredient
-from .forms import ProductForm, NutritionForm, IngredientEditForm, IngredientForm
+from .forms import (
+    ProductForm,
+    NutritionForm,
+    IngredientEditForm,
+    IngredientForm
+    )
 
 # Create your views here.
 
@@ -27,6 +38,7 @@ def product_detail(request):
 
     return render(request, "products/product_detail.html", context)
 
+
 @login_required
 @staff_member_required
 def product_management(request):
@@ -34,6 +46,7 @@ def product_management(request):
     Returns the product management page
     """
     return render(request, "products/product_management.html")
+
 
 @login_required
 @staff_member_required
@@ -60,7 +73,8 @@ def admin_add(request):
                 messages.success(request, "Successfully added Product!")
                 return redirect(reverse('admin_add'))
             else:
-                messages.error(request, "The form was not valid and therefore failed.")
+                messages.error(request,
+                               "The form was not valid and therefore failed.")
                 return redirect(reverse('admin_add'))
 
         if "nutrition_form_submit_button" in request.POST:
@@ -70,9 +84,10 @@ def admin_add(request):
                 messages.success(request, "Successfully added Nutrition!")
                 return redirect(reverse('admin_add'))
             else:
-                messages.error(request, "The form was not valid and therefore failed.")
+                messages.error(request,
+                               "The form was not valid and therefore failed.")
                 return redirect(reverse('admin_add'))
-            
+
         if "ingredient_form_submit_button" in request.POST:
             form = IngredientForm(request.POST)
             if form.is_valid():
@@ -80,28 +95,28 @@ def admin_add(request):
                 messages.success(request, "Successfully added Ingredient!")
                 return redirect(reverse('admin_add'))
             else:
-                messages.error(request, "The form was not valid and therefore failed.")
+                messages.error(request,
+                               "The form was not valid and therefore failed.")
                 return redirect(reverse('admin_add'))
 
     return render(request, template, context)
 
+
 @login_required
 @staff_member_required
-def admin_edit_list(request): 
+def admin_edit_list(request):
     """
     Displays the list of products that can be selected to be edited
     """
     items = Product.objects.all()
     template = 'products/admin_edit_list.html'
-    context = {
-        "items": items
-    }
+    context = {"items": items}
     return render(request, template, context)
 
 
 @login_required
 @staff_member_required
-def admin_edit_item_ingredient(request, item_id, ingredient_id): 
+def admin_edit_item_ingredient(request, item_id, ingredient_id):
     """
     View to edit a products ingredient
     """
@@ -134,24 +149,24 @@ def admin_edit_item(request, item_id):
     item_product = False
     try:
         item_product = Product.objects.get(id=item_id)
-    except Exception as e:
+    except Exception as error:
         messages.error(request, ('Sorry, there has been an error.'))
-        return HttpResponse(content=e, status=400)
+        return HttpResponse(content=error, status=400)
 
     item_nutrition = False
     try:
         item_nutrition = Nutrition.objects.filter(product_id=item_id)
-    except Exception as e:
+    except Exception as error:
         messages.error(request, ('Sorry, there has been an error.'))
-        return HttpResponse(content=e, status=400)
+        return HttpResponse(content=error, status=400)
 
     item_ingredients = False
     try:
         item_ingredients = Ingredient.objects.filter(product__id=item_id)
-    except Exception as e:
+    except Exception as error:
         messages.error(request, ('Sorry, there has been an error.'))
-        return HttpResponse(content=e, status=400)
-          
+        return HttpResponse(content=error, status=400)
+
     template = 'products/admin_edit_item.html'
     items = Ingredient.objects.filter(product_id=item_id)
     product_id = item_id
@@ -171,7 +186,7 @@ def admin_edit_item(request, item_id):
     if item_ingredients:
         for ingredient in item_ingredients:
             ingredient_forms.append(IngredientForm(instance=ingredient))
-    
+
     context["ingredient_forms"] = ingredient_forms
 
     if request.method == "POST":
@@ -199,6 +214,7 @@ def admin_edit_item(request, item_id):
 
     return render(request, template, context)
 
+
 @login_required
 @staff_member_required
 def admin_delete(request, item_id):
@@ -208,7 +224,8 @@ def admin_delete(request, item_id):
     item = get_object_or_404(Product, id=item_id)
     item.delete()
     messages.success(request, "Successfully deleted Product!")
-    return render(request, "products/product_management.html")
+    return redirect(reverse('product_management'))
+
 
 @login_required
 @staff_member_required

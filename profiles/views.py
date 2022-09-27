@@ -1,19 +1,26 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, get_list_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import (
+    render,
+    redirect,
+    reverse,
+    get_object_or_404,
+    )
+from subscription.models import Order
 from .forms import UserProfileForm
 from .models import UserProfile
-from subscription.models import Order
 
 
 # Create your views here.
+
+
 @login_required
 def profile(request):
     """
     Returns the profile page
     """
     request.session['checkout_key'] = False
-    
+
     profile = get_object_or_404(UserProfile, user=request.user)
     form = UserProfileForm(instance=profile)
     if request.method == "POST":
@@ -41,12 +48,10 @@ def order_history(request, order_number):
     if request.user == order.user_profile.user:
 
         template = 'profiles/view_order.html'
-        context = {
-            "order": order
-        }
+        context = {"order": order}
 
         return render(request, template, context)
-        
+
     if request.user != order.user_profile.user:
         messages.error(request, "An error occured.")
         return redirect(reverse('profile'))

@@ -269,9 +269,9 @@ Python files were run through the [pythonchecker](https://www.pythonchecker.com/
 * Warnings were found regarding line length, white spaces around assignment operators, spaces in empty lines and no new line at end.
 > These were all corrected.
 * Another warning appeared in places: `Class 'x' has no 'objects' member`.
-> These are just warnings from pylint and therefore no "addressed".
+> These are just warnings from pylint and therefore not "addressed".
 
-To note, in Gitpod the "Problems" tab in the bottom left sometimes conflicted with what pythonchecker suggested. xxx
+To note, in Gitpod the "Problems" tab in the bottom left sometimes conflicted with what pythonchecker suggested. For example some formats that pythonchecker produced were over the pep8 line length of 79 characters, therfore these were adjusted.
 
 ## User Scenarios - Testing
 How does the web application design enable the goals of a first time users, returning users, frequent users and admins?<br>
