@@ -67,12 +67,12 @@
                             {% if user.is_authenticated %}
                             {% if user.is_superuser %}
                             <li><a class="dropdown-item text-white" href="{% url 'product_management' %}">Product
-                                    Management</a>
+                                    Management</a></li>
                             <li><a class="dropdown-item text-white" href="{% url 'message_management' %}">Customer
                                     Messages</a>
-                                {% endif %}
-                                {% endif %}
                             </li>
+                            {% endif %}
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>
@@ -121,7 +121,7 @@
     </script>
     {% endblock %}
 
-    <script type="text/javascript">
+    <script>
         window.onload = (event) => {
             let myAlert = document.querySelector(".toast");
             let bsAlert = new bootstrap.Toast(myAlert);

@@ -233,8 +233,6 @@ Technologies used are as follows.
 # Testing
 Django Unit Tests:
 xxx
-xxx
-xxx
 
 Manual High level testing plan:
 1. CRUD functionality in various places within the web application
@@ -250,10 +248,12 @@ Test Results can be found here: [Test Results](/static/readme/test-result.xlsx)
 ## Validation
 ### HTML Validation
 The rendered HTML pages were run through the [W3C HTML Validator](https://validator.w3.org/), via the "Validate by URI" or "Validate by Direct Input" methods.
-* TEMPLATE NAME THAT HAD ERRORS XXX
-  > XXXX WHAT WAS THE ERROR AND HOW DID I FIX XXX
-* WAS THERE A COMMON WARNING?
-  > what was common warning and how did I fix? XXX
+* `base.html`
+  > There was an open `<li>` because of the placement of an `{% endif %}` statement. This was corrected.
+* `product-detail.html`
+  > An `<img>` tag had two class attribures within it.
+* In the `Order` page first firm containing delivery details, the follow error showed: `Error: Attribute placeholder not allowed on element select at this point.`.
+  > This code is rendered from the `django-countries` package and therefore not changed.
 
 ### CSS Validation
 CSS Stylesheet was run through the [W3C CSS Validator](https://jigsaw.w3.org/css-validator/), via the direct input method.
