@@ -74,3 +74,12 @@ class ContactURLTestCaseSuperUser(TestCase):
         self.assertContains(response, "Phone:</strong> 07123123123")
         msg = "Message:</strong></p>\n                <p>Test message."
         self.assertContains(response, msg)
+
+    def test_url_contact_admin_create_message(self):
+        response = c.post('/contact/', {
+            'name': 'TestNameCreateMessage',
+            'email': 'testemailCreateMessage@email.com',
+            'phone_number': '07123123123',
+            'message': 'Test message, create message.',
+            }
+        )
