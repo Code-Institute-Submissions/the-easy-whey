@@ -76,10 +76,34 @@ class ContactURLTestCaseSuperUser(TestCase):
         self.assertContains(response, msg)
 
     def test_url_contact_admin_create_message(self):
-        response = c.post('/contact/', {
+        pre_total = Contact.objects.all().count()
+        response = self.c.post('/contact/', {
             'name': 'TestNameCreateMessage',
             'email': 'testemailCreateMessage@email.com',
             'phone_number': '07123123123',
             'message': 'Test message, create message.',
             }
         )
+        post_total = Contact.objects.all().count()
+        contact = Contact.objects.get(name="TestNameCreateMessage")
+        self.assertEqual(pre_total, 0)
+        self.assertEqual(post_total, 1)
+        self.assertEqual(contact.name, "TestNameCreateMessage")
+        self.assertEqual(contact.email, "testemailCreateMessage@email.com")
+        self.assertEqual(contact.phone_number, "07123123123")
+        self.assertEqual(contact.message, "Test message, create message.")
+
+    def test_url_contact_admin_delete_message(self):
+        pre_total = Contact.objects.all().count()
+        self.contact_message = Contact.objects.create(
+            name="TestNameDelete",
+            email="testemaildelete@email.com",
+            phone_number="07123123123",
+            message="Test message delete."
+        )
+        post_total = Contact.objects.all().count()
+        response = self.c.get(f'/contact/admin/delete/{self.contact_message.id}')
+        post_delete_total = Contact.objects.all().count()
+        self.assertEqual(pre_total, 0)
+        self.assertEqual(post_total, 1)
+        self.assertEqual(post_delete_total, 0)
