@@ -7,7 +7,7 @@ from .forms import ContactForm
 
 class ModelTestCase(TestCase):
     """
-    Test object model object creation
+    Test contact model object creation
     """
     def setUp(self):
         self.contact_message = Contact.objects.create(
