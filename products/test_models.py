@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.test import Client
 from .models import Product, Nutrition, Ingredient
-from .forms import ProductForm, NutritionForm, IngredientForm
 # Create your tests here.
 
 
