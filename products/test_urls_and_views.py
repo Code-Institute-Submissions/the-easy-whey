@@ -205,9 +205,9 @@ class ProductsURLTestCaseSuperUser(TestCase):
         self.assertEqual(pre_total, 1)
         self.assertEqual(post_total, 0)
 
-    # def test_url_product_admin_delete_ingredient(self):
-    #     pre_total = Ingredient.objects.all().count()
-    #     response = self.c.get(f'/product/admin/edit/delete_ingredient/{self.ingredient_one.id}')
-    #     post_total = Ingredient.objects.all().count()
-    #     self.assertEqual(pre_total, 2)
-    #     self.assertEqual(post_total, 1)
+    def test_url_product_admin_delete_ingredient(self):
+        pre_total = Ingredient.objects.all().count()
+        response = self.c.get(f'/product/admin/edit/item/delete_ingredient/{self.ingredient_one.id}')
+        post_total = Ingredient.objects.all().count()
+        self.assertEqual(pre_total, 2)
+        self.assertEqual(post_total, 1)
