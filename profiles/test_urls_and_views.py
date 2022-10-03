@@ -1,50 +1,102 @@
 from django.test import TestCase
 from django.test import Client
 from django.contrib.auth.models import User
+from subscription.models import Order
 from .models import UserProfile
+
 # Create your tests here.
 
 
-# class ProductsURLTestCaseNonSuperUser(TestCase):
-#     """
-#     Test urls are returning appropriate responses - non superuser,
-#     non-super users get redirected
-#     """
-#     def setUp(self):
-#         self.c = Client()
+class ProfileURLTestCaseNonLoggedInUser(TestCase):
+    """
+    Test urls are returning appropriate responses,
+    non-logged in users get redirected and if order is not theirs
+    """
+    def setUp(self):
+        self.c = Client()
+        self.my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        self.user_profile = UserProfile.objects.all().first()
+        self.order = Order.objects.create(user_profile=self.user_profile)
 
-#     def test_url_home(self):
-#         response = self.c.get('/')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertContains(response, "Making protein easy.")
+    def test_url_profile(self):
+        response = self.c.get('/profile')
+        self.assertEqual(response.status_code, 301)
 
-#     def test_url_product_admin(self):
-#         response = self.c.get('/product/admin/')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile_created_orderer_is_self(self):
+        response = self.c.get(f'/profile/{self.order.order_number}')
+        self.assertEqual(response.status_code, 302)
 
-#     def test_url_admin_add(self):
-#         response = self.c.get('/product/admin/add/')
-#         self.assertEqual(response.status_code, 302)
+class ProfileURLTestCaseLoggedInUser(TestCase):
+    """
+    Test urls are returning appropriate responses,
+    logged in users arent redirected unless order is not theirs
+    """
+    def setUp(self):
+        self.c = Client()
+        self.my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        self.user_profile = UserProfile.objects.all().first()
+        self.order = Order.objects.create(user_profile=self.user_profile)
+        self.user_profile.default_address_one = "Test Address Line 1"
+        self.user_profile.default_address_two = "Test Address Line 2"
+        self.user_profile.default_town_city = "Test City"
+        self.user_profile.default_postcode = "AA99 9AA"
+        self.user_profile.default_phone_number = "07123123123"
+        self.user_profile.default_county = "Test County"
+        self.user_profile.default_country = "UK"
+        self.user_profile.save()
+        self.c.login(username=self.my_user.username, password="my_userpass")
 
-#     def test_url_admin_edit(self):
-#         response = self.c.get('/product/admin/edit/')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile(self):
+        response = self.c.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Your Profile")
+        self.assertContains(response, "Edit your delivery details")
 
-#     def test_url_admin_edit_item_product_or_nutrition(self):
-#         response = self.c.get('/product/admin/edit/item/1')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile_address_info_renders(self):
+        user_profile = UserProfile.objects.all().first()
+        response = self.c.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, user_profile.default_address_one)
+        self.assertContains(response, user_profile.default_address_two)
+        self.assertContains(response, user_profile.default_phone_number)
 
-#     def test_url_admin_edit_item_ingredient(self):
-#         response = self.c.get('/product/admin/edit/item/1/ingredient/1')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile_order_orderer_is_self(self):
+        response = self.c.get(f'/profile/{self.order.order_number}')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Order Number")
+        self.assertContains(response, "Return to Profile")
 
-#     def test_url_admin_edit_delete_product(self):
-#         response = self.c.get('/product/admin/edit/delete/1')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile_order_orderer_non_self(self):
+        self.client.logout()
+        new_user = User.objects.create_user('new_user', 'new_user@new_user.com', "new_userpass")
+        self.c.login(username=new_user.username, password="new_userpass")
+        response = self.c.get(f'/profile/{self.order.order_number}')
+        self.assertEqual(response.status_code, 302)
 
-#     def test_url_admin_edit_delete_ingredient(self):
-#         response = self.c.get('/product/admin/edit/item/delete_ingredient/1')
-#         self.assertEqual(response.status_code, 302)
+    def test_url_profile_post_method_update_user_info(self):
+        response = self.c.post('/profile/', {
+            "default_address_one": "THIS IS A NEW ADDRESS LINE ONE",
+            "default_postcode": "BB11 1BB",
+            "default_town_city": "LIVERPOOL"
+        })
+        self.assertEqual(response.status_code, 200)
+        response = self.c.get('/profile/')
+        self.assertContains(response, "THIS IS A NEW ADDRESS LINE ONE")
+        self.assertContains(response, "BB11 1BB")
+        self.assertContains(response, "LIVERPOOL")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class ProductsURLTestCaseSuperUser(TestCase):
@@ -164,49 +216,3 @@ from .models import UserProfile
 #         })
 #         item = Product.objects.all().first()
 #         self.assertEqual(item.flavour, "Edit Tasty Flavour")
-
-#     def test_url_product_admin_edit_nutrition(self):
-#         self.assertEqual(self.nutrition.energy, 400)
-#         self.assertEqual(self.nutrition.protein, 80)
-#         response = self.c.post('/product/admin/edit/item/1', {
-#             "product": 1,
-#             "energy": 500,
-#             "fat": 9,
-#             "carbohydrate": 9,
-#             "sugars": 9,
-#             "protein": 90,
-#             "salt": 0.4,
-#             "nutrition_form_edit_button": "nutrition_form_edit_button"
-#         }, follow=True)
-#         item = Nutrition.objects.get(product_id=1)
-#         self.assertEqual(item.energy, 500)
-#         self.assertEqual(item.protein, 90)
-
-#     def test_url_product_admin_edit_ingredient(self):
-#         self.assertEqual(self.ingredient_one.name, "Tasty Ingredient 1")
-#         response = self.c.post(f'/product/admin/edit/item/1/ingredient/{self.ingredient_one.id}', {
-#             "name": "Edit Ingredient 1",
-#         })
-#         item = Product.objects.get(id=1)
-#         self.assertEqual(item.ingredient.first().name, "Edit Ingredient 1")
-
-#     def test_url_product_admin_delete_product(self):
-#         pre_total = Product.objects.all().count()
-#         response = self.c.get(f'/product/admin/edit/delete/{self.product.id}')
-#         post_total = Product.objects.all().count()
-#         self.assertEqual(pre_total, 1)
-#         self.assertEqual(post_total, 0)
-
-#     def test_url_product_admin_delete_nutrition(self):
-#         pre_total = Nutrition.objects.all().count()
-#         response = self.c.get(f'/product/admin/edit/delete/{self.nutrition.id}')
-#         post_total = Nutrition.objects.all().count()
-#         self.assertEqual(pre_total, 1)
-#         self.assertEqual(post_total, 0)
-
-#     def test_url_product_admin_delete_ingredient(self):
-#         pre_total = Ingredient.objects.all().count()
-#         response = self.c.get(f'/product/admin/edit/item/delete_ingredient/{self.ingredient_one.id}')
-#         post_total = Ingredient.objects.all().count()
-#         self.assertEqual(pre_total, 2)
-#         self.assertEqual(post_total, 1)

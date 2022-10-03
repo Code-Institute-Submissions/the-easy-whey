@@ -11,112 +11,55 @@ class ProfileModelTestCase(TestCase):
     Test profile model object creation
     """
     def setUp(self):
-        self.user = User.objects.create_user(username='UserForTesting', password='12345')
-        self.user_to_add = User(self.user)
-        self.new_profile = UserProfile.objects.create(
-            user=self.user_to_add.id,
-            default_address_one="Test Address Line 1",
-            default_address_two="Test Address Line 2",
-            default_town_city="Test City",
-            default_postcode="AA99 9AA",
-            default_phone_number="07123123123",
-            default_county="Test County",
-            default_country="UK",
-        )
+        self.user= User.objects.create(username="TestUser", password="12345")
+        self.user_profile = UserProfile.objects.get(id=self.user.id)
+        self.user_profile.default_address_one="Test Address Line 1"
+        self.user_profile.default_address_two="Test Address Line 2"
+        self.user_profile.default_town_city="Test City"
+        self.user_profile.default_postcode="AA99 9AA"
+        self.user_profile.default_phone_number="07123123123"
+        self.user_profile.default_county="Test County"
+        self.user_profile.default_country="UK"
+        self.user_profile.save()
 
-    def test_user_exists_and_is_correct(self):
+
+    def test_userprofile_exists(self):
         users_count = UserProfile.objects.all().count()
         self.assertEqual(users_count, 1)
-        self.assertEqual(self.new_profile.default_address_one, "Test Address Line 1")
-        self.assertEqual(self.new_profile.default_address_two, "Test Address Line 2")
-        self.assertEqual(self.new_profile.default_town_city, "Test City")
+
+    def test_userprofile_username_correct(self):
+        self.assertEqual(self.user_profile.user.username, "TestUser")
+
+    def test_userprofile_password_correct(self):
+        self.assertEqual(self.user_profile.user.password, "12345")
+
+    def test_userprofile_address_line_one_correct(self):
+        self.assertEqual(self.user_profile.default_address_one, "Test Address Line 1")
+
+    def test_userprofile_address_line_two_correct(self):
+        self.assertEqual(self.user_profile.default_address_two, "Test Address Line 2")
+
+    def test_userprofile_town_city_correct(self):
+        self.assertEqual(self.user_profile.default_town_city, "Test City")
+
+    def test_userprofile_model_string_name(self):
+        self.assertEqual(str(self.user_profile), "TestUser - TestUser")
 
 
-#     def test_product_price_default_is_699(self):
-#         new_product = Product.objects.create(
-#             flavour="Tasty Flavour V2",
-#             description="Tasty Flavour Description V2",
-#         )
-#         self.assertEqual(new_product.price, "6.99")
+class ProfileModelMethodTestCase(TestCase):
+    """
+    Test profile model method
+    """
+    def test_userprofile_is_zero(self):
+        user_count = User.objects.all().count()
+        user_profile_count = UserProfile.objects.all().count()
+        self.assertEqual(user_count, 0)
+        self.assertEqual(user_profile_count, 0)
 
-#     def test_product_model_string_name(self):
-#         self.assertEqual(str(self.product), "Flavour: Tasty Flavour")
-
-
-# class NutritionModelTestCase(TestCase):
-#     """
-#     Test nutrition model object creation
-#     """
-#     def setUp(self):
-#         self.product = Product.objects.create(
-#             flavour="Tasty Flavour",
-#             description="Tasty Flavour Description",
-#             price=6.99
-#         )
-#         self.nutrition = Nutrition.objects.create(
-#             product=self.product,
-#             energy=400,
-#             fat=10,
-#             carbohydrate=10,
-#             sugars=10,
-#             protein=80,
-#             salt=0.5
-#         )
-
-#     def test_nutrition_information(self):
-#         self.assertEqual(self.nutrition.product, self.product)
-#         self.assertEqual(self.nutrition.energy, 400)
-#         self.assertEqual(self.nutrition.fat, 10)
-#         self.assertEqual(self.nutrition.carbohydrate, 10)
-#         self.assertEqual(self.nutrition.sugars, 10)
-#         self.assertEqual(self.nutrition.protein, 80)
-#         self.assertEqual(self.nutrition.salt, 0.5)
-
-#     def test_nutrition_model_string_name(self):
-#         self.assertEqual(str(self.nutrition), "Flavour: Tasty Flavour nutrition")
-
-# class IngredientModelTestCase(TestCase):
-#     """
-#     Test ingredient model object creation
-#     """
-#     def setUp(self):
-#         self.product = Product.objects.create(
-#             flavour="Tasty Flavour",
-#             description="Tasty Flavour Description",
-#             price=6.99
-#         )
-#         self.nutrition = Nutrition.objects.create(
-#             product=self.product,
-#             energy=400,
-#             fat=10,
-#             carbohydrate=10,
-#             sugars=10,
-#             protein=80,
-#             salt=0.5
-#         )
-#         self.ingredient_one = Ingredient.objects.create(
-#             product=self.product,
-#             name="Tasty Ingredient 1"
-#         )
-#         self.ingredient_two = Ingredient.objects.create(
-#             product=self.product,
-#             name="Tasty Ingredient 2"
-#         )
-
-#     def test_ingredient_information_number(self):
-#         self.assertEqual(self.product.ingredient.all().count(), 2)
-
-#     def test_ingredient_information_one(self):
-#         self.assertEqual(self.product.ingredient.first().name, "Tasty Ingredient 1")
-
-#     def test_ingredient_information_two(self):
-#         self.assertEqual(self.product.ingredient.last().name, "Tasty Ingredient 2")
-
-#     def test_ingredient_default_name(self):
-#         ingredient_three = Ingredient.objects.create(
-#             product=self.product,
-#         )
-#         self.assertEqual(self.product.ingredient.last().name, "You need an ingredient")
-
-#     def test_ingredient_model_string_name(self):
-#         self.assertEqual(str(self.ingredient_one), "ingredient - Flavour: Tasty Flavour ingredients")
+    def test_one_user_created_and_user_profile_created(self):
+        user = User.objects.create(username="TestUser", password="12345")
+        user_count = User.objects.all().count()
+        self.assertEqual(user.username, "TestUser")
+        self.assertEqual(user_count, 1)
+        user_profile_count = UserProfile.objects.all().count()
+        self.assertEqual(user_profile_count, 1)
