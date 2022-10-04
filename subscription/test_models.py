@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+from products.models import Product
 from profiles.models import UserProfile
 from .models import Order, OrderLineItem
 import datetime
@@ -15,7 +16,6 @@ class OrderModelTestCase(TestCase):
         self.user = User.objects.create(username="TestUser", password="12345")
         self.user_profile = UserProfile.objects.get(id=self.user.id)
         self.order = Order.objects.create(
-            order_number="1234567890",
             user_profile=self.user_profile,
             full_name="Test Name",
             email="test@test.com",
@@ -29,17 +29,16 @@ class OrderModelTestCase(TestCase):
             date=datetime.datetime.now(),
             total_cost=0,
         )
-
-        # for button to save info in order page
-        # self.user_profile.default_address_one="Test Address Line 1"
-        # self.user_profile.default_address_two="Test Address Line 2"
-        # self.user_profile.default_town_city="Test City"
-        # self.user_profile.default_postcode="AA99 9AA"
-        # self.user_profile.default_phone_number="07123123123"
-        # self.user_profile.default_county="Test County"
-        # self.user_profile.default_country="UK"
-        # self.user_profile.save()
-
+        self.product_one = Product.objects.create(
+            flavour="Yum Yum",
+            description="Yum Yum Description",
+            price=6.99
+        )
+        self.item_one = OrderLineItem.objects.create(
+            order=self.order,
+            product=self.product_one,
+            quantity=2,
+        )
 
     def test_order_exists(self):
         order_count = Order.objects.all().count()
@@ -55,29 +54,25 @@ class OrderModelTestCase(TestCase):
         self.assertEqual(self.order.address_one, "Address Line 1")
 
     def test_order_info_town_city(self):
-        self.assertEqual(self.order.total_cost, 0)
+        self.assertEqual(float(self.order.total_cost), 13.98)
+
+    def test_order_model_string_name(self):
+        self.assertEqual(str(self.order), self.order.order_number)
 
     def test_order_is_paid_is_false_by_default(self):
         self.assertEqual(self.order.is_paid, False)
 
-    def test_order_model_string_name(self):
-        self.assertEqual(str(self.order), "1234567890")
+    def test_order_line_item_added_to_order(self):
+        order_item_item = self.order.lineitems.all().count()
+        self.assertEqual(order_item_item, 1)
 
+    def test_order_line_item_added_is_correct_name(self):
+        line_item_name = self.order.lineitems.all().first().product.flavour
+        self.assertEqual(line_item_name, "Yum Yum")
 
-# class OrderLineItemModelTestCase(TestCase):
-#     """
-#     Test order line item model object creation
-#     """
-#     def test_userprofile_is_zero(self):
-#         user_count = User.objects.all().count()
-#         user_profile_count = UserProfile.objects.all().count()
-#         self.assertEqual(user_count, 0)
-#         self.assertEqual(user_profile_count, 0)
+    def test_order_line_item_added_is_correct_price(self):
+        line_item_cost = self.order.lineitems.all().first().product_total
+        self.assertEqual(float(line_item_cost), 13.98)
 
-#     def test_one_user_created_and_user_profile_created(self):
-#         user = User.objects.create(username="TestUser", password="12345")
-#         user_count = User.objects.all().count()
-#         self.assertEqual(user.username, "TestUser")
-#         self.assertEqual(user_count, 1)
-#         user_profile_count = UserProfile.objects.all().count()
-#         self.assertEqual(user_profile_count, 1)
+    def test_order_line_item_model_string_name(self):
+        self.assertEqual(str(self.item_one), f"Product: Yum Yum order: {self.order.order_number}")
