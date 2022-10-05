@@ -74,5 +74,11 @@ class OrderModelTestCase(TestCase):
         line_item_cost = self.order.lineitems.all().first().product_total
         self.assertEqual(float(line_item_cost), 13.98)
 
+    def test_order_line_item_save_method(self):
+        self.item_one.quantity = 3
+        self.item_one.save()
+        line_item_cost = self.order.lineitems.all().first().product_total
+        self.assertEqual(float(line_item_cost), 20.97)
+
     def test_order_line_item_model_string_name(self):
         self.assertEqual(str(self.item_one), f"Product: Yum Yum order: {self.order.order_number}")

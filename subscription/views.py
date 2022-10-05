@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import Site
 import stripe
 from products.models import Product
@@ -26,7 +27,7 @@ def order(request):
     context = {}
     return render(request, "order/order.html", context)
 
-
+@login_required
 def order_details(request):
     """
     Returns first page of the order form
@@ -96,7 +97,7 @@ def order_items(request):
     """
     if "order_number" not in request.session:
         messages.error(request, "An error occured, please try again.")
-        return redirect(reverse('order_details'))
+        return redirect(reverse('order'))
     order_items_form = OrderItemsForm()
 
     if request.method == "POST":
@@ -138,6 +139,9 @@ def payment(request):
     """
     Returns a page highlighting the order details
     """
+    if "order_number" not in request.session:
+        messages.error(request, "An error occured, please try again.")
+        return redirect(reverse('order'))
     order = get_object_or_404(Order, order_number=request.session[
         "order_number"
     ])
@@ -149,6 +153,9 @@ def create_checkout_session(request):
     """
     Stripe checkout system
     """
+    if "order_number" not in request.session:
+        messages.error(request, "An error occured, please try again.")
+        return redirect(reverse('order'))
     DOMAIN = Site.objects.get_current()
     order = get_object_or_404(
                 Order, order_number=request.session["order_number"]
@@ -201,8 +208,7 @@ def stripe_success(request):
         context = {}
         return render(request, "order/success.html", context)
     else:
-        context = {}
-        return render(request, "order/wrong_path.html", context)
+        return redirect(reverse('order'))
 
 
 def stripe_cancel(request):
@@ -221,16 +227,19 @@ def stripe_cancel(request):
         context = {}
         return render(request, "order/cancel.html", context)
     else:
-        context = {}
-        return render(request, "order/wrong_path.html", context)
+        return redirect(reverse('order'))
 
 
 def try_again(request):
     """
     view to delete the current order and restart
     """
+    if "order_number" not in request.session:
+        messages.error(request, "An error occured, please try again.")
+        return redirect(reverse('order'))
     order = get_object_or_404(
             Order, order_number=request.session["order_number"]
         )
     order.delete()
+    messages.success(request, "Order has been restarted!")
     return redirect(reverse('order'))
