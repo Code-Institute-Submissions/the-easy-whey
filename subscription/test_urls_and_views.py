@@ -25,8 +25,6 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         self.assertContains(response, "Tasty and Easy Whey to help you reach and maintain your goals!")
 
     def test_url_order_details(self):
-        my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
-        user_profile = UserProfile.objects.all().first()
         response = self.c.get('/order/details/')
         self.assertEqual(response.status_code, 302)
 
@@ -34,7 +32,7 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         response = self.c.get('/order/items/')
         self.assertEqual(response.status_code, 302)
 
-    def test_url_order_payment(self):
+    def test_url_order_payment_no_order_in_session(self):
         my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
         user_profile = UserProfile.objects.all().first()
         order = Order.objects.create(
@@ -52,9 +50,6 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
             total_cost=0,
         )
         order_number = Order.objects.first().order_number
-        # session = self.c.session
-        # session["order_number"] = order_number
-        # session.save()
         response = self.c.get('/order/payment/')
         self.assertEqual(response.status_code, 302)
 
@@ -77,6 +72,149 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         self.assertEqual(response.redirect_chain[0][0], "/order/")
         self.assertContains(response, "Why Order?")
         self.assertContains(response, "Tasty and Easy Whey to help you reach and maintain your goals!")
+
+
+class OrderURLTestCaseLoggedInUser(TestCase):
+    """
+    Test urls are returning appropriate responses,
+    """
+    def setUp(self):
+        self.c = Client()
+        self.new_user = User.objects.create_user('new_user', 'new_user@new_user.com', "new_userpass")
+        self.user_profile = UserProfile.objects.all().first()
+        self.c.login(username="new_user", password="new_userpass")
+        self.order = Order.objects.create(
+            user_profile=self.user_profile,
+            full_name="Test Name",
+            email="test@test.com",
+            phone_number="07123123123",
+            address_one="Address Line 1",
+            address_two="Address Line 1",
+            postcode="NP11 1AA",
+            town_city="TestCity",
+            county="TestCounty",
+            country="TestCountry",
+            date=datetime.datetime.now(),
+            total_cost=0,
+        )
+        self.product_choc = Product.objects.create(
+            flavour="Chocolate Whey Protein",
+            description="Yum Yum Description",
+            price=6.99
+        )
+        self.product_banana = Product.objects.create(
+            flavour="Banana Whey Protein",
+            description="Yum Yum Description",
+            price=6.99
+        )
+        self.product_strawb = Product.objects.create(
+            flavour="Strawberry Whey Protein",
+            description="Yum Yum Description",
+            price=6.99
+        )
+        self.product_c_and_c = Product.objects.create(
+            flavour="Cookies & Cream Whey Protein",
+            description="Yum Yum Description",
+            price=6.99
+        )
+
+    def test_url_order_redirects_to_order_details(self):
+        response = self.c.get('/order/', follow=True)
+        self.assertRedirects(response, '/order/details/')
+        self.assertContains(response, "Your Details")
+        self.assertTemplateUsed(response, "order/order_details.html")
+
+    # def test_url_order_details_submission(self):
+    #     pre_order_count = Order.objects.all().count()
+    #     self.assertEqual(pre_order_count, 1)
+    #     response = self.c.post('/order/details/', {
+    #         "full_name": "Test Name Post",
+    #         "email": "testpost@test.com",
+    #         "phone_number": "07789789789",
+    #         "address_one": "Address Line A",
+    #         "address_two": "Address Line B",
+    #         "postcode": "NP11 1BB",
+    #         "town_city": "Test City",
+    #         "county": "Test County",
+    #         "country": "Test Country",
+    #         "save_information": False,
+    #     }, follow=True)
+    #     post_order_count = Order.objects.all().count()
+    #     self.assertEqual(post_order_count, 2)
+    #     self.assertEqual(response.status_code, 200)
+
+
+    # def test_url_order_save_info_checkbox_checked(self):
+
+    def test_url_order_items_no_session_id(self):
+        response = self.c.get('/order/items/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, "/order/details/")
+
+    def test_url_order_items_with_session_id(self):
+        session = self.c.session
+        session["order_number"] = "fake_order_number"
+        session.save()
+        response = self.c.get('/order/items/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "order/order_items.html")
+        self.assertContains(response, "Please note, all bags weigh 500g.")
+
+    def test_url_order_items_submission(self):
+        session = self.c.session
+        session["order_number"] = self.order.order_number
+        session.save()
+        response = self.c.post('/order/items/', {
+            "chocolate_quantity": 2,
+            "banana_quantity": 0,
+            "strawberry_quantity": 0,
+            "cookies_and_cream_quantity": 0,
+        })
+        order = Order.objects.get(id=self.order.id)
+        self.assertEqual(order.lineitems.all()[0].quantity, 2)
+        self.assertEqual(order.lineitems.all()[1].quantity, 0)
+        self.assertEqual(order.lineitems.all()[2].quantity, 0)
+        self.assertEqual(order.lineitems.all()[3].quantity, 0)
+        self.assertEqual(float(order.total_cost), 13.98)
+
+    def test_url_order_payment_session_present(self):
+        order_number = Order.objects.first().order_number
+        session = self.c.session
+        session["order_number"] = order_number
+        session.save()
+        response = self.c.get('/order/payment/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Payment")
+        self.assertTemplateUsed(response, "order/payment.html")
+
+    def test_create_checkout_session_redirects(self):
+        response = self.c.get('/create-checkout-session', follow=True)
+        self.assertRedirects(response, "/order/details/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "An error occured, please try again.")
+        self.assertTemplateUsed(response, "order/order_details.html")
+
+    def test_stripe_success_response_updates_database(self):
+        session = self.c.session
+        session["checkout_key"] = True
+        session["order_number"] = self.order.order_number
+        session.save()
+        response = self.c.get('/stripe-success')
+        order = Order.objects.get(id=self.order.id)
+        self.assertEqual(order.user_profile, self.user_profile)
+        self.assertEqual(order.is_paid, True)
+        self.assertTemplateUsed(response, "order/success.html")
+
+    def test_stripe_cancel_response_updates_database(self):
+        session = self.c.session
+        session["checkout_key"] = True
+        session["order_number"] = self.order.order_number
+        session.save()
+        response = self.c.get('/stripe-cancel')
+        order = Order.objects.get(id=self.order.id)
+        self.assertEqual(order.user_profile, self.user_profile)
+        self.assertEqual(order.is_paid, False)
+        self.assertTemplateUsed(response, "order/cancel.html")
 
     def test_url_order_try_again(self):
         my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
@@ -101,96 +239,8 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         pre_order_count = Order.objects.all().count()
         response = self.c.get('/try_again', follow=True)
         post_order_count = Order.objects.all().count()
-        self.assertEqual(pre_order_count, 1)
-        self.assertEqual(post_order_count, 0)
+        self.assertEqual(pre_order_count, 2)
+        self.assertEqual(post_order_count, 1)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.redirect_chain[0][1], 302)
         self.assertEqual(response.redirect_chain[0][0], "/order/")
-
-# class OrderURLTestCaseLoggedInUser(TestCase):
-#     """
-#     Test urls are returning appropriate responses,
-#     """
-#     def setUp(self):
-#         self.c = Client()
-#         self.user = User.objects.create(username="TestUser", password="12345")
-#         self.user_profile = UserProfile.objects.get(id=self.user.id)
-#         order = Order.objects.create(
-#             user_profile=self.user_profile,
-#             full_name="Test Name",
-#             email="test@test.com",
-#             phone_number="07123123123",
-#             address_one="Address Line 1",
-#             address_two="Address Line 1",
-#             postcode="NP11 1AA",
-#             town_city="TestCity",
-#             county="TestCounty",
-#             country="TestCountry",
-#             date=datetime.datetime.now(),
-#             total_cost=0,
-#         )
-#         self.product_one = Product.objects.create(
-#             flavour="Yum Yum",
-#             description="Yum Yum Description",
-#             price=6.99
-#         )
-#         self.item_one = OrderLineItem.objects.create(
-#             order=self.order,
-#             product=self.product_one,
-#             quantity=5,
-#         )
-#         self.c.login(username=self.user.username, password="12345")
-
-
-# def test_url_order_details(self):
-#     self.c.login(username=my_user.username, password="my_userpass")
-#     response = self.c.get('/order/details/')
-#     self.assertEqual(response.status_code, 301)
-
-# AND IF THBERE IS AN ORDER NUMBER?
-    # def test_url_order_payment(self):
-    #     order_number = Order.objects.first().order_number
-    #     session = self.c.session
-    #     session["order_number"] = order_number
-    #     session.save()
-    #     response = self.c.get('/order/payment/')
-    #     self.assertEqual(response.status_code, 302)
-
-#     def test_url_profile(self):
-#         response = self.c.get('/profile/')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertContains(response, "Your Profile")
-#         self.assertContains(response, "Edit your delivery details")
-
-#     def test_url_profile_address_info_renders(self):
-#         user_profile = UserProfile.objects.all().first()
-#         response = self.c.get('/profile/')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertContains(response, user_profile.default_address_one)
-#         self.assertContains(response, user_profile.default_address_two)
-#         self.assertContains(response, user_profile.default_phone_number)
-
-#     def test_url_profile_order_orderer_is_self(self):
-#         response = self.c.get(f'/profile/{self.order.order_number}')
-#         self.assertEqual(response.status_code, 200)
-#         self.assertContains(response, "Order Number")
-#         self.assertContains(response, "Return to Profile")
-
-#     def test_url_profile_order_orderer_non_self(self):
-#         self.client.logout()
-#         new_user = User.objects.create_user('new_user', 'new_user@new_user.com', "new_userpass")
-#         self.c.login(username=new_user.username, password="new_userpass")
-#         response = self.c.get(f'/profile/{self.order.order_number}')
-#         self.assertEqual(response.status_code, 302)
-
-#     def test_url_profile_post_method_update_user_info(self):
-#         response = self.c.post('/profile/', {
-#             "default_address_one": "THIS IS A NEW ADDRESS LINE ONE",
-#             "default_postcode": "BB11 1BB",
-#             "default_town_city": "LIVERPOOL"
-#         })
-#         self.assertEqual(response.status_code, 200)
-#         response = self.c.get('/profile/')
-#         self.assertContains(response, "THIS IS A NEW ADDRESS LINE ONE")
-#         self.assertContains(response, "BB11 1BB")
-#         self.assertContains(response, "LIVERPOOL")
