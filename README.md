@@ -40,6 +40,7 @@
 * [Deployment](https://github.com/KNFullStack/the-easy-whey#deployment)
    * [Project Creation](https://github.com/KNFullStack/the-easy-whey#project-creation)
    * [Publishing](https://github.com/KNFullStack/the-easy-whey#publishing)
+   * [AWS](https://github.com/KNFullStack/the-easy-whey#AWS)
    * [Local Clone](https://github.com/KNFullStack/the-easy-whey#local-clone)
 * [Acknowledgements](https://github.com/KNFullStack/the-easy-whey#acknowledgements)
   * [Code](https://github.com/KNFullStack/the-easy-whey#code)
