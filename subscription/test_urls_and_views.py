@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test import Client
 from django.contrib.auth.models import User
 from products.models import Product
-from subscription.models import Order, OrderLineItem
+from subscription.models import Order
 from .models import UserProfile
 import datetime
 
@@ -15,6 +15,7 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
     Test urls are returning appropriate responses,
     non-logged in users get redirected if needed
     """
+
     def setUp(self):
         self.c = Client()
 
@@ -22,7 +23,8 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         response = self.c.get('/order/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Why Order?")
-        self.assertContains(response, "Tasty and Easy Whey to help you reach and maintain your goals!")
+        content = "Easy Whey to help you reach and maintain your goals!"
+        self.assertContains(response, content)
 
     def test_url_order_details(self):
         response = self.c.get('/order/details/')
@@ -33,9 +35,13 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_url_order_payment_no_order_in_session(self):
-        my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        User.objects.create_user(
+            'my_user',
+            'my_user@my_user.com',
+            "my_userpass"
+        )
         user_profile = UserProfile.objects.all().first()
-        order = Order.objects.create(
+        Order.objects.create(
             user_profile=user_profile,
             full_name="Test Name",
             email="test@test.com",
@@ -49,7 +55,6 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
             date=datetime.datetime.now(),
             total_cost=0,
         )
-        order_number = Order.objects.first().order_number
         response = self.c.get('/order/payment/')
         self.assertEqual(response.status_code, 302)
 
@@ -61,7 +66,8 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         self.assertEqual(response.redirect_chain[0][1], 302)
         self.assertEqual(response.redirect_chain[0][0], "/order/")
         self.assertContains(response, "Why Order?")
-        self.assertContains(response, "Tasty and Easy Whey to help you reach and maintain your goals!")
+        content = "Easy Whey to help you reach and maintain your goals!"
+        self.assertContains(response, content)
 
     def test_url_order_stripe_cancel(self):
         session = self.c.session
@@ -71,16 +77,22 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
         self.assertEqual(response.redirect_chain[0][1], 302)
         self.assertEqual(response.redirect_chain[0][0], "/order/")
         self.assertContains(response, "Why Order?")
-        self.assertContains(response, "Tasty and Easy Whey to help you reach and maintain your goals!")
+        content = "Easy Whey to help you reach and maintain your goals!"
+        self.assertContains(response, content)
 
 
 class OrderURLTestCaseLoggedInUser(TestCase):
     """
     Test urls are returning appropriate responses,
     """
+
     def setUp(self):
         self.c = Client()
-        self.new_user = User.objects.create_user('new_user', 'new_user@new_user.com', "new_userpass")
+        self.new_user = User.objects.create_user(
+            'new_user',
+            'new_user@new_user.com',
+            "new_userpass"
+        )
         self.user_profile = UserProfile.objects.all().first()
         self.c.login(username="new_user", password="new_userpass")
         self.order = Order.objects.create(
@@ -169,7 +181,6 @@ class OrderURLTestCaseLoggedInUser(TestCase):
         self.assertEqual(user.default_address_one, "Address Line A")
         self.assertEqual(user.default_address_two, "Address Line B")
 
-
     def test_url_order_items_no_session_id(self):
         response = self.c.get('/order/items/', follow=True)
         self.assertEqual(response.status_code, 200)
@@ -241,7 +252,11 @@ class OrderURLTestCaseLoggedInUser(TestCase):
         self.assertTemplateUsed(response, "order/cancel.html")
 
     def test_url_order_try_again(self):
-        my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        User.objects.create_user(
+            'my_user',
+            'my_user@my_user.com',
+            "my_userpass"
+        )
         user_profile = UserProfile.objects.all().first()
         order = Order.objects.create(
             user_profile=user_profile,

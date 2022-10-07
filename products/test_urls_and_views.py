@@ -11,6 +11,7 @@ class ProductsURLTestCaseNonSuperUser(TestCase):
     Test urls are returning appropriate responses - non superuser,
     non-super users get redirected
     """
+
     def setUp(self):
         self.c = Client()
 
@@ -55,7 +56,11 @@ class ProductsURLTestCaseSuperUser(TestCase):
 
     def setUp(self):
         self.c = Client()
-        self.my_admin = User.objects.create_superuser('myuser', 'testemail@email.com', "password")
+        self.my_admin = User.objects.create_superuser(
+            'myuser',
+            'testemail@email.com',
+            "password"
+        )
         self.c.login(username=self.my_admin.username, password="password")
         self.product = Product.objects.create(
             flavour="Tasty Flavour",
@@ -84,7 +89,8 @@ class ProductsURLTestCaseSuperUser(TestCase):
         response = self.c.get('/product/admin/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Admin Product Management")
-        self.assertContains(response, "Use below links to either add a new product")
+        self.assertContains(response,
+                            "Use below links to either add a new product")
 
     def test_url_product_admin_add_product(self):
         pre_total = Product.objects.all().count()
@@ -185,9 +191,10 @@ class ProductsURLTestCaseSuperUser(TestCase):
 
     def test_url_product_admin_edit_ingredient(self):
         self.assertEqual(self.ingredient_one.name, "Tasty Ingredient 1")
-        response = self.c.post(f'/product/admin/edit/item/1/ingredient/{self.ingredient_one.id}', {
-            "name": "Edit Ingredient 1",
-        })
+        response = self.c.post(
+            f'/product/admin/edit/item/1/ingredient/{self.ingredient_one.id}',
+            {"name": "Edit Ingredient 1"}
+        )
         item = Product.objects.get(id=1)
         self.assertEqual(item.ingredient.first().name, "Edit Ingredient 1")
 
@@ -200,14 +207,18 @@ class ProductsURLTestCaseSuperUser(TestCase):
 
     def test_url_product_admin_delete_nutrition(self):
         pre_total = Nutrition.objects.all().count()
-        response = self.c.get(f'/product/admin/edit/delete/{self.nutrition.id}')
+        response = self.c.get(
+            f'/product/admin/edit/delete/{self.nutrition.id}'
+        )
         post_total = Nutrition.objects.all().count()
         self.assertEqual(pre_total, 1)
         self.assertEqual(post_total, 0)
 
     def test_url_product_admin_delete_ingredient(self):
         pre_total = Ingredient.objects.all().count()
-        response = self.c.get(f'/product/admin/edit/item/delete_ingredient/{self.ingredient_one.id}')
+        ingredient_id = self.ingredient_one.id
+        response = self.c.get(
+            f'/product/admin/edit/item/delete_ingredient/{ingredient_id}')
         post_total = Ingredient.objects.all().count()
         self.assertEqual(pre_total, 2)
         self.assertEqual(post_total, 1)

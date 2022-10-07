@@ -12,9 +12,14 @@ class ProfileURLTestCaseNonLoggedInUser(TestCase):
     Test urls are returning appropriate responses,
     non-logged in users get redirected and if order is not theirs
     """
+
     def setUp(self):
         self.c = Client()
-        self.my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        self.my_user = User.objects.create_user(
+            'my_user',
+            'my_user@my_user.com',
+            "my_userpass"
+        )
         self.user_profile = UserProfile.objects.all().first()
         self.order = Order.objects.create(user_profile=self.user_profile)
 
@@ -26,14 +31,20 @@ class ProfileURLTestCaseNonLoggedInUser(TestCase):
         response = self.c.get(f'/profile/{self.order.order_number}')
         self.assertEqual(response.status_code, 302)
 
+
 class ProfileURLTestCaseLoggedInUser(TestCase):
     """
     Test urls are returning appropriate responses,
     logged in users arent redirected unless order is not theirs
     """
+
     def setUp(self):
         self.c = Client()
-        self.my_user = User.objects.create_user('my_user', 'my_user@my_user.com', "my_userpass")
+        self.my_user = User.objects.create_user(
+            'my_user',
+            'my_user@my_user.com',
+            "my_userpass"
+        )
         self.user_profile = UserProfile.objects.all().first()
         self.order = Order.objects.create(user_profile=self.user_profile)
         self.user_profile.default_address_one = "Test Address Line 1"
@@ -68,7 +79,11 @@ class ProfileURLTestCaseLoggedInUser(TestCase):
 
     def test_url_profile_order_orderer_non_self(self):
         self.client.logout()
-        new_user = User.objects.create_user('new_user', 'new_user@new_user.com', "new_userpass")
+        new_user = User.objects.create_user(
+            'new_user',
+            'new_user@new_user.com',
+            "new_userpass"
+        )
         self.c.login(username=new_user.username, password="new_userpass")
         response = self.c.get(f'/profile/{self.order.order_number}')
         self.assertEqual(response.status_code, 302)

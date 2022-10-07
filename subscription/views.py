@@ -27,6 +27,7 @@ def order(request):
     context = {}
     return render(request, "order/order.html", context)
 
+
 @login_required
 def order_details(request):
     """

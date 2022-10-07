@@ -270,6 +270,8 @@ Python files were run through the [pythonchecker](https://www.pythonchecker.com/
 > These were all corrected.
 * Another warning appeared in places: `Class 'x' has no 'objects' member`.
 > These are just warnings from pylint and therefore not "addressed".
+* PEP8 E303
+> States methods of a class should have 1 line between then, therefore this was followed for the test files.
 
 To note, in Gitpod the "Problems" tab in the bottom left sometimes conflicted with what pythonchecker suggested. For example some formats that pythonchecker produced were over the pep8 line length of 79 characters, therfore these were adjusted.
 

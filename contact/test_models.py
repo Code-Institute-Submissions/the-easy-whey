@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.test import Client
 from .models import Contact
-from .forms import ContactForm
 # Create your tests here.
 
 
@@ -9,6 +8,7 @@ class ModelTestCase(TestCase):
     """
     Test contact model object creation
     """
+
     def setUp(self):
         self.contact_message = Contact.objects.create(
             name="TestName",
@@ -43,4 +43,5 @@ class ModelTestCase(TestCase):
             }
         )
         errors = response.context["form"].errors
-        self.assertEqual(errors["phone_number"][0], "Phone number must be entered in the format: 07xxxxxxxxx")
+        message = "Phone number must be entered in the format: 07xxxxxxxxx"
+        self.assertEqual(errors["phone_number"][0], message)

@@ -12,6 +12,7 @@ class OrderModelTestCase(TestCase):
     """
     Test order model object creation
     """
+
     def setUp(self):
         self.user = User.objects.create(username="TestUser", password="12345")
         self.user_profile = UserProfile.objects.get(id=self.user.id)
@@ -81,4 +82,5 @@ class OrderModelTestCase(TestCase):
         self.assertEqual(float(line_item_cost), 20.97)
 
     def test_order_line_item_model_string_name(self):
-        self.assertEqual(str(self.item_one), f"Product: Yum Yum order: {self.order.order_number}")
+        self.assertEqual(str(self.item_one),
+                         f"Product: Yum Yum order: {self.order.order_number}")

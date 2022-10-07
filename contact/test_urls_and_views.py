@@ -11,6 +11,7 @@ class ContactURLTestCaseNonSuperUser(TestCase):
     Test urls are returning appropriate responses - non superuser,
     non-super users get redirected to login page
     """
+
     def setUp(self):
         self.c = Client()
 
@@ -30,7 +31,7 @@ class ContactURLTestCaseNonSuperUser(TestCase):
     def test_url_contact_admin_delete(self):
         response = self.c.get('/contact/admin/delete/1')
         self.assertEqual(response.status_code, 302)
-    
+
 
 class ContactURLTestCaseSuperUser(TestCase):
     """
@@ -39,7 +40,11 @@ class ContactURLTestCaseSuperUser(TestCase):
 
     def setUp(self):
         self.c = Client()
-        self.my_admin = User.objects.create_superuser('myuser', 'testemail@email.com', "password")
+        self.my_admin = User.objects.create_superuser(
+            'myuser',
+            'testemail@email.com',
+            "password"
+        )
         self.c.login(username=self.my_admin.username, password="password")
 
     def test_url_contact_admin_no_messages(self):
@@ -102,7 +107,8 @@ class ContactURLTestCaseSuperUser(TestCase):
             message="Test message delete."
         )
         post_total = Contact.objects.all().count()
-        response = self.c.get(f'/contact/admin/delete/{self.contact_message.id}')
+        message_id = self.contact_message.id
+        response = self.c.get(f'/contact/admin/delete/{message_id}')
         post_delete_total = Contact.objects.all().count()
         self.assertEqual(pre_total, 0)
         self.assertEqual(post_total, 1)

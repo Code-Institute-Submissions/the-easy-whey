@@ -9,18 +9,18 @@ class ProfileModelTestCase(TestCase):
     """
     Test profile model object creation
     """
-    def setUp(self):
-        self.user= User.objects.create(username="TestUser", password="12345")
-        self.user_profile = UserProfile.objects.get(id=self.user.id)
-        self.user_profile.default_address_one="Test Address Line 1"
-        self.user_profile.default_address_two="Test Address Line 2"
-        self.user_profile.default_town_city="Test City"
-        self.user_profile.default_postcode="AA99 9AA"
-        self.user_profile.default_phone_number="07123123123"
-        self.user_profile.default_county="Test County"
-        self.user_profile.default_country="UK"
-        self.user_profile.save()
 
+    def setUp(self):
+        self.user = User.objects.create(username="TestUser", password="12345")
+        self.user_profile = UserProfile.objects.get(id=self.user.id)
+        self.user_profile.default_address_one = "Test Address Line 1"
+        self.user_profile.default_address_two = "Test Address Line 2"
+        self.user_profile.default_town_city = "Test City"
+        self.user_profile.default_postcode = "AA99 9AA"
+        self.user_profile.default_phone_number = "07123123123"
+        self.user_profile.default_county = "Test County"
+        self.user_profile.default_country = "UK"
+        self.user_profile.save()
 
     def test_userprofile_exists(self):
         users_count = UserProfile.objects.all().count()
@@ -33,10 +33,12 @@ class ProfileModelTestCase(TestCase):
         self.assertEqual(self.user_profile.user.password, "12345")
 
     def test_userprofile_address_line_one_correct(self):
-        self.assertEqual(self.user_profile.default_address_one, "Test Address Line 1")
+        self.assertEqual(self.user_profile.default_address_one,
+                         "Test Address Line 1")
 
     def test_userprofile_address_line_two_correct(self):
-        self.assertEqual(self.user_profile.default_address_two, "Test Address Line 2")
+        self.assertEqual(self.user_profile.default_address_two,
+                         "Test Address Line 2")
 
     def test_userprofile_town_city_correct(self):
         self.assertEqual(self.user_profile.default_town_city, "Test City")
@@ -49,6 +51,7 @@ class ProfileModelMethodTestCase(TestCase):
     """
     Test profile model method
     """
+
     def test_userprofile_is_zero(self):
         user_count = User.objects.all().count()
         user_profile_count = UserProfile.objects.all().count()

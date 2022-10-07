@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.test import Client
 from .models import Product, Nutrition, Ingredient
 # Create your tests here.
 
@@ -8,6 +7,7 @@ class ProductModelTestCase(TestCase):
     """
     Test product model object creation
     """
+
     def setUp(self):
         self.product = Product.objects.create(
             flavour="Tasty Flavour",
@@ -63,7 +63,9 @@ class NutritionModelTestCase(TestCase):
         self.assertEqual(self.nutrition.salt, 0.5)
 
     def test_nutrition_model_string_name(self):
-        self.assertEqual(str(self.nutrition), "Flavour: Tasty Flavour nutrition")
+        string = "Flavour: Tasty Flavour nutrition"
+        self.assertEqual(str(self.nutrition), string)
+
 
 class IngredientModelTestCase(TestCase):
     """
@@ -97,16 +99,20 @@ class IngredientModelTestCase(TestCase):
         self.assertEqual(self.product.ingredient.all().count(), 2)
 
     def test_ingredient_information_one(self):
-        self.assertEqual(self.product.ingredient.first().name, "Tasty Ingredient 1")
+        self.assertEqual(self.product.ingredient.first().name,
+                         "Tasty Ingredient 1")
 
     def test_ingredient_information_two(self):
-        self.assertEqual(self.product.ingredient.last().name, "Tasty Ingredient 2")
+        self.assertEqual(self.product.ingredient.last().name,
+                         "Tasty Ingredient 2")
 
     def test_ingredient_default_name(self):
-        ingredient_three = Ingredient.objects.create(
+        Ingredient.objects.create(
             product=self.product,
         )
-        self.assertEqual(self.product.ingredient.last().name, "You need an ingredient")
+        self.assertEqual(self.product.ingredient.last().name,
+                         "You need an ingredient")
 
     def test_ingredient_model_string_name(self):
-        self.assertEqual(str(self.ingredient_one), "ingredient - Flavour: Tasty Flavour ingredients")
+        self.assertEqual(str(self.ingredient_one),
+                         "ingredient - Flavour: Tasty Flavour ingredients")
