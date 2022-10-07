@@ -21,7 +21,7 @@
     <div class="row justify-content-center text-font">
         <div class="col-12">
             {% if user.is_authenticated %}
-            <h2 class="text-font text-center my-2">Please note, all bags weigh 500g.</h2>
+            <h2 class="text-font text-center my-2">Please note, all bags weigh 500g and cost £6.99 each.</h2>
             <form action="{% url 'order_items' %}" method="POST" id="order-form">
                 <div class="row justify-content-center">
                     <div class="col-md-6">

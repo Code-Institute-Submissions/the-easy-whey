@@ -30,6 +30,7 @@
                         <p>500g {{ item.product }} x {{ item.quantity }}</p>
                         {% endif %}
                         {% endfor %}
+                        <p>The total cost is: £{{ order.total_cost }}.</p>
                         <div>
                             <h3 class="my-4">Delivery Address:</h3>
                             <p>{{ order.address_one }}, {{ order.address_two }},

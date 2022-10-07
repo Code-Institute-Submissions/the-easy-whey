@@ -155,7 +155,7 @@ class OrderURLTestCaseLoggedInUser(TestCase):
         self.assertEqual(post_order_count, 2)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "order/order_items.html")
-        self.assertContains(response, "Please note, all bags weigh 500g.")
+        self.assertContains(response, "Please note, all bags weigh 500g")
 
     def test_url_order_save_info_checkbox_checked(self):
         user = UserProfile.objects.get(id=self.new_user.id)
@@ -193,7 +193,7 @@ class OrderURLTestCaseLoggedInUser(TestCase):
         response = self.c.get('/order/items/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "order/order_items.html")
-        self.assertContains(response, "Please note, all bags weigh 500g.")
+        self.assertContains(response, "Please note, all bags weigh 500g")
 
     def test_url_order_items_submission(self):
         session = self.c.session

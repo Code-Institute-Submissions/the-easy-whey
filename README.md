@@ -260,8 +260,8 @@ CSS Stylesheet was run through the [W3C CSS Validator](https://jigsaw.w3.org/css
 
 ### JavaScript Validation
 JavaScript file was run through the [JSHint](https://jshint.com/).
-* cusotmfile xxx??
-> ERRORS? XXX
+* `buttons.js`
+> No errors found.
 
 ### Python Validation
 Python files were run through the [pythonchecker](https://www.pythonchecker.com/).
