@@ -1,4 +1,5 @@
 from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -206,6 +207,13 @@ def stripe_success(request):
         order.is_paid = True
         order.save()
         request.session['checkout_key'] = False
+        send_mail(
+            'Order Successful!',
+            'Hi, thank you so much for your order! The Easy Whey',
+            None,
+            [order.email],
+            fail_silently=True,
+        )
         context = {}
         return render(request, "order/success.html", context)
     else:

@@ -34,7 +34,6 @@
     * [Returning User](https://github.com/KNFullStack/the-easy-whey#returning-user)
     * [Frequent User](https://github.com/KNFullStack/the-easy-whey#frequent-users)
     * [Admins](https://github.com/KNFullStack/the-easy-whey#admin-users)
-  * [User Testing](https://github.com/KNFullStack/the-easy-whey#user-testing)
   * [Currently Known Bugs](https://github.com/KNFullStack/the-easy-whey#currently-known-bugs)
   * [Major Bugs Fixed During Development](https://github.com/KNFullStack/the-easy-whey#major-bugs-fixed-during-development)
   * [Lighthouse Results](https://github.com/KNFullStack/the-easy-whey#lighthouse-results)
@@ -232,7 +231,7 @@ Technologies used are as follows.
 
 # Testing
 Django Unit Tests:
-xxx
+* 89 Django Unit Tests written to test the app's models, urls and views. All passing.
 
 Manual High level testing plan:
 1. CRUD functionality in various places within the web application
@@ -307,14 +306,8 @@ How does the web application design enable the goals of a first time users, retu
 2. How can I check if there have been messages sent from customers?
 > Links that appear only for staff users/admin users direct the relevant users to the pages that control these operations.
 
-## User Testing
-A user kindly volunteered to test the web application once overall development was complete.
-User's comments were as follows:
-* COMMENT xxx
-  * how to address it xxx 
-
 ## Currently Known Bugs
-1. None currently known.
+1. Refreshing the page that shows the user's current order selection causes the form to be resubmitted and add the number of products again. In order to try to circumvent this a button was added to delete the current order and try again.
 
 ## Major Bugs Fixed During Development
 1. Toasts that popped up after user interaction while on the mobile view were often too large, to the point where the x button to remove the toast was not visible.
