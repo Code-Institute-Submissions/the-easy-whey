@@ -45,7 +45,7 @@ class OrderURLTestCaseNonLoggedInUser(TestCase):
             postcode="NP11 1AA",
             town_city="TestCity",
             county="TestCounty",
-            country="TestCountry",
+            country="GB",
             date=datetime.datetime.now(),
             total_cost=0,
         )
@@ -93,28 +93,28 @@ class OrderURLTestCaseLoggedInUser(TestCase):
             postcode="NP11 1AA",
             town_city="TestCity",
             county="TestCounty",
-            country="TestCountry",
+            country="GB",
             date=datetime.datetime.now(),
             total_cost=0,
         )
         self.product_choc = Product.objects.create(
             flavour="Chocolate Whey Protein",
-            description="Yum Yum Description",
+            description="Chocolate Yum Description",
             price=6.99
         )
         self.product_banana = Product.objects.create(
             flavour="Banana Whey Protein",
-            description="Yum Yum Description",
+            description="Banana Yum Description",
             price=6.99
         )
         self.product_strawb = Product.objects.create(
             flavour="Strawberry Whey Protein",
-            description="Yum Yum Description",
+            description="Strawberry Yum Description",
             price=6.99
         )
         self.product_c_and_c = Product.objects.create(
             flavour="Cookies & Cream Whey Protein",
-            description="Yum Yum Description",
+            description="Cookies Yum Description",
             price=6.99
         )
 
@@ -124,27 +124,51 @@ class OrderURLTestCaseLoggedInUser(TestCase):
         self.assertContains(response, "Your Details")
         self.assertTemplateUsed(response, "order/order_details.html")
 
-    # def test_url_order_details_submission(self):
-    #     pre_order_count = Order.objects.all().count()
-    #     self.assertEqual(pre_order_count, 1)
-    #     response = self.c.post('/order/details/', {
-    #         "full_name": "Test Name Post",
-    #         "email": "testpost@test.com",
-    #         "phone_number": "07789789789",
-    #         "address_one": "Address Line A",
-    #         "address_two": "Address Line B",
-    #         "postcode": "NP11 1BB",
-    #         "town_city": "Test City",
-    #         "county": "Test County",
-    #         "country": "Test Country",
-    #         "save_information": False,
-    #     }, follow=True)
-    #     post_order_count = Order.objects.all().count()
-    #     self.assertEqual(post_order_count, 2)
-    #     self.assertEqual(response.status_code, 200)
+    def test_url_order_details_submission(self):
+        pre_order_count = Order.objects.all().count()
+        self.assertEqual(pre_order_count, 1)
+        response = self.c.post('/order/details/', {
+            "full_name": "Test Name Post",
+            "email": "testpost@test.com",
+            "phone_number": "07789789789",
+            "address_one": "Address Line A",
+            "address_two": "Address Line B",
+            "postcode": "NP11 1BB",
+            "town_city": "Test City",
+            "county": "Test County",
+            "country": "GB",
+            "save_information": False,
+        }, follow=True)
+        post_order_count = Order.objects.all().count()
+        self.assertEqual(post_order_count, 2)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "order/order_items.html")
+        self.assertContains(response, "Please note, all bags weigh 500g.")
 
+    def test_url_order_save_info_checkbox_checked(self):
+        user = UserProfile.objects.get(id=self.new_user.id)
+        self.assertEqual(user.default_address_one, None)
+        self.assertEqual(user.default_address_two, None)
+        response = self.c.post('/order/details/', {
+            "full_name": "Test Name Post",
+            "email": "testpost@test.com",
+            "phone_number": "07789789789",
+            "address_one": "Address Line A",
+            "address_two": "Address Line B",
+            "postcode": "NP11 1BB",
+            "town_city": "Test City",
+            "county": "Test County",
+            "country": "GB",
+            "save_information": True,
+        }, follow=True)
+        session = self.c.session
+        session["save_information"] = True
+        session.save()
+        self.assertEqual(Order.objects.all().count(), 2)
+        user = UserProfile.objects.get(id=self.new_user.id)
+        self.assertEqual(user.default_address_one, "Address Line A")
+        self.assertEqual(user.default_address_two, "Address Line B")
 
-    # def test_url_order_save_info_checkbox_checked(self):
 
     def test_url_order_items_no_session_id(self):
         response = self.c.get('/order/items/', follow=True)
